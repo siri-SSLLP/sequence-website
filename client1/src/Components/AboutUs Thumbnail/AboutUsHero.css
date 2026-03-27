@@ -1,0 +1,14 @@
+
+
+.about-hero-img-div{
+    margin-top: 180px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.about-hero-img{
+    width: 99%;
+    height: 720px;
+}
+

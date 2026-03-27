@@ -1,0 +1,220 @@
+/* TITLE */
+.appcat-title {
+    /* margin: 25px 5px 1px 5px;
+    text-align: center;
+    margin-bottom: 30px; */
+    text-align: center;
+    margin: 30px 0;
+}
+
+.appcat-title-name {
+    color: #AEB2B8;
+}
+
+/* CONTAINER */
+.appcat-container {
+    background-color: #F8F9FA;
+}
+
+/* PARENT CATEGORY */
+.appcat-parent-list {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.appcat-parent-wrapper {
+    text-align: center;
+}
+
+/* CIRCLE ITEM */
+/* .appcat-parent-item img{
+    width: 100px;
+    height: 100px;
+} */
+.appcat-parent-item img {
+    /* background-color: white; */
+    /* border-radius: 50%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    width: 120px;
+    height: 100px;
+    font-size: 100px;
+    margin: auto;
+    color: #AEB2B8;
+    margin: 25px 25px 25px 25px;
+}
+
+.appcat-parent-item img:hover {
+    color: #000000;
+    font-size: 120px;
+    cursor: pointer;
+    /* transform: scale(1.2); */
+
+}
+
+/* ACTIVE */
+.appcat-active {
+    /* background: #ffffff; */
+    color: #ebc76c;
+}
+
+.appcat-active:hover {
+    color: #c59826 !important;
+}
+
+/* LABEL */
+.appcat-parent-label {
+    margin-top: 10px;
+}
+
+/* CHILD PRODUCTS (DEFAULT BASE) */
+.appcat-child-list {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+}
+
+.appcat-child-item {
+    background: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.appcat-child-item:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+.appcat-child-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.appcat-child-item p {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ---------------- MOBILE (CAROUSEL) ---------------- */
+@media (max-width: 768px) {
+    .appcat-child-list {
+        flex-direction: row;
+        overflow-x: auto;
+
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+
+        scrollbar-width: none;
+    }
+
+    .appcat-child-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .appcat-child-item {
+        min-width: 140px;
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        margin-top: 25px;
+    }
+
+    .appcat-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .appcat-parent-list {
+        gap: 5px;
+    }
+
+    /* .appcat-parent-item img{
+        margin: 25px 10px 1px 25px;
+        font-size: 60px;
+        width: 70px;
+        height: 60px;
+    } */
+    .appcat-parent-item img {
+        margin: 12px 10px 14px 17px;
+        font-size: 60px;
+        width: 70px;
+        height: 60px;
+
+    }
+
+    .appcat-parent-item img.active {
+        font-size: 70px;
+        transform: scale(1.2);
+    }
+
+    .appcat-active img {
+        font-size: 80px !important;
+        width: 80px;
+        height: 70px;
+    }
+}
+
+/* ---------------- DESKTOP (CENTERED GRID) ---------------- */
+@media (min-width: 769px) {
+    .appcat-child-list {
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow-x: hidden;
+
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .appcat-child-item {
+        width: 180px;
+        min-width: unset;
+        flex: none;
+    }
+}
+
+/* .appcat-parent-logo{
+    margin-top: 100px;
+} */
+
+
+.application-image {
+    height: 60px !important;
+    width: 60px !important;
+    padding: 7px;
+
+    /* padding: 30px; */
+
+}
+
+.application-image-test {
+    border: 2px solid white;
+    border-radius: 100%;
+    margin: 5px;
+}
+
+.appcat-active {
+    /* transform: scale(1.2); */
+    background-color: #ebc76c;
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.application-image-div {
+    border: 2px solid black;
+    border-radius: 100%;
+    border: 2px solid rgb(229 231 235);
+}
+
+.check {
+    border: 2px solid black;
+}
