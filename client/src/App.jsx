@@ -13,6 +13,7 @@ import MaintenanceGuidePage from './pages/MaintenanceGuidePage.jsx'
 import WhatsAppButton from './Components/WhatsAppButton/WhatsAppButton.jsx'
 import ScrollToTopButton from './Components/ScrollToTopButton/ScrollToTopButton.jsx'
 import NewRegisterPage from './pages/NewRegisterPage.jsx'
+import Testing from './Components/Testing/Testing.jsx'
 
 
 
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
       <NavBar></NavBar>
+      <Testing></Testing>
 
 
       {/* I dont know why but this { Router } tag is not working tried some methods */}
