@@ -731,3 +731,14 @@
 
 .ppc-qty-modal { flex: 1; height: 42px; }
 .ppc-qty-modal button { height: 42px; }
+
+
+
+@media(max-width:768px){
+    .ppc-page{
+        margin-top: 60px;
+    }
+    .ppc-sidebar{
+        margin-top: 60px;
+    }
+}
