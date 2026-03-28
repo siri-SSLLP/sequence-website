@@ -1,0 +1,73 @@
+.theme-container {
+    padding: 40px 20px;
+    text-align: center;
+    background: #f8f9fa;
+}
+
+/* TITLE */
+.theme-title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* GRID */
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 25px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* CARD */
+.theme-card {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+}
+
+.theme-card:hover {
+    transform: translateY(-5px);
+}
+
+/* IMAGE */
+.theme-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* TEXT */
+.theme-name {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+
+}
+
+/* RESPONSIVE */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .theme-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .theme-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .theme-card img {
+        height: 150px;
+    }
+}
+
+
+.theme-name-link {
+    text-decoration: none;
+}

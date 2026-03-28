@@ -1,0 +1,56 @@
+.carousel {
+    margin-top: 180px;
+
+}
+
+.carousel-img {
+    /* height: 400px; */
+    object-fit: cover;
+}
+
+@media (max-width: 991px) {
+    .carousel {
+        margin-top: 80px;
+    }
+
+    /* mobile screen indicator setting */
+
+    .carousel-indicators [data-bs-target] {
+        width: 8px !important;
+        height: 8px !important;
+        border-radius: 50%;
+        background-color: white;
+        opacity: 0.5;
+        transition: all 0.3s ease;
+        margin-bottom: -20px;
+    }
+
+    .carousel-indicators .active {
+        width: 16px !important;
+        height: 8px !important;
+        background-color: #ffffff;
+        /* highlight color */
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Normal dots */
+.carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+/* Active dot */
+.carousel-indicators .active {
+    width: 25px;
+    height: 10px;
+    background-color: #ffffff;
+    /* highlight color */
+    opacity: 1;
+    transform: scale(1.2);
+}

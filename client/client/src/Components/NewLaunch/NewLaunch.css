@@ -1,0 +1,139 @@
+.s {
+  /* background-color: red; */
+  margin-top: 10px;
+}
+
+.carousel-scroll {
+  scroll-behavior: smooth;
+}
+
+.carousel-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* image container */
+.image-box {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.image-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* arrows */
+.carousel-arrow {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-arrow.left {
+  left: -20px;
+  margin-top: 30px;
+}
+
+.carousel-arrow.right {
+  right: -20px;
+  margin-top: 30px;
+}
+
+
+
+
+
+.rotating-star {
+  display: inline-block;
+  animation: rotateStar 4s linear infinite, colorShift 4s ease-in-out infinite;
+}
+
+/* Rotation */
+@keyframes rotateStar {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Color changing */
+@keyframes colorShift {
+  0% {
+    color: #ff4d4d;
+  }
+
+  /* red */
+  25% {
+    color: #ffa500;
+  }
+
+  /* orange */
+  50% {
+    color: #00c3ff;
+  }
+
+  /* blue */
+  75% {
+    color: #8a2be2;
+  }
+
+  /* purple */
+  100% {
+    color: #ff4d4d;
+  }
+
+  /* back to red */
+}
+
+
+.color-changing-text {
+  background: linear-gradient(270deg, #ff4d4d, #ffa500, #00c3ff, #8a2be2);
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 6s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.new-launch-box:hover {
+  transform: translateY(-15px);
+  transition: 0.3s;
+}
+
+.border-black{
+  background-color: black !important;
+  
+  z-index: 999 !important;
+}
+
+
