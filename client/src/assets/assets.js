@@ -1002,9 +1002,16 @@ export const product = [
         "styleFit": "Modern",
         "tags": ["yellow"],
         "applications": ["Interior"],
-        "area": "32 sq ft",
-        "height": "8 ft",
-        "width": "4 ft"
+        area: "32 sq ft",
+    height: "8 ft",
+    width: "4 ft",
+    images: [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=400&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1761839258513-099c3121d72d?w=400&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=400&fit=crop"
+    ]
     },
 
     {
