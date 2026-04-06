@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import "./ProductPageComponent.css";
 import { product } from "../../assets/assets";
 import { FaFilter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 
 const ProductPageComponent = () => {
@@ -173,7 +174,9 @@ const ProductPageComponent = () => {
                         <div className="ppc-card-link" key={item.productId} style={{ animationDelay: `${index * 0.06}s` }}>
                             <div className="ppc-card">
                                 <div className="ppc-card-img-wrap">
-                                    <img src={item.imageUrl} alt={item.productName} />
+                                    <Link to={`/product/${item.productId}`}>
+                            <img src={item.imageUrl} alt={item.productName} />        
+                            </Link>
 
                                     {/* Heart button */}
                                     <button
@@ -212,6 +215,9 @@ const ProductPageComponent = () => {
                                             <button onClick={(e) => changeQty(e, item.productId, +1)}>+</button>
                                         </div>
                                     )}
+                                    {/* <Link to={`/product/${item.productId}`}>
+                            <img src={item.imageUrl} alt={item.productName} />        
+                            </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -237,7 +243,10 @@ const ProductPageComponent = () => {
                             {/* Left col */}
                             <div className="ppc-modal-img-col">
                                 <div className="ppc-modal-img-wrap">
+                                    
                                     <img src={modal.imageUrl} alt={modal.productName} />
+                                    
+                                    
                                 </div>
                                 {modal.tags?.length > 0 && (
                                     <div className="ppc-modal-tags">
