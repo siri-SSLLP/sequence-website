@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import './SignInSignUp.css';
+import './SigninSignup.css';
 
 // ── Country list (flag emoji + name + dial code) ──
 const COUNTRIES = [
