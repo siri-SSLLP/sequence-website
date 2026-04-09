@@ -81,12 +81,12 @@ const ProductDescription = () => {
                         {/* VERTICAL THUMBNAIL STRIP */}
                         {imageList.length > 1 && (
                             <div className="pdp-thumb-strip">
-                                <button
+                                {/* <button
                                     className="pdp-strip-arrow"
                                     onClick={() => goTo(mainIndex - 1)}
                                     disabled={mainIndex === 0}
                                     aria-label="Previous image"
-                                >&#8963;</button>
+                                >&#8963;</button> */}
 
                                 <div className="pdp-thumb-list" ref={carouselRef}>
                                     {imageList.map((img, index) => (
@@ -102,12 +102,12 @@ const ProductDescription = () => {
                                     ))}
                                 </div>
 
-                                <button
+                                {/* <button
                                     className="pdp-strip-arrow"
                                     onClick={() => goTo(mainIndex + 1)}
                                     disabled={mainIndex === imageList.length - 1}
                                     aria-label="Next image"
-                                >&#8964;</button>
+                                >&#8964;</button> */}
                             </div>
                         )}
 
