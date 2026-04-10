@@ -13,8 +13,8 @@ import MaintenanceGuidePage from './pages/MaintenanceGuidePage.jsx'
 import WhatsAppButton from './Components/WhatsAppButton/WhatsAppButton.jsx'
 import ScrollToTopButton from './Components/ScrollToTopButton/ScrollToTopButton.jsx'
 import Testing from './Components/Testing/Testing.jsx'
-import CartPage from './Components/Cart/Cart.jsx'
-
+import Cart from './Components/Cart/Cart.jsx'
+import Checkout from './Components/Checkout/Checkout.jsx'
 
 
 
@@ -40,14 +40,14 @@ function App() {
         </Route>
         <Route path="/product/:id" element={<ProductDescription />} />
         <Route path='/maintenance-guide' element={<MaintenanceGuidePage></MaintenanceGuidePage>}></Route>
-        <Route path="/cart" element={<CartPage></CartPage>}></Route>
+        <Route path="/cart" element={<Cart></Cart>}></Route>
         <Route ></Route>
         <Route ></Route>
         <Route ></Route>
         <Route ></Route>
         <Route ></Route>
         <Route ></Route>
-        <Route ></Route>
+        <Route path='/checkout' element={<Checkout></Checkout>}></Route>
       </Routes>
       {/* </Router> */}
 
@@ -57,6 +57,3 @@ function App() {
 }
 
 export default App
-
-// Testing again
-// Testing again 2
