@@ -512,7 +512,7 @@ function NavBar() {
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/profile">
                                     <IoPerson /> <span>Profile</span>
                                 </Link>
-                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/store">
+                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/products">
                                     <MdOutlineStorefront /> <span>Visit Store</span>
                                 </Link>
                             </li>
