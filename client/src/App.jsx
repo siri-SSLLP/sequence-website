@@ -12,8 +12,8 @@ import ProductDescription from './Components/ProductDescription/ProductDescripti
 import MaintenanceGuidePage from './pages/MaintenanceGuidePage.jsx'
 import WhatsAppButton from './Components/WhatsAppButton/WhatsAppButton.jsx'
 import ScrollToTopButton from './Components/ScrollToTopButton/ScrollToTopButton.jsx'
-import NewRegisterPage from './pages/NewRegisterPage.jsx'
 import Testing from './Components/Testing/Testing.jsx'
+import CartPage from './Components/Cart/Cart.jsx'
 
 
 
@@ -35,11 +35,12 @@ function App() {
         <Route path='/home' element={<Home></Home>}></Route>
         <Route path='/about-us' element={<AboutUs></AboutUs>}></Route>
         <Route path='/contact-us' element={<ContactUsPage></ContactUsPage>}></Route>
-        <Route path='/blog' element={<ProductPage></ProductPage>}></Route>
+        <Route path='/products' element={<ProductPage></ProductPage>}>
+        
+        </Route>
         <Route path="/product/:id" element={<ProductDescription />} />
         <Route path='/maintenance-guide' element={<MaintenanceGuidePage></MaintenanceGuidePage>}></Route>
-        <Route path='/register' element={<NewRegisterPage></NewRegisterPage>}></Route>
-        <Route ></Route>
+        <Route path="/cart" element={<CartPage></CartPage>}></Route>
         <Route ></Route>
         <Route ></Route>
         <Route ></Route>

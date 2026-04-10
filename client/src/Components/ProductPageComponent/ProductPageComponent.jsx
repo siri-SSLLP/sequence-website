@@ -1,54 +1,102 @@
-import React, { useState, useMemo, useEffect } from "react";
+   
+
+
+import React, { useState, useMemo, useEffect, useContext } from "react";
 import "./ProductPageComponent.css";
 import { product } from "../../assets/assets";
 import { FaFilter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-
+import {ProductContext} from '../../Context/Context'
 const ProductPageComponent = () => {
     const [filters, setFilters] = useState({
-        category: "", color: "", finish: "", application: "",
-        priceMin: 0, priceMax: 5000,
+        category: "", 
+        subcategory: "",
+        color: "", 
+        finish: "", 
+        application: "",
+        priceMin: 0, 
+        priceMax: 5000,
     });
     const [sort, setSort] = useState("popular");
     const [activeFilters, setActiveFilters] = useState([]);
     const [favourites, setFavourites] = useState({});
-    const [cart, setCart] = useState({});
+    const {changeQty,addToCart ,cart} = useContext(ProductContext)
     const [modal, setModal] = useState(null);
     const [heartAnim, setHeartAnim] = useState({});
 
     useEffect(() => {
+        console.log(cart)
         document.body.style.overflow = modal ? "hidden" : "";
         return () => { document.body.style.overflow = ""; };
     }, [modal]);
 
+    // Get unique parent categories
     const categories = [...new Set(product.map(p => p.parentCategory.name))];
+    
+    // Get subcategories based on selected parent category
+    const subcategories = useMemo(() => {
+        if (!filters.category) return [];
+        return [...new Set(
+            product
+                .filter(p => p.parentCategory.name === filters.category)
+                .map(p => p.childCategory.name)
+        )];
+    }, [filters.category]);
+
     const colors = [...new Set(product.map(p => p.color))];
     const finishes = [...new Set(product.map(p => p.finishType))];
     const applications = [...new Set(product.flatMap(p => p.applications))];
 
     const handleFilterChange = (key, value) => {
-        setFilters(prev => ({ ...prev, [key]: value }));
-        if (value && key !== "priceMin" && key !== "priceMax") {
-            setActiveFilters(prev => [...prev.filter(f => f.key !== key), { key, value }]);
-        } else if (!value) {
-            setActiveFilters(prev => prev.filter(f => f.key !== key));
+        // If category changes, reset subcategory
+        if (key === "category" && value !== filters.category) {
+            setFilters(prev => ({ ...prev, [key]: value, subcategory: "" }));
+            if (value) {
+                setActiveFilters(prev => [
+                    ...prev.filter(f => f.key !== key && f.key !== "subcategory"),
+                    { key, value }
+                ]);
+            } else {
+                setActiveFilters(prev => prev.filter(f => f.key !== key && f.key !== "subcategory"));
+            }
+        } else {
+            setFilters(prev => ({ ...prev, [key]: value }));
+            if (value && key !== "priceMin" && key !== "priceMax") {
+                setActiveFilters(prev => [...prev.filter(f => f.key !== key), { key, value }]);
+            } else if (!value) {
+                setActiveFilters(prev => prev.filter(f => f.key !== key));
+            }
         }
     };
 
     const removeFilter = (key) => {
-        setFilters(prev => ({ ...prev, [key]: "" }));
-        setActiveFilters(prev => prev.filter(f => f.key !== key));
+        if (key === "category") {
+            setFilters(prev => ({ ...prev, [key]: "", subcategory: "" }));
+            setActiveFilters(prev => prev.filter(f => f.key !== key && f.key !== "subcategory"));
+        } else {
+            setFilters(prev => ({ ...prev, [key]: "" }));
+            setActiveFilters(prev => prev.filter(f => f.key !== key));
+        }
     };
 
     const clearAll = () => {
-        setFilters({ category: "", color: "", finish: "", application: "", priceMin: 0, priceMax: 5000 });
+        setFilters({ 
+            category: "", 
+            subcategory: "",
+            color: "", 
+            finish: "", 
+            application: "", 
+            priceMin: 0, 
+            priceMax: 5000 
+        });
         setActiveFilters([]);
     };
 
     const filteredProducts = useMemo(() => {
         let data = [...product];
         if (filters.category) data = data.filter(p => p.parentCategory.name === filters.category);
+        if (filters.subcategory) data = data.filter(p => p.childCategory.name === filters.subcategory);
         if (filters.color) data = data.filter(p => p.color === filters.color);
         if (filters.finish) data = data.filter(p => p.finishType === filters.finish);
         if (filters.application) data = data.filter(p => p.applications.includes(filters.application));
@@ -65,19 +113,7 @@ const ProductPageComponent = () => {
         setTimeout(() => setHeartAnim(prev => ({ ...prev, [id]: false })), 400);
     };
 
-    const addToCart = (e, id) => {
-        e.stopPropagation();
-        setCart(prev => ({ ...prev, [id]: 1 }));
-    };
-
-    const changeQty = (e, id, delta) => {
-        e.stopPropagation();
-        setCart(prev => {
-            const next = (prev[id] || 0) + delta;
-            if (next <= 0) { const { [id]: _, ...rest } = prev; return rest; }
-            return { ...prev, [id]: next };
-        });
-    };
+    
 
     const openModal = (e, item) => { e.stopPropagation(); setModal(item); };
     const closeModal = () => setModal(null);
@@ -92,24 +128,71 @@ const ProductPageComponent = () => {
                     <h3>Filters</h3>
                 </div>
 
-                {[
-                    { key: "category", label: "Category", opts: categories },
-                    { key: "color", label: "Color", opts: colors },
-                    { key: "finish", label: "Finish", opts: finishes },
-                    { key: "application", label: "Application", opts: applications },
-                ].map(({ key, label, opts }) => (
-                    <div className="ppc-filter-group" key={key}>
-                        <label className="ppc-label">{label}</label>
+                {/* Category Filter */}
+                <div className="ppc-filter-group">
+                    <label className="ppc-label">Category</label>
+                    <div className="ppc-select-wrap">
+                        <select value={filters.category} onChange={(e) => handleFilterChange("category", e.target.value)}>
+                            <option value="">All Categories</option>
+                            {categories.map((cat, i) => <option key={i} value={cat}>{cat}</option>)}
+                        </select>
+                        <span className="ppc-select-arrow">›</span>
+                    </div>
+                </div>
+
+                {/* Subcategory Filter - Shows only when category is selected */}
+                {filters.category && subcategories.length > 0 && (
+                    <div className="ppc-filter-group ppc-subcategory-filter">
+                        <label className="ppc-label">Subcategory</label>
                         <div className="ppc-select-wrap">
-                            <select value={filters[key]} onChange={(e) => handleFilterChange(key, e.target.value)}>
-                                <option value="">All {label}s</option>
-                                {opts.map((o, i) => <option key={i} value={o}>{o}</option>)}
+                            <select value={filters.subcategory} onChange={(e) => handleFilterChange("subcategory", e.target.value)}>
+                                <option value="">All Subcategories</option>
+                                {subcategories.map((subcat, i) => (
+                                    <option key={i} value={subcat}>{subcat}</option>
+                                ))}
                             </select>
                             <span className="ppc-select-arrow">›</span>
                         </div>
                     </div>
-                ))}
+                )}
 
+                {/* Color Filter */}
+                <div className="ppc-filter-group">
+                    <label className="ppc-label">Color</label>
+                    <div className="ppc-select-wrap">
+                        <select value={filters.color} onChange={(e) => handleFilterChange("color", e.target.value)}>
+                            <option value="">All Colors</option>
+                            {colors.map((col, i) => <option key={i} value={col}>{col}</option>)}
+                        </select>
+                        <span className="ppc-select-arrow">›</span>
+                    </div>
+                </div>
+
+                {/* Finish Filter */}
+                <div className="ppc-filter-group">
+                    <label className="ppc-label">Finish</label>
+                    <div className="ppc-select-wrap">
+                        <select value={filters.finish} onChange={(e) => handleFilterChange("finish", e.target.value)}>
+                            <option value="">All Finishes</option>
+                            {finishes.map((fin, i) => <option key={i} value={fin}>{fin}</option>)}
+                        </select>
+                        <span className="ppc-select-arrow">›</span>
+                    </div>
+                </div>
+
+                {/* Application Filter */}
+                <div className="ppc-filter-group">
+                    <label className="ppc-label">Application</label>
+                    <div className="ppc-select-wrap">
+                        <select value={filters.application} onChange={(e) => handleFilterChange("application", e.target.value)}>
+                            <option value="">All Applications</option>
+                            {applications.map((app, i) => <option key={i} value={app}>{app}</option>)}
+                        </select>
+                        <span className="ppc-select-arrow">›</span>
+                    </div>
+                </div>
+
+                {/* Price Range */}
                 <div className="ppc-filter-group">
                     <label className="ppc-label">
                         Price Range
@@ -172,11 +255,12 @@ const ProductPageComponent = () => {
                 <div className="ppc-grid">
                     {filteredProducts.map((item, index) => (
                         <div className="ppc-card-link" key={item.productId} style={{ animationDelay: `${index * 0.06}s` }}>
+
                             <div className="ppc-card">
                                 <div className="ppc-card-img-wrap">
                                     <Link to={`/product/${item.productId}`}>
-                            <img src={item.imageUrl} alt={item.productName} />        
-                            </Link>
+                                        <img src={item.imageUrl} alt={item.productName} />
+                                    </Link>
 
                                     {/* Heart button */}
                                     <button
@@ -215,9 +299,6 @@ const ProductPageComponent = () => {
                                             <button onClick={(e) => changeQty(e, item.productId, +1)}>+</button>
                                         </div>
                                     )}
-                                    {/* <Link to={`/product/${item.productId}`}>
-                            <img src={item.imageUrl} alt={item.productName} />        
-                            </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -243,14 +324,24 @@ const ProductPageComponent = () => {
                             {/* Left col */}
                             <div className="ppc-modal-img-col">
                                 <div className="ppc-modal-img-wrap">
-                                    
-                                    <img src={modal.imageUrl} alt={modal.productName} />
-                                    
-                                    
+                                    <Link to={`/product/${modal.productId}`}>
+                                        <img src={modal.imageUrl} alt={modal.productName} />
+                                    </Link>
                                 </div>
+
+                                {/* 🔥 VIEW FULL PRODUCT BUTTON */}
+                                <Link
+                                    to={`/product/${modal.productId}`}
+                                    className="ppc-full-product-btn"
+                                >
+                                    View Full Product →
+                                </Link>
+
                                 {modal.tags?.length > 0 && (
                                     <div className="ppc-modal-tags">
-                                        {modal.tags.map((t) => <span key={t} className="ppc-modal-tag">#{t}</span>)}
+                                        {modal.tags.map((t) => (
+                                            <span key={t} className="ppc-modal-tag">#{t}</span>
+                                        ))}
                                     </div>
                                 )}
                             </div>
@@ -332,4 +423,4 @@ const ProductPageComponent = () => {
     );
 };
 
-export default ProductPageComponent;    
+export default ProductPageComponent;
