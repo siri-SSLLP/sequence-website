@@ -14,6 +14,7 @@ import WhatsAppButton from './Components/WhatsAppButton/WhatsAppButton.jsx'
 import ScrollToTopButton from './Components/ScrollToTopButton/ScrollToTopButton.jsx'
 import NewRegisterPage from './pages/NewRegisterPage.jsx'
 import Testing from './Components/Testing/Testing.jsx'
+import CheckoutPage from './Components/Checkout/Checkout.jsx'
 
 
 
@@ -46,7 +47,7 @@ function App() {
         <Route ></Route>
         <Route ></Route>
         <Route ></Route>
-        <Route ></Route>
+        <Route path='/checkout' element={<CheckoutPage></CheckoutPage>}></Route>
       </Routes>
       {/* </Router> */}
 
@@ -56,6 +57,3 @@ function App() {
 }
 
 export default App
-
-// Testing again
-// Testing again 2
