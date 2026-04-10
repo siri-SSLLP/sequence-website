@@ -301,7 +301,7 @@
 // export default NavBar   
 
 
-import { useState } from 'react';
+import { use, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 import { product } from '../../assets/assets.js';
@@ -322,8 +322,10 @@ import { callNumber, Message, WhatsappNumber } from '../../assets/assets.js';
 // ── NEW: import the auth modal ──
 // import SignInSignUp from '../SignInSignUp/SignInSignUp';
 import SignInSignUp from '../Signupsignin/Signupsignin.jsx';
-
+import { ProductContext } from '../../Context/Context.jsx';
 function NavBar() {
+
+    const {cart} = useContext(ProductContext)
     // ── NEW: control modal visibility ──
     const [showAuth, setShowAuth] = useState(false);
 
@@ -403,7 +405,7 @@ function NavBar() {
                             <Link to={'/cart'} className='img-cart-icon'>
                                 <BsCart3 />
                             </Link>
-                            <div className='cart-count-desktop'>20</div>
+                            <div className='cart-count-desktop'>{Object.keys(cart).length}</div>
                         </div>
 
                         {/* ── CHANGED: button instead of Link — opens modal ── */}
@@ -510,7 +512,7 @@ function NavBar() {
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/profile">
                                     <IoPerson /> <span>Profile</span>
                                 </Link>
-                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/store">
+                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/products">
                                     <MdOutlineStorefront /> <span>Visit Store</span>
                                 </Link>
                             </li>

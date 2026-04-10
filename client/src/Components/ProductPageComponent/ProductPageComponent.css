@@ -742,3 +742,20 @@
         margin-top: 60px;
     }
 }
+
+.ppc-full-product-btn {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  padding: 10px;
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.ppc-full-product-btn:hover {
+  background: #333;
+}

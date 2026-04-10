@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import './SignInSignUp.css';
+import './SigninSignup.css';
 
 // ── Country list (flag emoji + name + dial code) ──
 const COUNTRIES = [
@@ -7,7 +7,7 @@ const COUNTRIES = [
     { code: 'US', name: 'United States',         dial: '+1',   flag: '🇺🇸' },
     { code: 'GB', name: 'United Kingdom',        dial: '+44',  flag: '🇬🇧' },
     { code: 'AU', name: 'Australia',             dial: '+61',  flag: '🇦🇺' },
-    { code: 'CA', name: 'Canada',                dial: '+1',   flag: '🇨🇦' },
+    { code: 'CA', name: 'Canada ',                dial: '+1',   flag: '🇨🇦' },
     { code: 'AE', name: 'UAE',                   dial: '+971', flag: '🇦🇪' },
     { code: 'SA', name: 'Saudi Arabia',          dial: '+966', flag: '🇸🇦' },
     { code: 'SG', name: 'Singapore',             dial: '+65',  flag: '🇸🇬' },

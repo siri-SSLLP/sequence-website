@@ -1010,12 +1010,7 @@ export const newLaunchProducts = [
     }
 ]
 
-// const getCategoryIcon = [{
-//     if(name.includes("Kitchen")) return<TbToolsKitchen />;
-// if (name.includes("Living")) return <TbArmchair />;
-// if (name.includes("Light")) return <TbLamp />;
-// return <BsFillHouseHeartFill />;
-//     }];
+
 
 
 export const CategoryIcon = [
