@@ -1,17 +1,15 @@
-
-
-
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import "./ProductPageComponent.css";
 import { product } from "../../assets/assets";
 import { FaFilter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 import { ProductContext } from '../../Context/Context'
 const ProductPageComponent = () => {
+    const location = useLocation();
     const [filters, setFilters] = useState({
-        category: "",
-        subcategory: "",
+    category: location.state?.category || "",
+    subcategory: location.state?.subcategory || "",
         color: "",
         finish: "",
         application: "",
@@ -24,6 +22,26 @@ const ProductPageComponent = () => {
     const { changeQty, addToCart, cart } = useContext(ProductContext)
     const [modal, setModal] = useState(null);
     const [heartAnim, setHeartAnim] = useState({});
+    
+
+
+    useEffect(() => {
+    if (location.state?.category) {
+
+        setFilters(prev => ({
+            ...prev,
+            category: location.state.category,
+            subcategory: location.state.subcategory || ""
+        }));
+
+        setActiveFilters([
+            { key: "category", value: location.state.category },
+            ...(location.state.subcategory
+                ? [{ key: "subcategory", value: location.state.subcategory }]
+                : [])
+        ]);
+    }
+}, [location.state]);
 
     useEffect(() => {
         console.log(cart)
@@ -424,3 +442,6 @@ const ProductPageComponent = () => {
 };
 
 export default ProductPageComponent;
+
+
+

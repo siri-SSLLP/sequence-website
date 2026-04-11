@@ -75,6 +75,7 @@ export const product = [
         "height": "8 ft",
         "width": "4 ft",
         "orientation": "Horizontal"
+        
     },
 
     {

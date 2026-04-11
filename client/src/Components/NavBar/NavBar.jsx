@@ -283,8 +283,17 @@ function NavBar() {
                         <ul className="dropdown-menu">
                             {category.children.map((child, i) => (
                                 <li key={i}>
-                                    <a className="dropdown-item" href="#">{child.name}</a>
-                                </li>
+    <Link
+        className="dropdown-item"
+        to="/products"
+        state={{
+            category: category.name,
+            subcategory: child.name
+        }}
+    >
+        {child.name}
+    </Link>
+</li>
                             ))}
                         </ul>
                     </li>
