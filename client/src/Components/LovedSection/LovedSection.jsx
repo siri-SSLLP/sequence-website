@@ -69,7 +69,7 @@ const LovedSection = () => {
                             : 0;
 
                         return (
-                            <Link className="loved-link" to={`/${item.productName}`} key={index}>
+                            <Link className="loved-link" to={`/product/${item.productId}`} key={index}>
                                 <div className="card">
                                     <div className="image-wrapper">
                                         <img
