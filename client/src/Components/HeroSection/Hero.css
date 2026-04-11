@@ -10,7 +10,7 @@
 
 @media (max-width: 991px) {
     .carousel {
-        margin-top: 80px;
+        margin-top: 80px !important;
     }
 
     /* mobile screen indicator setting */

@@ -23,7 +23,7 @@ import SignInSignUp from '../Signupsignin/Signupsignin.jsx';
 import { ProductContext } from '../../Context/Context.jsx';
 function NavBar() {
 
-    const {cart} = useContext(ProductContext)
+    const { cart } = useContext(ProductContext)
     // ── NEW: control modal visibility ──
     const [showAuth, setShowAuth] = useState(false);
 
@@ -283,17 +283,17 @@ function NavBar() {
                         <ul className="dropdown-menu">
                             {category.children.map((child, i) => (
                                 <li key={i}>
-    <Link
-        className="dropdown-item"
-        to="/products"
-        state={{
-            category: category.name,
-            subcategory: child.name
-        }}
-    >
-        {child.name}
-    </Link>
-</li>
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/products"
+                                        state={{
+                                            category: category.name,
+                                            subcategory: child.name
+                                        }}
+                                    >
+                                        {child.name}
+                                    </Link>
+                                </li>
                             ))}
                         </ul>
                     </li>

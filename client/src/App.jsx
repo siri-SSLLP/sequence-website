@@ -22,7 +22,6 @@ function App() {
   return (
     <>
       <NavBar></NavBar>
-      <Testing></Testing>
 
 
       {/* I dont know why but this { Router } tag is not working tried some methods */}
