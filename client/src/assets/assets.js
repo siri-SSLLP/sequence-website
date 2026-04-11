@@ -21,13 +21,13 @@ export const product = [
         "unit": "Sheet",
         "netWeight": "12kg",
         "status": "Active",
-        "description": "Elegant walnut laminate perfect for premium furniture.",
+        "description": "Elegant walnut laminate perfect for premium furniture.Elegant walnut laminate perfect for premium furniture.Elegant walnut laminate perfect for premium furniture.Elegant walnut laminate perfect for premium furniture.Elegant walnut laminate perfect for premium furniture.Elegant walnut laminate perfect for premium furniture.",
         "saleType": "Retail",
         "stock": 95,
         "mrpPrice": 2550,
         "mrpDiscount": 10,
         "displayMRP": 2550,
-        "imageUrl": "https://images.unsplash.com/photo-1729086046027-09979ade13fd?q=80&w=862&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "imageUrl": "https://imagesm.plexussquare.in/SEQUENCE/Images/12-03-2025/1741786221943.jpg",
         "finishTexture": "Wood Grain",
         "finishType": "Matte",
         "materialComposition": "High Pressure Laminate",
@@ -38,7 +38,8 @@ export const product = [
         "area": "32 sq ft",
         "height": "8 ft",
         "width": "4 ft",
-        "orientation": "Horizontal"
+        "orientation": "Horizontal",
+        "descriptionShort":"This is SortDescription. "
     },
 
     {
@@ -75,7 +76,7 @@ export const product = [
         "height": "8 ft",
         "width": "4 ft",
         "orientation": "Horizontal"
-        
+
     },
 
     {

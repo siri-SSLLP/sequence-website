@@ -1,65 +1,416 @@
-.s {
-  /* background-color: red; */
-  margin-top: 10px;
+/* ─────────────────────────────────────────────
+   NewLaunch.css
+   Font: import in your index.html or global CSS
+   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+───────────────────────────────────────────── */
+
+/* ── Section shell ── */
+.nl-section {
+  background: #FAF8F4;
+  padding: 72px 0 56px;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  position: relative;
+  overflow: hidden;
 }
 
-.carousel-scroll {
+/* Gold top stripe */
+.nl-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #BF7A38, #E8A84C, #BF7A38);
+}
+
+/* Mandala watermark */
+.nl-bg-motif {
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 380px; height: 380px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* ── Layout ── */
+.nl-inner {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+.nl-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.nl-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #BF7A38;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.nl-eyebrow-line {
+  width: 28px;
+  height: 1.5px;
+  background: #BF7A38;
+  display: inline-block;
+}
+
+.nl-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  color: #1E0F02;
+  line-height: 1.15;
+  margin: 0 0 6px;
+}
+
+.nl-title em {
+  font-style: italic;
+  color: #BF7A38;
+}
+
+.nl-subtitle {
+  font-size: 13px;
+  color: #7A6048;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* Badges + star */
+.nl-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+}
+
+.nl-pill {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 2px;
+}
+
+.nl-pill--dark {
+  background: #1E0F02;
+  color: #FAF8F4;
+}
+
+.nl-pill--outline {
+  background: transparent;
+  border: 1px solid #BF7A38;
+  color: #BF7A38;
+}
+
+.nl-star {
+  font-size: 18px;
+  color: #BF7A38;
+  display: block;
+  animation: nl-spin 10s linear infinite;
+}
+
+@keyframes nl-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Carousel wrapper ── */
+.nl-wrap {
+  position: relative;
+}
+
+/* Edge fade-out masks */
+.nl-fade {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 72px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.nl-fade--left {
+  left: 0;
+  background: linear-gradient(to right, #FAF8F4, transparent);
+}
+
+.nl-fade--right {
+  right: 0;
+  background: linear-gradient(to left, #FAF8F4, transparent);
+}
+
+/* Scrollable track */
+.nl-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
   scroll-behavior: smooth;
+  padding: 8px 2px 28px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
 }
 
-.carousel-scroll::-webkit-scrollbar {
+.nl-track::-webkit-scrollbar {
   display: none;
 }
 
-/* image container */
-.image-box {
-  width: 140px;
-  height: 140px;
+/* ── Product card ── */
+.nl-card {
+  flex: 0 0 190px;
+  background: #fff;
+  border: 1px solid #EDE3D8;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: nl-fadeUp 0.4s ease both;
+}
+
+@keyframes nl-fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.nl-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 44px rgba(30, 15, 2, 0.1);
+  border-color: #BF7A38;
+}
+
+/* Card image area */
+.nl-card-img {
+  height: 210px;
+  overflow: hidden;
+  position: relative;
+  background: #F3EDE4;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: #fff;
 }
 
-.image-box img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.nl-card-img-inner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
 }
 
-/* arrows */
-.carousel-arrow {
+.nl-card:hover .nl-card-img-inner {
+  transform: scale(1.07);
+}
+
+/* "New" badge */
+.nl-card-badge {
   position: absolute;
-  top: 45%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  top: 10px; left: 10px;
+  background: #1E0F02;
+  color: #FAF8F4;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+}
+
+/* Card text */
+.nl-card-body {
+  padding: 14px 16px 16px;
+}
+
+.nl-card-series {
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #BF7A38;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.nl-card-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1E0F02;
+  line-height: 1.4;
+}
+
+.nl-card-code {
+  font-size: 10px;
+  color: #9A8070;
+  margin-top: 3px;
+}
+
+/* ── Footer controls ── */
+.nl-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+/* Dot indicators */
+.nl-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.nl-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: #DDD3C6;
   border: none;
-  background: white;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  z-index: 10;
+  padding: 0;
+  transition: all 0.2s ease;
 }
 
-.carousel-arrow.left {
-  left: -20px;
-  margin-top: 30px;
+.nl-dot--active {
+  background: #BF7A38;
+  width: 22px;
 }
 
-.carousel-arrow.right {
-  right: -20px;
-  margin-top: 30px;
+/* Arrow buttons */
+.nl-arrows {
+  display: flex;
+  gap: 10px;
 }
 
+.nl-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #DDD3C6;
+  background: #fff;
+  color: #1E0F02;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
 
+.nl-arrow:hover {
+  background: #1E0F02;
+  border-color: #1E0F02;
+  color: #FAF8F4;
+}
 
+/* ── Bottom CTA ── */
+.nl-divider {
+  height: 1px;
+  background: #EDE3D8;
+  margin-top: 28px;
+}
+
+.nl-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.nl-cta-btn {
+  background: #BF7A38;
+  color: #fff;
+  border: none;
+  padding: 12px 26px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.nl-cta-btn:hover {
+  background: #9E6028;
+}
+
+.nl-cta-link {
+  font-size: 12px;
+  color: #4A3020;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.nl-cta-link:hover {
+  color: #BF7A38;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nl-inner {
+    padding: 0 20px;
+  }
+
+  .nl-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .nl-meta {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .nl-card {
+    flex: 0 0 155px;
+  }
+
+  .nl-card-img {
+    height: 170px;
+  }
+
+  .nl-section {
+    padding: 48px 0 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nl-card {
+    flex: 0 0 140px;
+  }
+
+  .nl-card-img {
+    height: 150px;
+  }
+}
 
 
 .rotating-star {
   display: inline-block;
-  animation: rotateStar 4s linear infinite, colorShift 4s ease-in-out infinite;
+  animation: rotateStar 5s linear infinite, colorShift 4s ease-in-out infinite;
+  font-size: 28px;
 }
 
 /* Rotation */
@@ -101,39 +452,3 @@
 
   /* back to red */
 }
-
-
-.color-changing-text {
-  background: linear-gradient(270deg, #ff4d4d, #ffa500, #00c3ff, #8a2be2);
-  background-size: 800% 800%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientMove 6s ease infinite;
-}
-
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.new-launch-box:hover {
-  transform: translateY(-15px);
-  transition: 0.3s;
-}
-
-.border-black{
-  background-color: black !important;
-  
-  z-index: 999 !important;
-}
-
-
