@@ -115,6 +115,11 @@
         -webkit-overflow-scrolling: touch;
 
         scrollbar-width: none;
+        /* padding-left: 50px; */
+    }
+
+    .appcat-child-list {
+        margin: 0px 15px 0px 15px;
     }
 
     .appcat-child-list::-webkit-scrollbar {
@@ -176,6 +181,8 @@
         margin: 0 auto;
     }
 
+
+
     .appcat-child-item {
         width: 180px;
         min-width: unset;
@@ -196,6 +203,14 @@
     /* padding: 30px; */
 
 }
+@media (max-width:769px){
+    .application-image{
+        height: 20px !important;
+        width: 20px !important;
+        padding: 0px;
+    }
+}
+
 
 .application-image-test {
     border: 2px solid white;
