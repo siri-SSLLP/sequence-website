@@ -35,6 +35,7 @@
     min-height: 100vh;
     padding-top: calc(var(--navbar-height) + 24px); /* space from navbar */
     padding-bottom: 80px;
+    margin-top: 130px;
 }
 
 .not-found {
@@ -819,101 +820,165 @@
 
 /* ─────────────────────────────────────────
    RESPONSIVE
+   Order matters: largest → smallest
+   Each block only overrides what changes
 ───────────────────────────────────────── */
+
+/* ── 1060px: related grid 4 → 3 cols ── */
 @media (max-width: 1060px) {
     .pdp-related-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-@media (max-width: 860px) {
+/* ── 768px: stack layout, horizontal thumbs ── */
+@media (max-width: 768px) {
     .pdp-section {
         grid-template-columns: 1fr;
-        gap: 28px;
+        gap: 22px;
         padding: 0 16px;
     }
 
     /* On mobile left is no longer sticky */
-    .pdp-left { position: static; }
-
-    /* Flip thumb strip to horizontal row below main image */
-    .pdp-gallery {
-        flex-direction: column-reverse;
-        gap: 12px;
+    .pdp-left {
+        position: static;
+        width: 100%;
+        min-width: 0;
     }
 
+    /* Gallery becomes a column: main image on top, thumbs below */
+    .pdp-gallery {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Main image fills full width */
+    .pdp-main-img-wrap {
+        width: 100%;
+        flex: none;
+        aspect-ratio: 1 / 1;
+    }
+
+    /* Thumb strip becomes a horizontal scrollable row below main image */
     .pdp-thumb-strip {
         flex-direction: row;
         width: 100%;
+        min-width: 0;
         align-items: center;
+        gap: 8px;
+        overflow: hidden;
     }
 
     .pdp-thumb-list {
         flex-direction: row;
         max-height: none;
+        width: 100%;
         overflow-x: auto;
         overflow-y: hidden;
         flex: 1;
         gap: 8px;
+        padding-bottom: 4px; /* space for scrollbar on some browsers */
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
     }
 
-    .pdp-strip-arrow {
-        /* Back to left/right on mobile */
-        writing-mode: horizontal-tb;
+    .pdp-thumb {
+        flex-shrink: 0;
+        scroll-snap-align: start;
+        width: 64px;
+        height: 64px;
     }
 
-    /* Rotate the up/down chars back to left/right on mobile */
-    .pdp-strip-arrow:first-child::before { content: "‹"; }
-    .pdp-strip-arrow:first-child { font-size: 0; }
-    .pdp-strip-arrow:first-child::before { font-size: 17px; }
-    .pdp-strip-arrow:last-child::before { content: "›"; }
-    .pdp-strip-arrow:last-child { font-size: 0; }
-    .pdp-strip-arrow:last-child::before { font-size: 17px; }
+    /* hide strip arrows — dot indicators handle navigation on mobile */
+    .pdp-strip-arrow { display: none; }
 
+    /* zoom off on mobile */
     .zoom-overlay { display: none; }
 
+    .pdp-title { font-size: 20px; }
+    .pdp-price { font-size: 24px; }
+    .pdp-desc  { font-size: 13.5px; }
+
+    /* actions stack */
     .pdp-actions { grid-template-columns: 1fr; }
 
     .pdp-breadcrumb { padding: 0 16px; }
-
-    .pdp-related { padding: 0 16px; }
+    .pdp-related    { padding: 0 16px; }
     .pdp-related-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 }
 
+/* ── 480px: normal mobile ── */
 @media (max-width: 480px) {
     :root { --navbar-height: 56px; }
-    .pdp-page { padding-top: calc(var(--navbar-height) + 16px); }
-    .pdp-title { font-size: 20px; }
-    .pdp-price { font-size: 26px; }
+
+    .pdp-page {
+        padding-top: calc(var(--navbar-height) + 14px);
+    }
+
+    .pdp-section {
+        padding: 0 12px;
+        gap: 18px;
+    }
+
+    .pdp-title { font-size: 18px; }
+    .pdp-price { font-size: 22px; }
+    .pdp-desc  { font-size: 13px; }
+
+    /* thumbnails slightly smaller */
+    .pdp-thumb {
+        width: 58px;
+        height: 58px;
+    }
+
+    .pdp-thumb-list { gap: 6px; }
+
+    /* scrollable tabs */
+    .pdp-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* buttons full width */
+    .pdp-actions { grid-template-columns: 1fr; }
+
+    .pdp-btn-cart,
+    .pdp-btn-buy {
+        width: 100%;
+        padding: 13px;
+    }
+
+    /* trust stacked vertically */
+    .pdp-trust { flex-direction: column; }
+
+    .pdp-trust-item {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 10px;
+        border-bottom: 1px solid var(--line);
+        border-right: none;
+    }
+
+    .pdp-trust-item:last-child { border-bottom: none; }
+
     .pdp-related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
 
-
-/* ─────────────────────────────────────────
-   SMALL DEVICES (320px → small phones)
-───────────────────────────────────────── */
+/* ── 320px: small phones — overrides 480px ── */
 @media (max-width: 320px) {
-
     :root { --navbar-height: 52px; }
 
     .pdp-page {
         padding-top: calc(var(--navbar-height) + 12px);
     }
 
-    .pdp-title {
-        font-size: 16px;
-    }
-
-    .pdp-price {
-        font-size: 20px;
-    }
-
-    .pdp-desc {
-        font-size: 12.5px;
-    }
+    .pdp-title { font-size: 16px; }
+    .pdp-price { font-size: 20px; }
+    .pdp-desc  { font-size: 12.5px; }
 
     /* ultra compact thumbnails */
     .pdp-thumb {
-        width: 54px;
-        height: 54px;
+        width: 48px;
+        height: 48px;
     }
 
     /* tighter layout */
@@ -934,155 +999,6 @@
         padding: 8px;
     }
 
-    .pdp-related-grid {
-        grid-template-columns: 1fr;
-    }
+    .pdp-related-grid { grid-template-columns: 1fr; }
 }
 
-
-/* ─────────────────────────────────────────
-   NORMAL MOBILE (321px → 480px)
-───────────────────────────────────────── */
-@media (max-width: 480px) {
-
-    :root { --navbar-height: 56px; }
-
-    .pdp-page {
-        padding-top: calc(var(--navbar-height) + 14px);
-    }
-
-    .pdp-section {
-        padding: 0 12px;
-        gap: 18px;
-    }
-
-    .pdp-title {
-        font-size: 18px;
-    }
-
-    .pdp-price {
-        font-size: 22px;
-    }
-
-    .pdp-desc {
-        font-size: 13px;
-    }
-
-    /* thumbnails */
-    .pdp-thumb {
-        width: 60px;
-        height: 60px;
-    }
-
-    .pdp-thumb-list {
-        gap: 6px;
-    }
-
-    /* scrollable tabs */
-    .pdp-tabs {
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    /* buttons full width */
-    .pdp-actions {
-        grid-template-columns: 1fr;
-    }
-
-    .pdp-btn-cart,
-    .pdp-btn-buy {
-        width: 100%;
-        padding: 13px;
-    }
-
-    /* trust stacked */
-    .pdp-trust {
-        flex-direction: column;
-    }
-
-    .pdp-trust-item {
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 10px;
-        border-bottom: 1px solid var(--line);
-        border-right: none;
-    }
-
-    .pdp-trust-item:last-child {
-        border-bottom: none;
-    }
-
-    .pdp-related-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-}
-
-
-/* ─────────────────────────────────────────
-   TABLETS / LARGE MOBILE (481px → 768px)
-───────────────────────────────────────── */
-@media (max-width: 768px) {
-
-    .pdp-section {
-        grid-template-columns: 1fr;
-        gap: 22px;
-        padding: 0 16px;
-    }
-
-    .pdp-left {
-        position: static;
-    }
-
-    /* gallery stack */
-    .pdp-gallery {
-        flex-direction: column-reverse;
-    }
-
-    /* horizontal thumbnails */
-    .pdp-thumb-strip {
-        flex-direction: row;
-        width: 100%;
-    }
-
-    .pdp-thumb-list {
-        flex-direction: row;
-        overflow-x: auto;
-        overflow-y: hidden;
-        gap: 8px;
-    }
-
-    /* hide arrows */
-    .pdp-strip-arrow {
-        display: none;
-    }
-
-    /* zoom off */
-    .zoom-overlay {
-        display: none;
-    }
-
-    /* better spacing */
-    .pdp-title {
-        font-size: 20px;
-    }
-
-    .pdp-price {
-        font-size: 24px;
-    }
-
-    .pdp-desc {
-        font-size: 13.5px;
-    }
-
-    /* actions */
-    .pdp-actions {
-        grid-template-columns: 1fr;
-    }
-
-    /* related */
-    .pdp-related-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-    }
-}

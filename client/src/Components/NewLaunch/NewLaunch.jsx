@@ -182,7 +182,7 @@ const NewLaunch = () => {
           >
             {product.map((data, key) => (
               <div className="nl-card" key={key} style={{ animationDelay: `${key * 0.06}s` }}>
-                <Link to={`/product/${data.productId}`} key={key}>
+                <Link to={`/product/${data.productId}`} key={key} className="New-lauch-link">
                   <div className="nl-card-img">
                     <img
                       src={data.imageUrl}

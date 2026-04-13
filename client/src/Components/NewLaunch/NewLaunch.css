@@ -404,6 +404,8 @@
   .nl-card-img {
     height: 150px;
   }
+
+  
 }
 
 
@@ -451,4 +453,8 @@
   }
 
   /* back to red */
+}
+
+.New-lauch-link{
+  text-decoration: none;
 }
