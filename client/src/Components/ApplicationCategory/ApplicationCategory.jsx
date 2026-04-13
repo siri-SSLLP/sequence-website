@@ -44,7 +44,7 @@ const ApplicationCategory = ({ title, name }) => {
             <div className='appcat-container'>
 
                 {/* PARENT CATEGORIES */}
-                <div className="appcat-parent-list">
+                <div className="appcat-parent-list mt-4">
                     {categoriesArray.map((category, index) => (
                         <div key={index} className='appcat-parent-wrapper'>
                             <div

@@ -23,6 +23,13 @@ export const ProductProvider = ({ children }) => {
           });
       };
 
+      const removeFromCart = (e, productId) => {
+    e.stopPropagation();
+    setCart(prev => {
+        const { [productId]: _, ...rest } = prev;
+        return rest;
+    });
+};
 
 
 
