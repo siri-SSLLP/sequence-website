@@ -197,7 +197,7 @@
     .application-image {
     width: 50px !important;
     height: 50px !important;
-    background-color: red;
+    /* background-color: red; */
     object-fit: contain;
     padding: 2px;
     transition: transform 0.2s ease;
