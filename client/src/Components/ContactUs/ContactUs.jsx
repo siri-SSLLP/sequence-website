@@ -89,12 +89,12 @@ export default function ContactUs() {
       </div>
 
       {/* MAP */}
-      <div className="map-section">
+      {/* <div className="map-section">
         <iframe
           title="map"
           src="https://maps.google.com/maps?q=12.9716,77.5946&output=embedhttps://maps.google.com/maps?q=Bangalore&t=&z=13&ie=UTF8&iwloc=&output=embed"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -123,6 +123,14 @@
         height: 100%;
         border: none;
     }
+    .map-bottum{
+        display: none;
+    }
+}
+@media (min-width:769px){
+    .map-top{
+        display: none;
+    }
 }
 
 /* LINKS */
