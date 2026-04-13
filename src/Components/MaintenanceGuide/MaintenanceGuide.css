@@ -1,0 +1,129 @@
+/* PAGE */
+.care-page {
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    min-height: 100vh;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    margin-top: 175px;
+    margin-bottom: 5px;
+}
+
+/* HERO */
+.care-hero {
+    text-align: center;
+    padding: 100px 20px 60px;
+}
+
+.care-hero h1 {
+    font-size: 50px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #d4af37, #f5d76e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.care-hero p {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #aaa;
+}
+
+/* GRID */
+.care-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 40px 80px;
+}
+
+/* CARD */
+.care-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.care-card:hover {
+    /* transform: translateY(-10px) scale(1.02); */
+    /* border-color: #d4af37; */
+}
+
+/* ICON */
+.care-icon {
+    font-size: 28px;
+    color: #d4af37;
+    margin-bottom: 10px;
+}
+
+/* TITLE */
+.care-card h2 {
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+/* LIST */
+.care-card ul {
+    padding-left: 18px;
+}
+
+.care-card li {
+    margin-bottom: 8px;
+    color: #ccc;
+}
+
+/* WARNING */
+.care-warning {
+    margin: 60px auto;
+    max-width: 800px;
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    background: rgba(255, 0, 0, 0.08);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.care-warning h2 {
+    color: #ff4d4d;
+    margin-bottom: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .care-page {
+        margin-top: 73px;
+        /* margin-bottom: -px; */
+        padding-bottom: 1px;
+    }
+
+    .care-hero h1 {
+        font-size: 32px;
+    }
+
+    .care-grid {
+        padding: 20px;
+    }
+}
+
+/* DOWNLOAD BUTTON */
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 12px 22px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #d4af37, #f5d76e);
+    color: #000;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.download-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    color: black !important;
+}
