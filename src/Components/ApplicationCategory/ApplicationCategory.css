@@ -1,0 +1,215 @@
+/* ── TITLE ─────────────────────────────────────────────── */
+.appcat-title {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.appcat-title-name {
+    color: #AEB2B8;
+}
+
+/* ── CONTAINER ──────────────────────────────────────────── */
+.appcat-container {
+    background-color: #F8F9FA;
+    padding: 16px 8px;
+}
+
+/* ── PARENT LIST — always 5 inline, never wraps ─────────── */
+.appcat-parent-list {
+    display: flex;
+    /* flex-wrap: nowrap; */
+    /* justify-content: space-around; */
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
+    /* overflow: hidden; */
+    gap: 10px;
+    /* padding: 8px 0; */
+}
+
+
+
+
+.appcat-parent-wrapper {
+    /* flex: 1 1 0; */
+    min-width: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-self:; */
+}
+
+/* ── ICON CIRCLE ────────────────────────────────────────── */
+.application-image-div {
+    border: 2px solid rgb(229, 231, 235);
+    border-radius: 100%;
+    cursor: pointer;
+    width: clamp(44px, 11vw, 84px);
+    height: clamp(44px, 11vw, 84px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.application-image-div:hover {
+    border-color: #ebc76c;
+    transform: scale(1.05);
+}
+
+.application-image-test {
+    border: 2px solid white;
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.application-image {
+    width: clamp(22px, 5.5vw, 46px) !important;
+    height: clamp(22px, 5.5vw, 46px) !important;
+    object-fit: contain;
+    padding: 2px;
+    transition: transform 0.2s ease;
+}
+
+/* ── ACTIVE STATE ───────────────────────────────────────── */
+.appcat-active {
+    background-color: #ebc76c;
+    border-color: #ebc76c;
+    transform: scale(1.08);
+}
+
+.appcat-active:hover {
+    background-color: #c59826;
+}
+
+/* ── LABEL ──────────────────────────────────────────────── */
+.appcat-parent-label {
+    margin-top: 8px;
+    font-size: clamp(9px, 2.2vw, 13px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    padding: 0 4px;
+    color: #444;
+}
+
+/* ── CHILD PRODUCTS (base) ──────────────────────────────── */
+.appcat-child-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px;
+}
+
+.appcat-child-item {
+    background: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.appcat-child-item:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.appcat-child-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.appcat-child-item p {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ── MOBILE — child carousel ────────────────────────────── */
+@media (max-width: 768px) {
+
+    .appcat-container {
+        padding: 12px 4px;
+    }
+
+    .appcat-child-list {
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin: 0 12px;
+        padding: 4px 4px 12px;
+    }
+
+    .appcat-child-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .appcat-child-item {
+        min-width: 130px;
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        margin-top: 20px;
+    }
+
+    .appcat-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* ── DESKTOP — child grid ───────────────────────────────── */
+@media (min-width: 769px) {
+
+    .appcat-child-list {
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow-x: hidden;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .appcat-child-item {
+        width: 180px;
+        min-width: unset;
+        flex: none;
+    }
+}
+
+@media (min-width:798px) {
+    .appcat-parent-list{
+        gap: 30px;
+    }
+    .application-image {
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: contain;
+    padding: 2px;
+    transition: transform 0.2s ease;
+}
+.application-image-div {
+    border: 2px solid rgb(229, 231, 235);
+    border-radius: 100%;
+    cursor: pointer;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+}
