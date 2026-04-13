@@ -38,9 +38,6 @@
   .contact-grid {
     grid-template-columns: 1fr;
   }
-  .contact-container{
-    /* margin-top: 150px; */
-  }
 }
 
 /* LEFT SIDE */
