@@ -1,5 +1,5 @@
 import './ApplicationCategory.css'
-import { newLaunchProducts, CategoryIcon } from '../../assets/assets.js'
+import {  CategoryIcon, product } from '../../assets/assets.js'
 import { useState } from "react";
 import { BsFillHouseHeartFill } from "react-icons/bs";
 import { FaKitchenSet } from "react-icons/fa6";
@@ -20,7 +20,7 @@ const ApplicationCategory = ({ title, name }) => {
     CategoryIcon[0]['Kitchen']
     const groupedCategories = {};
 
-    newLaunchProducts.forEach((item) => {
+    product.forEach((item) => {
 
         if (Array.isArray(item.applications)) {
 
@@ -45,7 +45,7 @@ const ApplicationCategory = ({ title, name }) => {
     });
 
     function productsForApplication(appName) {
-        return newLaunchProducts.filter(p =>
+        return product.filter(p =>
             Array.isArray(p.applications) &&
             p.applications.includes(appName)
         );
@@ -103,12 +103,12 @@ const ApplicationCategory = ({ title, name }) => {
                         selectedParent &&
                             productsForApplication(selectedParent.name).length > 0 ? (
 
-                            productsForApplication(selectedParent.name).map((child, index) => (
+                            productsForApplication(selectedParent.name).slice(0,5).map((child, index) => (
 
                                 <div key={index} className="appcat-child-item">
 
                                     <img
-                                        src={child.imageUrl || "https://via.placeholder.com/150"}
+                                        src={child.imageUrl}
                                         alt={child.productName}
                                     />
 

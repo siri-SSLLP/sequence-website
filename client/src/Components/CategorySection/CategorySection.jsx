@@ -147,7 +147,7 @@ const CategorySection = ({ name }) => {
                                         className='mob-cat-card'
                                         onClick={() => handleParentClickMobile(category)}
                                         style={{
-                                            backgroundImage: `url(${imageSrc || 'https://via.placeholder.com/400'})`
+                                            backgroundImage: `url(${imageSrc})`
                                         }}
                                     >
                                         <div className='mob-cat-overlay' />
