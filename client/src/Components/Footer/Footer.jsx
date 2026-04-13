@@ -17,6 +17,18 @@ const Footer = () => {
         <footer className="footer">
 
             <div className="footer-container">
+                <div>
+                        {/* GOOGLE MAP */}
+                        <div className="footer-map-container map-top">
+                            <iframe
+                            className="footer-main-map"
+                                title="map"
+                                src="https://maps.google.com/maps?q=12.9716,77.5946&output=embedhttps://maps.google.com/maps?q=Bangalore&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                frameBorder="0"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+                    </div>
 
                 {/* CONTACT */}
                 <div className="footer-section">
@@ -103,7 +115,7 @@ const Footer = () => {
                     </div>
                     <div>
                         {/* GOOGLE MAP */}
-                        <div className="footer-map-container">
+                        <div className="footer-map-container map-bottum">
                             <iframe
                             className="footer-main-map"
                                 title="map"
