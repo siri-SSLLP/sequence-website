@@ -1,8 +1,5 @@
-/* TITLE */
+/* ── TITLE ─────────────────────────────────────────────── */
 .appcat-title {
-    /* margin: 25px 5px 1px 5px;
-    text-align: center;
-    margin-bottom: 30px; */
     text-align: center;
     margin: 30px 0;
 }
@@ -11,67 +8,95 @@
     color: #AEB2B8;
 }
 
-/* CONTAINER */
+/* ── CONTAINER ──────────────────────────────────────────── */
 .appcat-container {
     background-color: #F8F9FA;
+    padding: 16px 8px;
 }
 
-/* PARENT CATEGORY */
+/* ── PARENT LIST — always 5 inline, never wraps ─────────── */
 .appcat-parent-list {
     display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
+    /* flex-wrap: nowrap; */
+    /* justify-content: space-around; */
+    /* align-items: flex-start; */
+    /* width: 100%; */
+    /* overflow: hidden; */
+    gap: 0;
+    /* padding: 8px 0; */
 }
 
 .appcat-parent-wrapper {
+    flex: 1 1 0;
+    min-width: 0;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-self:; */
 }
 
-/* CIRCLE ITEM */
-/* .appcat-parent-item img{
-    width: 100px;
-    height: 100px;
-} */
-.appcat-parent-item img {
-    /* background-color: white; */
-    /* border-radius: 50%; */
+/* ── ICON CIRCLE ────────────────────────────────────────── */
+.application-image-div {
+    border: 2px solid rgb(229, 231, 235);
+    border-radius: 100%;
+    cursor: pointer;
+    width: clamp(44px, 11vw, 84px);
+    height: clamp(44px, 11vw, 84px);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.3s;
-    width: 120px;
-    height: 100px;
-    font-size: 100px;
-    margin: auto;
-    color: #AEB2B8;
-    margin: 25px 25px 25px 25px;
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
 }
 
-.appcat-parent-item img:hover {
-    color: #000000;
-    font-size: 120px;
-    cursor: pointer;
-    /* transform: scale(1.2); */
-
+.application-image-div:hover {
+    border-color: #ebc76c;
+    transform: scale(1.05);
 }
 
-/* ACTIVE */
+.application-image-test {
+    border: 2px solid white;
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.application-image {
+    width: clamp(22px, 5.5vw, 46px) !important;
+    height: clamp(22px, 5.5vw, 46px) !important;
+    object-fit: contain;
+    padding: 2px;
+    transition: transform 0.2s ease;
+}
+
+/* ── ACTIVE STATE ───────────────────────────────────────── */
 .appcat-active {
-    /* background: #ffffff; */
-    color: #ebc76c;
+    background-color: #ebc76c;
+    border-color: white;
+    transform: scale(1.08);
 }
 
 .appcat-active:hover {
-    color: #c59826 !important;
+    background-color: #c59826;
 }
 
-/* LABEL */
+/* ── LABEL ──────────────────────────────────────────────── */
 .appcat-parent-label {
-    margin-top: 10px;
+    margin-top: 8px;
+    font-size: clamp(9px, 2.2vw, 13px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    padding: 0 4px;
+    color: #444;
 }
 
-/* CHILD PRODUCTS (DEFAULT BASE) */
+/* ── CHILD PRODUCTS (base) ──────────────────────────────── */
 .appcat-child-list {
     display: flex;
     gap: 12px;
@@ -84,12 +109,13 @@
     padding: 10px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    transition: 0.3s;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .appcat-child-item:hover {
     cursor: pointer;
     transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
 .appcat-child-item img {
@@ -105,21 +131,21 @@
     font-weight: 500;
 }
 
-/* ---------------- MOBILE (CAROUSEL) ---------------- */
+/* ── MOBILE — child carousel ────────────────────────────── */
 @media (max-width: 768px) {
-    .appcat-child-list {
-        flex-direction: row;
-        overflow-x: auto;
 
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-
-        scrollbar-width: none;
-        /* padding-left: 50px; */
+    .appcat-container {
+        padding: 12px 4px;
     }
 
     .appcat-child-list {
-        margin: 0px 15px 0px 15px;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin: 0 12px;
+        padding: 4px 4px 12px;
     }
 
     .appcat-child-list::-webkit-scrollbar {
@@ -127,109 +153,33 @@
     }
 
     .appcat-child-item {
-        min-width: 140px;
+        min-width: 130px;
         flex: 0 0 auto;
         scroll-snap-align: start;
-        margin-top: 25px;
+        margin-top: 20px;
     }
 
     .appcat-title {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .appcat-parent-list {
-        gap: 5px;
-    }
-
-    /* .appcat-parent-item img{
-        margin: 25px 10px 1px 25px;
-        font-size: 60px;
-        width: 70px;
-        height: 60px;
-    } */
-    .appcat-parent-item img {
-        margin: 12px 10px 14px 17px;
-        font-size: 60px;
-        width: 70px;
-        height: 60px;
-
-    }
-
-    .appcat-parent-item img.active {
-        font-size: 70px;
-        transform: scale(1.2);
-    }
-
-    .appcat-active img {
-        font-size: 80px !important;
-        width: 80px;
-        height: 70px;
+        align-items: center;
     }
 }
 
-/* ---------------- DESKTOP (CENTERED GRID) ---------------- */
+/* ── DESKTOP — child grid ───────────────────────────────── */
 @media (min-width: 769px) {
+
     .appcat-child-list {
         flex-wrap: wrap;
         justify-content: center;
         overflow-x: hidden;
-
         max-width: 1100px;
         margin: 0 auto;
     }
-
-
 
     .appcat-child-item {
         width: 180px;
         min-width: unset;
         flex: none;
     }
-}
-
-/* .appcat-parent-logo{
-    margin-top: 100px;
-} */
-
-
-.application-image {
-    height: 60px !important;
-    width: 60px !important;
-    padding: 7px;
-
-    /* padding: 30px; */
-
-}
-@media (max-width:769px){
-    .application-image{
-        height: 20px !important;
-        width: 20px !important;
-        padding: 0px;
-    }
-}
-
-
-.application-image-test {
-    border: 2px solid white;
-    border-radius: 100%;
-    margin: 5px;
-}
-
-.appcat-active {
-    /* transform: scale(1.2); */
-    background-color: #ebc76c;
-    border: 2px solid rgb(255, 255, 255);
-}
-
-.application-image-div {
-    border: 2px solid black;
-    border-radius: 100%;
-    border: 2px solid rgb(229 231 235);
-}
-
-.check {
-    border: 2px solid black;
 }
