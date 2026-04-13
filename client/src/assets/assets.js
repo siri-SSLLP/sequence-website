@@ -34,7 +34,7 @@ export const product = [
         "whereToUse": ["Wardrobes", "Furniture", "Panels"],
         "styleFit": "Luxury Interiors",
         "tags": ["walnut", "wood", "laminate"],
-        "applications": ["Furniture", "Interior Decor"],
+        "applications": ["Furniture", "Interior Decor","Wardrobes"],
         "area": "32 sq ft",
         "height": "8 ft",
         "width": "4 ft",
@@ -1028,16 +1028,12 @@ export const CategoryIcon = [
         "Fabric Finish Laminates New": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "Fabric Finish Laminates": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92",
         "Fabric Finish Laminates temp": "https://images.unsplash.com/photo-1615874959474-d609969a20ed",
-        "Fabric Laminates": "https://images.unsplash.com/photo-1564466809058-bf4114d55352?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        "Fabric Laminates": "https://images.unsplash.com/photo-1564466809058-bf4114d55352?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "Wardrobes":kitchen
     }
 ];
 
-// import kitchen from './kitchen.png'
-// import bathroom from './bathroom.png'
-// import bedroom from './bedroom.png'
-// import livingroom from './livingroom.png'
-// import tvunit from './tvunit.png'
-// import office from './office.png'
+
 
 export const inspirationCategory = [
     {
