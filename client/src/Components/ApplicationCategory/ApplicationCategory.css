@@ -19,15 +19,19 @@
     display: flex;
     /* flex-wrap: nowrap; */
     /* justify-content: space-around; */
-    /* align-items: flex-start; */
+    align-items: center;
+    justify-content: center;
     /* width: 100%; */
     /* overflow: hidden; */
-    gap: 0;
+    gap: 10px;
     /* padding: 8px 0; */
 }
 
+
+
+
 .appcat-parent-wrapper {
-    flex: 1 1 0;
+    /* flex: 1 1 0; */
     min-width: 0;
     text-align: center;
     display: flex;
@@ -76,7 +80,7 @@
 /* ── ACTIVE STATE ───────────────────────────────────────── */
 .appcat-active {
     background-color: #ebc76c;
-    border-color: white;
+    border-color: #ebc76c;
     transform: scale(1.08);
 }
 
@@ -99,6 +103,8 @@
 /* ── CHILD PRODUCTS (base) ──────────────────────────────── */
 .appcat-child-list {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 12px;
     padding: 10px;
 }
@@ -182,4 +188,30 @@
         min-width: unset;
         flex: none;
     }
+}
+
+@media (min-width:798px) {
+    .appcat-parent-list{
+        gap: 30px !important;
+    }
+    .application-image {
+    width: 50px !important;
+    height: 50px !important;
+    background-color: red;
+    object-fit: contain;
+    padding: 2px;
+    transition: transform 0.2s ease;
+}
+.application-image-div {
+    border: 2px solid rgb(229, 231, 235);
+    border-radius: 100%;
+    cursor: pointer;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+/* dfklbhdfl */
 }
