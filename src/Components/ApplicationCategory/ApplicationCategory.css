@@ -192,11 +192,12 @@
 
 @media (min-width:798px) {
     .appcat-parent-list{
-        gap: 30px;
+        gap: 30px !important;
     }
     .application-image {
     width: 50px !important;
     height: 50px !important;
+    background-color: red;
     object-fit: contain;
     padding: 2px;
     transition: transform 0.2s ease;
@@ -207,7 +208,6 @@
     cursor: pointer;
     width: 110px;
     height: 110px;
-
     display: flex;
     align-items: center;
     justify-content: center;
