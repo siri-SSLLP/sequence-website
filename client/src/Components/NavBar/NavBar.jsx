@@ -23,7 +23,7 @@ import SignInSignUp from '../Signupsignin/Signupsignin.jsx';
 import { ProductContext } from '../../Context/Context.jsx';
 function NavBar() {
 
-    const { cart } = useContext(ProductContext)
+    const {cart} = useContext(ProductContext)
     // ── NEW: control modal visibility ──
     const [showAuth, setShowAuth] = useState(false);
 
@@ -141,16 +141,16 @@ function NavBar() {
                     <ul className="navbar-nav">
                         <div className='colasped-side-bar'>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/home">
-                                    <div className='row'>
+                                <Link className="nav-link" to="/home" >
+                                    <div className='row' data-bs-dismiss="offcanvas">
                                         <div className='col-6 text-end offcanvas-icons'><FaHome /></div>
                                         <div className='col-4 text-start offcanvas-home'><span> Home</span></div>
                                     </div>
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/about-us">
-                                    <div className='row'>
+                                <Link className="nav-link" to="/about-us" >
+                                    <div className='row' data-bs-dismiss="offcanvas">
                                         <div className='col-6 text-end offcanvas-icons'><FaPersonChalkboard /></div>
                                         <div className='col-4 text-start offcanvas-about-us'><span> About Us</span></div>
                                     </div>
@@ -158,7 +158,7 @@ function NavBar() {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/contact-us">
-                                    <div className='row'>
+                                    <div className='row' data-bs-dismiss="offcanvas">
                                         <div className='col-6 text-end offcanvas-icons'><BiSolidContact /></div>
                                         <div className='col-4 text-start offcanvas-contact-us'><span> Contact Us</span></div>
                                     </div>
@@ -166,7 +166,7 @@ function NavBar() {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/blog">
-                                    <div className='row'>
+                                    <div className='row' data-bs-dismiss="offcanvas">
                                         <div className='col-6 text-end offcanvas-icons'><FaBlog /></div>
                                         <div className='col-4 text-start'><span> Blog</span></div>
                                     </div>
@@ -175,7 +175,7 @@ function NavBar() {
 
                             {/* ── CHANGED: Login / Signup buttons open modal ── */}
                             <div className='login-mobile'>
-                                <div className='row'>
+                                <div className='row' >
                                     <div className='col-6'>
                                         <li className="nav-item">
                                             <button
@@ -203,15 +203,15 @@ function NavBar() {
                                 </div>
                             </div>
 
-                            <li className="nav-item mt-3">
+                            <li className="nav-item mt-3" data-bs-dismiss="offcanvas">
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/cart">
-                                    <BsCart3 /> <span>Cart</span>
+                                    <BsCart3 /> <span >Cart</span>
                                 </Link>
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/profile">
-                                    <IoPerson /> <span>Profile</span>
+                                    <IoPerson /> <span data-bs-dismiss="offcanvas">Profile</span>
                                 </Link>
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/products">
-                                    <MdOutlineStorefront /> <span>Visit Store</span>
+                                    <MdOutlineStorefront /> <span data-bs-dismiss="offcanvas">Visit Store</span>
                                 </Link>
                             </li>
                         </div>
@@ -229,7 +229,7 @@ function NavBar() {
                 {/* Second Row Mobile View */}
                 <div className="second-row-mobile">
                     <div className='container'>
-                        <div className="row">
+                        <div className="row" data-bs-dismiss="offcanvas">
                             {Object.entries(groupedCategories).map(([key, category], index) => (
                                 <div key={index} className="col-6">
                                     <li className="nav-item dropdown" style={{ listStyleType: "none" }}>
