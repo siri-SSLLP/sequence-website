@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./CancellationPolicy.css";
+import "./Cancellationpolicy.css";
 
 const sections = [
   {
