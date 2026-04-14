@@ -1,4 +1,4 @@
-import "./PrivacyPolicy.css";
+import "./Privacypolicy.css";
 
 const lastUpdated = "April 14, 2026";
 
