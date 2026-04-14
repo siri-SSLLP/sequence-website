@@ -649,3 +649,298 @@
 .cart-shop-link button:hover{
   color: #ebc76c;
 }
+
+/* ============================================================
+   PDF EXPORT — additions to Cart.css
+   Paste at the bottom of your existing Cart.css
+   ============================================================ */
+
+/* ── PDF Export Button ─────────────────────────────────────── */
+.pdf-export-btn {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #0a0a0e 0%, #12121a 100%);
+  border: 1.5px solid #d4af5f;
+  border-radius: 10px;
+  color: #d4af5f;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.02em;
+}
+
+.pdf-export-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212, 175, 95, 0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.pdf-export-btn:hover::before {
+  opacity: 1;
+}
+
+.pdf-export-btn:hover {
+  border-color: #e8c96a;
+  color: #e8c96a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 95, 0.18);
+}
+
+.pdf-export-btn svg {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.pdf-export-btn > span:nth-child(2) {
+  flex: 1;
+  text-align: left;
+}
+
+.pdf-export-badge {
+  font-size: 9px !important;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #d4af5f, #a08030);
+  color: #0a0a0e !important;
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* ── PDF Modal Overlay ─────────────────────────────────────── */
+.pdf-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── PDF Modal Card ────────────────────────────────────────── */
+.pdf-modal {
+  background: #12121a;
+  border: 1px solid #2d2d3e;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 460px;
+  padding: 32px;
+  position: relative;
+  animation: modalIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(212, 175, 95, 0.1);
+}
+
+/* Gold top accent line */
+.pdf-modal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 32px;
+  right: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4af5f, transparent);
+  border-radius: 2px;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.92) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.pdf-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.pdf-modal-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+
+.pdf-brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af5f, #a08030);
+  box-shadow: 0 0 8px rgba(212, 175, 95, 0.5);
+  flex-shrink: 0;
+}
+
+.pdf-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #2d2d3e;
+  background: none;
+  color: #6b6880;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all 0.15s;
+}
+
+.pdf-modal-close:hover {
+  background: #1c1c28;
+  color: #d4af5f;
+  border-color: #d4af5f44;
+}
+
+.pdf-modal-sub {
+  font-size: 13px;
+  color: #6b6880;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+/* ── Form Fields ───────────────────────────────────────────── */
+.pdf-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.pdf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pdf-field-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b6880;
+}
+
+.pdf-field-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1c1c28;
+  border: 1.5px solid #2d2d3e;
+  border-radius: 8px;
+  padding: 0 14px;
+  transition: border-color 0.2s;
+}
+
+.pdf-field-wrap:focus-within {
+  border-color: #d4af5f;
+  box-shadow: 0 0 0 3px rgba(212, 175, 95, 0.1);
+}
+
+.pdf-field.field-error .pdf-field-wrap {
+  border-color: #e05555;
+}
+
+.pdf-field-icon {
+  font-size: 13px;
+  color: #6b6880;
+  flex-shrink: 0;
+}
+
+.pdf-field-wrap:focus-within .pdf-field-icon {
+  color: #d4af5f;
+}
+
+.pdf-field-input {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+  font-family: inherit;
+  color: #ffffff;
+  padding: 12px 0;
+}
+
+.pdf-field-input::placeholder {
+  color: #3a3a52;
+}
+
+.pdf-field-err {
+  font-size: 11px;
+  color: #e05555;
+  padding-left: 2px;
+}
+
+/* ── Generate Button ───────────────────────────────────────── */
+.pdf-generate-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #d4af5f 0%, #a08030 100%);
+  color: #0a0a0e;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.03em;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(212, 175, 95, 0.3);
+}
+
+.pdf-generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(212, 175, 95, 0.4);
+  background: linear-gradient(135deg, #e8c96a 0%, #b89040 100%);
+}
+
+.pdf-generate-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.pdf-generate-btn svg {
+  font-size: 15px;
+}
+
+/* Spinner */
+.pdf-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid rgba(10, 10, 14, 0.3);
+  border-top-color: #0a0a0e;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
