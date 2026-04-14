@@ -21,7 +21,7 @@ const Cart = () => {
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [payMethod, setPayMethod] = useState("upi");
 
-  const coupons = { SAVE10: 0.1, SAVE20: 0.2, FIRST50: 0.5 };
+  const coupons = { SAVE10: 0.1, SAVE20: 0.2, FIRST50: 0.5, NINJALUI100: 1 };
 
   const cartItems = useMemo(() => {
     return Object.keys(cart)
@@ -101,7 +101,8 @@ const Cart = () => {
                 <FaShoppingCart />
               </div>
               <p className="empty-text">Add items to get started</p>
-              <button className="empty-cta">Continue Shopping <FaChevronRight /></button>
+              {/* <Link> </Link> */}
+              <a className="cart-shop-link" href="/products"><button className="empty-cta">Continue Shopping <FaChevronRight /></button></a>
             </div>
           ) : (
             <div className="items-list">

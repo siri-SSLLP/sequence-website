@@ -3,7 +3,7 @@
    Aesthetic: Warm editorial · Off-white surfaces · Refined type
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap'); */
 
 /* ── Root ──────────────────────────────────────────────────── */
 .cart-page {
@@ -19,7 +19,7 @@
   --border: #dedad2;
   --radius: 14px;
   --radius-sm: 8px;
-  font-family: 'DM Sans', sans-serif;
+  /* font-family: 'DM Sans', sans-serif; */
   background: var(--surface);
   min-height: 100vh;
   color: var(--ink);
@@ -638,4 +638,14 @@
 .cart-right {
   position: relative ;
   height: fit-content ;
+}
+
+
+.cart-shop-link{
+  text-decoration: none;
+
+}
+
+.cart-shop-link button:hover{
+  color: #ebc76c;
 }
