@@ -1,0 +1,332 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap'); */
+
+/* ─── Page ─────────────────────────────────────────────── */
+
+.career-page {
+  font-family: 'DM Sans', sans-serif;
+  background: #f7f6f2;
+  padding: 72px 0 96px;
+  min-height: 60vh;
+  margin-top: 180px;
+}
+
+.career-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── Header ────────────────────────────────────────────── */
+
+.career-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.career-eyebrow {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.career-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 800;
+  color: #111;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.career-subtext {
+  font-size: 14px;
+  color: #888;
+  font-weight: 400;
+}
+
+.career-header-tagline {
+  font-size: 15px;
+  color: #555;
+  max-width: 280px;
+  line-height: 1.6;
+  text-align: right;
+}
+
+/* ─── Job List ──────────────────────────────────────────── */
+
+.career-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ─── Job Card ──────────────────────────────────────────── */
+
+.career-card {
+  background: #ffffff;
+  border: 1.5px solid #e4e2da;
+  border-radius: 14px;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.career-card:hover {
+  border-color: #ccc;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.07);
+  transform: translateY(-2px);
+}
+
+.career-card-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.career-job-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.career-job-desc {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.career-tag-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.career-tag {
+  font-size: 12px;
+  font-weight: 500;
+  color: #444;
+  background: #f0ede6;
+  border: 1px solid #e0ddd5;
+  border-radius: 999px;
+  padding: 4px 14px;
+}
+
+/* ─── Card Action Buttons ───────────────────────────────── */
+
+.career-card-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.career-view-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+  background: transparent;
+  border: 1.5px solid #111;
+  border-radius: 999px;
+  padding: 10px 22px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s, color 0.18s;
+}
+
+.career-view-btn:hover {
+  background: #111;
+  color: #fff;
+}
+
+.career-apply-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  background: #f5c400;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: background 0.18s;
+}
+
+.career-apply-btn:hover {
+  background: #d4a800;
+}
+
+/* ─── Modal Overlay ─────────────────────────────────────── */
+
+.career-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ─── Modal Box ─────────────────────────────────────────── */
+
+.career-modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 44px 48px;
+  max-width: 560px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+}
+
+.career-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f0ede6;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #111;
+  transition: background 0.15s;
+}
+
+.career-close-btn:hover {
+  background: #e0ddd5;
+}
+
+.career-modal-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.career-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #444;
+  background: #f0ede6;
+  border: 1px solid #e0ddd5;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.career-modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.career-modal-desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.career-divider {
+  height: 1px;
+  background: #e4e2da;
+  margin-bottom: 20px;
+}
+
+.career-modal-details {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.75;
+  margin-bottom: 32px;
+  white-space: pre-line;
+}
+
+.career-apply-btn-modal {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  background: #f5c400;
+  border: none;
+  border-radius: 999px;
+  padding: 13px 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.18s;
+}
+
+.career-apply-btn-modal:hover {
+  background: #d4a800;
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .career-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px 20px;
+  }
+
+  .career-card-actions {
+    width: 100%;
+  }
+
+  .career-view-btn,
+  .career-apply-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .career-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .career-header-tagline {
+    text-align: left;
+  }
+
+  .career-modal {
+    padding: 32px 24px;
+  }
+}
+
+
+@media (max-width:991px) {
+    .career-page{
+        margin-top: 75px;
+    }
+}

@@ -15,6 +15,7 @@ import ScrollToTopButton from './Components/ScrollToTopButton/ScrollToTopButton.
 import Testing from './Components/Testing/Testing.jsx'
 import Cart from './Components/Cart/Cart.jsx'
 import Checkout from './Components/Checkout/Checkout.jsx'
+import Career from './Components/Career/Career.jsx'
 
 
 
@@ -40,7 +41,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDescription />} />
         <Route path='/maintenance-guide' element={<MaintenanceGuidePage></MaintenanceGuidePage>}></Route>
         <Route path="/cart" element={<Cart></Cart>}></Route>
-        <Route ></Route>
+        <Route path="/career" element={<Career></Career>}></Route>
         <Route ></Route>
         <Route ></Route>
         <Route ></Route>
