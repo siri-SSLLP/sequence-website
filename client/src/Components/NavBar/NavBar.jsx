@@ -23,7 +23,7 @@ import SignInSignUp from '../Signupsignin/Signupsignin.jsx';
 import { ProductContext } from '../../Context/Context.jsx';
 function NavBar() {
 
-    const {cart} = useContext(ProductContext)
+    const { cart } = useContext(ProductContext)
     // ── NEW: control modal visibility ──
     const [showAuth, setShowAuth] = useState(false);
 
@@ -174,9 +174,8 @@ function NavBar() {
                             </li>
 
                             {/* ── CHANGED: Login / Signup buttons open modal ── */}
-                            <div className='login-mobile'>
-                                <div className='row' >
-                                    <div className='col-6'>
+                            {/* <div className='login-mobile'>
+                                <div className='visit-store-btn-navbar nav-link navbar-btn visit-btn' >
                                         <li className="nav-item">
                                             <button
                                                 className="nav-link"
@@ -187,7 +186,6 @@ function NavBar() {
                                                 <IoLogIn /><span> Login</span>
                                             </button>
                                         </li>
-                                    </div>
                                     <div className='col-6'>
                                         <li className="nav-item">
                                             <button
@@ -201,15 +199,19 @@ function NavBar() {
                                         </li>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                             <li className="nav-item mt-3" data-bs-dismiss="offcanvas">
+                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" onClick={() => setShowAuth(true)}>
+                                    <BsCart3 /> <span >SignUp / SignIn</span>
+                                    {/* <BsCart3 /> <span >SignUp / SignIn</span> */}
+                                </Link>
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/cart">
                                     <BsCart3 /> <span >Cart</span>
                                 </Link>
-                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/profile">
+                                {/* <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/profile">
                                     <IoPerson /> <span data-bs-dismiss="offcanvas">Profile</span>
-                                </Link>
+                                </Link> */}
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/products">
                                     <MdOutlineStorefront /> <span data-bs-dismiss="offcanvas">Visit Store</span>
                                 </Link>
