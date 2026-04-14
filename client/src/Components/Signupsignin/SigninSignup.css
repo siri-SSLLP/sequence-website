@@ -110,7 +110,7 @@
     align-items: center;
     border: 1.5px solid #e0e0e0;
     border-radius: 8px;
-    overflow: visible;
+    overflow: hidden;
     transition: border-color 0.2s, box-shadow 0.2s;
     background: #fff;
     position: relative;
@@ -129,122 +129,6 @@
     background: transparent;
     min-width: 0;
     border-radius: 8px;
-}
-
-/* Country picker slide-in container */
-.auth-picker-slide {
-    display: flex;
-    align-items: center;
-    max-width: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-width 0.3s ease, opacity 0.25s ease;
-    flex-shrink: 0;
-}
-.auth-picker-slide.visible {
-    max-width: 120px;
-    opacity: 1;
-}
-.auth-field-divider {
-    width: 1px;
-    height: 22px;
-    background: #e0e0e0;
-    flex-shrink: 0;
-}
-
-/* ── Country picker trigger button ── */
-.auth-country-picker {
-    position: relative;
-    flex-shrink: 0;
-}
-.auth-country-trigger {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 10px 8px 10px 12px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    color: #333;
-    white-space: nowrap;
-    transition: background 0.15s;
-    border-radius: 7px 0 0 7px;
-}
-.auth-country-trigger:hover { background: #f9f9f9; }
-.auth-flag { font-size: 18px; line-height: 1; }
-.auth-dial { font-weight: 700; font-size: 13px; color: #333; }
-.auth-chevron { color: #aaa; display: flex; align-items: center; transition: transform 0.2s; }
-.auth-chevron.open { transform: rotate(180deg); }
-
-/* ── Country dropdown ── */
-.auth-country-dropdown {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    z-index: 10000;
-    background: #fff;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-    width: 260px;
-    overflow: hidden;
-    animation: dropdownOpen 0.18s ease;
-}
-@keyframes dropdownOpen {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Search inside dropdown */
-.auth-country-search-wrap {
-    padding: 10px 10px 6px;
-    border-bottom: 1px solid #f0f0f0;
-}
-.auth-country-search {
-    width: 100%;
-    padding: 7px 10px;
-    border: 1.5px solid #e8e8e8;
-    border-radius: 6px;
-    font-size: 13px;
-    outline: none;
-    color: #222;
-    box-sizing: border-box;
-    transition: border-color 0.2s;
-}
-.auth-country-search:focus { border-color: #ebc76c; }
-
-/* Country list */
-.auth-country-list {
-    list-style: none;
-    margin: 0;
-    padding: 6px 0;
-    max-height: 200px;
-    overflow-y: auto;
-}
-.auth-country-list::-webkit-scrollbar { width: 4px; }
-.auth-country-list::-webkit-scrollbar-track { background: transparent; }
-.auth-country-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
-
-.auth-country-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 14px;
-    cursor: pointer;
-    transition: background 0.15s;
-    font-size: 13px;
-}
-.auth-country-item:hover { background: #faf8f2; }
-.auth-country-item.active { background: #fdf5e0; }
-.auth-country-name { flex: 1; color: #333; }
-.auth-country-dial { font-weight: 700; color: #888; font-size: 12px; }
-
-.auth-country-empty {
-    text-align: center;
-    padding: 16px;
-    font-size: 13px;
-    color: #aaa;
 }
 
 /* ── Type badge ── */
@@ -388,5 +272,4 @@
 /* ── Mobile ── */
 @media (max-width: 480px) {
     .auth-modal { margin: 0 16px; padding: 28px 20px 22px; }
-    .auth-country-dropdown { width: 230px; }
 }
