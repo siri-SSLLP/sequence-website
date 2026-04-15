@@ -20,6 +20,7 @@ import {
   FaBuilding,
 } from "react-icons/fa";
 import "./Cart.css";
+import { Link } from "react-router-dom";
 
 /* ─────────────────────────────────────────────────────────────
    HELPERS
@@ -496,11 +497,11 @@ const Cart = () => {
                 <FaShoppingCart />
               </div>
               <p className="empty-text">Add items to get started</p>
-              <a className="cart-shop-link" href="/products">
+              <Link className="cart-shop-link" to="/products">
                 <button className="empty-cta">
                   Continue Shopping <FaChevronRight />
                 </button>
-              </a>
+              </Link>
             </div>
           ) : (
             <>
