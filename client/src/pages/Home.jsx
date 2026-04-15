@@ -14,16 +14,16 @@ import LovedSection from '../Components/LovedSection/LovedSection'
 
 
 const Home = () => {
-      const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000); // simulate loading
-  }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000); // simulate loading
+    }, []);
     return (
         <>
-        {loading ? <Loader /> : <h1></h1>}
+            {loading ? <Loader /> : <h1></h1>}
             <div>
                 <Hero></Hero>
                 <NewLaunch></NewLaunch>
