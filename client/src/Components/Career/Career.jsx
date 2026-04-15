@@ -128,9 +128,11 @@ function JobCard({ job, onViewDetails }) {
         <button className="career-view-btn" onClick={() => onViewDetails(job)}>
           View Details
         </button>
-        <button className="career-apply-btn">
-          Apply <ChevronRight size={13} />
-        </button>
+        <a href="/apply" target="_" className="apply-link-text">
+          <button className="career-apply-btn">
+            Apply <ChevronRight size={13} />
+          </button>
+        </a>
       </div>
     </div>
   );

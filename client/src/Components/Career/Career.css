@@ -330,3 +330,7 @@
         margin-top: 75px;
     }
 }
+
+.apply-link-text{
+  text-decoration: none;
+}

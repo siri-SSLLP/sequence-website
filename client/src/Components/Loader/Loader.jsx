@@ -63,7 +63,7 @@ export default function Loader({ onComplete }) {
         </div>
 
         {/* Tagline */}
-        <p className="loader-tagline">Premium Laminates · Bangalore</p>
+        <p className="loader-tagline">Exclusive Laminate Company · Bangalore</p>
       </div>
 
       {/* Progress bar at bottom */}
