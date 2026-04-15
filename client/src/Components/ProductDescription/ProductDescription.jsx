@@ -1,6 +1,6 @@
 import "./ProductDescription.css";
 import { product as products } from "../../assets/assets";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
 import { ProductContext } from "../../Context/Context.jsx";
 
@@ -327,7 +327,7 @@ const ProductDescription = () => {
                             <h2 className="pdp-related-title">You May Also Like</h2>
                             <p className="pdp-related-sub">Handpicked products just for you</p>
                         </div>
-                        <a href="/products" className="pdp-view-all">View All →</a>
+                        <Link to="/products" className="pdp-view-all">View All →</Link>
                     </div>
 
                     <div className="pdp-related-grid">
@@ -337,9 +337,9 @@ const ProductDescription = () => {
                             const inCart = (cart[item.productId] || 0) > 0;
 
                             return (
-                                <a
+                                <Link
                                     key={item.productId}
-                                    href={`/product/${item.productId}`}
+                                    to={`/product/${item.productId}`}
                                     className="pdp-rel-card"
                                 >
                                     <div className="pdp-rel-img-wrap">
@@ -378,7 +378,7 @@ const ProductDescription = () => {
                                     >
                                         {inCart ? "✕ Remove" : "+ Add to Cart"}
                                     </button>
-                                </a>
+                                </Link>
                             );
                         })}
                     </div>
