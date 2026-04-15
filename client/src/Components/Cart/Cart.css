@@ -23,6 +23,7 @@
   background: var(--surface);
   min-height: 100vh;
   color: var(--ink);
+  margin-top: 180px;
 }
 
 /* ── Header ────────────────────────────────────────────────── */
@@ -943,4 +944,10 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@media (max-width:990px){
+  .cart-page{
+    margin-top: 75px;
+  }
 }
