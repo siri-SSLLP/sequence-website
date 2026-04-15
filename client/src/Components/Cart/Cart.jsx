@@ -511,18 +511,13 @@ const generatePDF = async (userInfo, cartItems) => {
     });
 
   const generateQR = (text) =>
-    `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(
-      text
-    )}`;
+    `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(text)}`;
 
   /* ================= COVER PAGE ================= */
   doc.setFillColor(10, 10, 12);
   doc.rect(0, 0, W, H, "F");
 
-  const logo = await loadImage(
-    "https://sequencesurface.com/images/logo.png"
-  );
-
+  const logo = await loadImage("https://sequencesurface.com/images/logo.png");
   if (logo) {
     doc.addImage(logo, "PNG", W / 2 - 80, 120, 160, 60);
   }
@@ -533,11 +528,12 @@ const generatePDF = async (userInfo, cartItems) => {
   doc.text("Sequence Surface", W / 2, 250, { align: "center" });
 
   doc.setFontSize(14);
-  doc.setTextColor(180);
+  doc.setTextColor(180, 180, 180);
   doc.text("Premium Laminate Catalogue", W / 2, 280, { align: "center" });
 
   const now = new Date().toLocaleString("en-IN");
   doc.setFontSize(10);
+  doc.setTextColor(120, 120, 120);
   doc.text(now, W / 2, H - 60, { align: "center" });
 
   doc.addPage();
@@ -545,90 +541,144 @@ const generatePDF = async (userInfo, cartItems) => {
   /* ================= PRODUCTS ================= */
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];
-
     const productUrl =
       item.productLink ||
       `https://sequencesurface.com/product/${item.productId}`;
 
-    // New page per product (Apple style)
     doc.setFillColor(250, 250, 250);
     doc.rect(0, 0, W, H, "F");
 
     /* ===== SOFT GRADIENT BACK ===== */
     for (let g = 0; g < H; g += 4) {
-      doc.setFillColor(250 - g * 0.05, 250 - g * 0.05, 250);
+      const shade = Math.max(220, 250 - g * 0.05);
+      doc.setFillColor(shade, shade, shade);
       doc.rect(0, g, W, 4, "F");
     }
 
-    /* ===== IMAGE (FULL WIDTH HERO) ===== */
+    /* ===== IMAGE — orientation-aware layout ===== */
     const img = await loadImage(item.imageUrl);
 
+    // Determine if image is portrait or landscape
+    let heroH = H * 0.55; // default for landscape/square
+    let imgX = 0,
+      imgY = 0,
+      imgW = W,
+      imgDrawH = heroH;
+
     if (img) {
-      doc.addImage(img, "JPEG", 0, 0, W, H * 0.55);
-    }
+      const aspectRatio = img.naturalWidth / img.naturalHeight;
 
-    /* ===== SHADOW EFFECT ===== */
-    doc.setFillColor(255, 255, 255);
-    doc.roundedRect(30, H * 0.5, W - 60, H * 0.45, 20, 20, "F");
+      if (aspectRatio < 0.85) {
+        // Portrait image: place on right half, content on left
+        const portraitW = W * 0.45;
+        const portraitH = Math.min(H * 0.85, portraitW / aspectRatio);
+        imgX = W - portraitW - 20;
+        imgY = (H - portraitH) / 2;
+        imgW = portraitW;
+        imgDrawH = portraitH;
 
-    /* ===== TEXT ===== */
-    let y = H * 0.58;
+        // Draw portrait image
+        doc.addImage(img, "JPEG", imgX, imgY, imgW, imgDrawH);
 
-    doc.setTextColor(20);
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
+        // Vertical divider
+        doc.setDrawColor(220, 220, 220);
+        doc.line(W * 0.52, 40, W * 0.52, H - 40);
 
-    doc.text(item.productName, 50, y, {
-      maxWidth: W - 100,
-    });
+        /* ===== TEXT BLOCK (left side for portrait) ===== */
+        let y = 80;
+        const textMaxW = W * 0.48 - 60;
 
-    y += 30;
+        doc.setTextColor(20, 20, 20);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(20);
+        doc.text(item.productName, 40, y, { maxWidth: textMaxW });
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    doc.setTextColor(100);
+        y += 36;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(11);
+        doc.setTextColor(100, 100, 100);
+        const desc =
+          item.description ||
+          "Premium decorative laminate designed for elegant interiors with high durability and modern aesthetics.";
+        const split = doc.splitTextToSize(desc, textMaxW);
+        doc.text(split, 40, y);
+        y += split.length * 15 + 24;
 
-    const desc =
-      item.description ||
-      "Premium decorative laminate designed for elegant interiors with high durability and modern aesthetics.";
+        /* Price — rupee fix */
+        const price = item.salePrice ?? item.mrpPrice;
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(20, 20, 20);
+        doc.text(`Rs. ${price}`, 40, y);
 
-    const split = doc.splitTextToSize(desc, W - 120);
-    doc.text(split, 50, y);
+        y += 28;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(11);
+        doc.setTextColor(0, 102, 204);
+        doc.textWithLink("Explore Product \u2192", 40, y, { url: productUrl });
 
-    y += split.length * 16 + 20;
+        /* QR below link */
+        const qrImg = await loadImage(generateQR(productUrl));
+        if (qrImg) {
+          doc.addImage(qrImg, "PNG", 40, y + 20, 90, 90);
+        }
+      } else {
+        // Landscape or square image: full-width hero at top
+        heroH = aspectRatio > 1.4 ? H * 0.45 : H * 0.52;
+        doc.addImage(img, "JPEG", 0, 0, W, heroH);
 
-    /* ===== PRICE ===== */
-    const price = item.salePrice ?? item.mrpPrice;
+        /* ===== CARD OVERLAY ===== */
+        doc.setFillColor(255, 255, 255);
+        doc.roundedRect(30, heroH - 20, W - 60, H - heroH - 10, 20, 20, "F");
 
-    doc.setFontSize(14);
-    doc.setTextColor(0);
-    doc.text(`₹${price}`, 50, y);
+        /* ===== TEXT BLOCK ===== */
+        let y = heroH + 24;
 
-    /* ===== LINK ===== */
-    doc.setTextColor(0, 102, 204);
-    doc.setFontSize(12);
+        doc.setTextColor(20, 20, 20);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(22);
+        doc.text(item.productName, 50, y, { maxWidth: W - 100 });
 
-    doc.textWithLink("Explore Product →", 50, y + 25, {
-      url: productUrl,
-    });
+        y += 30;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(100, 100, 100);
+        const desc =
+          item.description ||
+          "Premium decorative laminate designed for elegant interiors with high durability and modern aesthetics.";
+        const split = doc.splitTextToSize(desc, W - 120);
+        doc.text(split, 50, y);
+        y += split.length * 16 + 20;
 
-    /* ===== QR ===== */
-    const qrImg = await loadImage(generateQR(productUrl));
+        /* Price — rupee fix */
+        const price = item.salePrice ?? item.mrpPrice;
+        doc.setFontSize(15);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(20, 20, 20);
+        doc.text(`Rs. ${price}`, 50, y);
 
-    if (qrImg) {
-      doc.addImage(qrImg, "PNG", W - 140, H * 0.65, 90, 90);
+        y += 28;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(0, 102, 204);
+        doc.textWithLink("Explore Product \u2192", 50, y, { url: productUrl });
+
+        /* QR */
+        const qrImg = await loadImage(generateQR(productUrl));
+        if (qrImg) {
+          doc.addImage(qrImg, "PNG", W - 140, heroH + 20, 90, 90);
+        }
+      }
     }
 
     /* ===== FOOTER ===== */
-    doc.setFontSize(10);
-    doc.setTextColor(150);
-
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(150, 150, 150);
     doc.text(
-      `${userInfo.name || ""} · ${userInfo.phone || ""} · ${
-        userInfo.email || ""
-      }`,
+      `${userInfo.name || ""} · ${userInfo.phone || ""} · ${userInfo.email || ""}`,
       W / 2,
-      H - 30,
+      H - 22,
       { align: "center" }
     );
 
