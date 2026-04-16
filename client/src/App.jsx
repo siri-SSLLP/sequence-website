@@ -42,6 +42,17 @@ function App() {
         <Route path='/blog' element={<BlogListing />} />
         <Route path='/blog/:slug' element={<BlogPost />} />
         <Route path='*' element={<Navigate to='/' replace />} />
+        <Route></Route>
+        <Route></Route>
+        <Route></Route>
+        <Route></Route>
+        <Route></Route>
+        <Route></Route>
+        <Route></Route>
+        <Route></Route>
+        <Route></Route>
+        <Route></Route>
+        
       </Routes>
 
       <Footer />
