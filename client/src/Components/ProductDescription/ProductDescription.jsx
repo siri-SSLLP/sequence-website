@@ -1,10 +1,11 @@
 import "./ProductDescription.css";
-import { product as products } from "../../assets/assets";
+// import { product as products } from "../../assets/assets";
 import { Link, useParams } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
 import { ProductContext } from "../../Context/Context.jsx";
 
 const ProductDescription = () => {
+    const { products } = useContext(ProductContext);
     const { id } = useParams();
     const { changeQty, addToCart, cart, setCart } = useContext(ProductContext);
 

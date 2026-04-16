@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import "./ProductPageComponent.css";
-import { product } from "../../assets/assets";
+// import { product } from "../../assets/assets";
 import { FaFilter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -19,11 +19,10 @@ const ProductPageComponent = () => {
     const [sort, setSort] = useState("popular");
     const [activeFilters, setActiveFilters] = useState([]);
     const [favourites, setFavourites] = useState({});
-    const { changeQty, addToCart, cart } = useContext(ProductContext)
+    const { changeQty, addToCart, cart, products } = useContext(ProductContext)
     const [modal, setModal] = useState(null);
     const [heartAnim, setHeartAnim] = useState({});
-    
-
+    const product = products;
 
     useEffect(() => {
     if (location.state?.category) {

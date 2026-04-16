@@ -1,11 +1,33 @@
 // src/context/ProductContext.jsx
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
+
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const [cart, setCart] = useState({});
 
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+      // 🔥 FETCH DATA FROM BACKEND
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get("https://testingserver-73um.onrender.com/api/products");
+      setProducts(res.data);
+      console.log("Fetched products:", res.data);
+    } catch (err) {
+      console.log("Error fetching products:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const addToCart = (e, id) => {
           e.stopPropagation();
@@ -35,7 +57,7 @@ export const ProductProvider = ({ children }) => {
 
 
   return (
-    <ProductContext.Provider value={{ addToCart, changeQty,cart,setCart }}>
+    <ProductContext.Provider value={{ addToCart, changeQty,cart,setCart,loading ,products,setLoading, setProducts}}>
       {children}
     </ProductContext.Provider>
   );

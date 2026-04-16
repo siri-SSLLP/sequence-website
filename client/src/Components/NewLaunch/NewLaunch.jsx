@@ -1,12 +1,15 @@
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useContext } from "react";
 import "./NewLaunch.css";
-import { product } from "../../assets/assets.js";
+// import { product } from "../../assets/assets.js";
 import { Link } from "react-router-dom";
+import { ProductContext } from "../../Context/Context";
 
 const NewLaunch = () => {
+  const {products} = useContext(ProductContext);
   const scrollRef = useRef(null);
   const [activeDot, setActiveDot] = useState(0);
+  const product =products;
 
   const DOTS = 4;
   const CARD_WIDTH = 208; // 190px + 18px gap

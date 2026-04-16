@@ -1,12 +1,40 @@
-import './ApplicationCategory.css'
-import { CategoryIcon, product } from '../../assets/assets.js'
-import { useState } from "react";
+import './ApplicationCategory.css';
+import { CategoryIcon } from '../../assets/assets.js';
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { ProductContext } from '../../Context/Context.jsx';
 
 const ApplicationCategory = ({ title, name }) => {
 
+    const {products,setLoading, setProducts,loading} = useContext(ProductContext)
+    const [selectedParent, setSelectedParent] = useState(null);
+
+    // 🔥 FETCH DATA FROM BACKEND
+    // useEffect(() => {
+    //     const fetchProducts = async () => {
+    //         try {
+    //             const res = await axios.get("http://127.0.0.1:5001/api/products", {
+    //                 // headers: {
+    //                 //     Authorization: localStorage.getItem("token") // remove if not protected
+    //                 // }
+    //             });
+
+    //             setProducts(res.data);
+    //             console.log("Fetched products:", res.data);
+    //         } catch (err) {
+    //             console.log("Error fetching products:", err);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+
+    //     fetchProducts();
+    // }, []);
+
+    // 🔥 GROUP CATEGORIES
     const groupedCategories = {};
 
-    product.forEach((item) => {
+    products.forEach((item) => {
         if (Array.isArray(item.applications)) {
             item.applications.forEach((app) => {
                 if (!groupedCategories[app]) {
@@ -23,16 +51,25 @@ const ApplicationCategory = ({ title, name }) => {
         }
     });
 
+    const categoriesArray = Object.values(groupedCategories).slice(0, 5);
+
+    // 🔥 SET DEFAULT SELECTED CATEGORY
+    useEffect(() => {
+        if (categoriesArray.length > 0 && !selectedParent) {
+            setSelectedParent(categoriesArray[0]);
+        }
+    }, [products]);
+
+    // 🔥 FILTER PRODUCTS
     function productsForApplication(appName) {
-        return product.filter(p =>
+        return products.filter(p =>
             Array.isArray(p.applications) &&
             p.applications.includes(appName)
         );
     }
 
-    const categoriesArray = Object.values(groupedCategories).slice(0, 5);
-
-    const [selectedParent, setSelectedParent] = useState(categoriesArray[0]);
+    // 🔥 LOADING STATE
+    if (loading) return <p>Loading...</p>;
 
     return (
         <>
@@ -69,15 +106,17 @@ const ApplicationCategory = ({ title, name }) => {
                 {/* CHILD PRODUCTS */}
                 <div className="appcat-child-list pb-5 mt-4">
                     {selectedParent && productsForApplication(selectedParent.name).length > 0 ? (
-                        productsForApplication(selectedParent.name).slice(0, 5).map((child, index) => (
-                            <div key={index} className="appcat-child-item">
-                                <img
-                                    src={child.imageUrl}
-                                    alt={child.productName}
-                                />
-                                <p>{child.productName}</p>
-                            </div>
-                        ))
+                        productsForApplication(selectedParent.name)
+                            .slice(0, 5)
+                            .map((child, index) => (
+                                <div key={index} className="appcat-child-item">
+                                    <img
+                                        src={child.imageUrl}
+                                        alt={child.productName}
+                                    />
+                                    <p>{child.productName}</p>
+                                </div>
+                            ))
                     ) : (
                         <p>No products found</p>
                     )}
