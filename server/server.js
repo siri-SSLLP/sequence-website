@@ -11,7 +11,11 @@ const app = express(); // ✅ CREATE APP FIRST
 
 // ✅ CORS AFTER APP
 app.use(cors({
-  origin: "http://localhost:5175"
+   origin: [
+    "http://localhost:5175",
+    "https://sequence-site-new-616y.vercel.app"
+  ],
+  credentials: true
 }));
 
 app.use(express.json());
