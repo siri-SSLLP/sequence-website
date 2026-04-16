@@ -1,9 +1,12 @@
 import './CategorySection.css'
-import { product, CategoryIcon } from '../../assets/assets.js'
-import { useState } from "react";
+import {  CategoryIcon } from '../../assets/assets.js'
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ProductContext } from '../../Context/Context.jsx';
 
 const CategorySection = ({ name }) => {
+  const { products } = useContext(ProductContext);
+  const product = products;
     const navigate = useNavigate();
 
     // ================= GROUP DATA =================
@@ -82,6 +85,7 @@ const CategorySection = ({ name }) => {
                     {/* Parent list */}
                     <div className="cat-parent-list">
                         {categoriesArray.map((category, index) => {
+                            console.log(category)
                             const imageSrc = CategoryIcon[0][category.name];
                             return (
                                 <div

@@ -378,7 +378,7 @@
 import { useContext, useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
-import { product } from '../../assets/assets.js';
+// import { product } from '../../assets/assets.js';
 import { ImWhatsapp } from "react-icons/im";
 import { IoCall } from "react-icons/io5";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -397,8 +397,8 @@ import { ProductContext } from '../../Context/Context.jsx';
 
 function NavBar() {
 
-    const { cart } = useContext(ProductContext);
-
+    const { cart, products} = useContext(ProductContext);
+    const product = products;
     const [showAuth, setShowAuth] = useState(false);
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);

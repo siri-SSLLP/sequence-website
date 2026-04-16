@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useState, useRef } from "react";
 import { ProductContext } from "../../Context/Context";
-import { product as products } from "../../assets/assets";
+// import { product as products } from "../../assets/assets";
 import {
   FaTrash,
   FaTag,
@@ -381,7 +381,7 @@ const UserInfoModal = ({ onClose, onGenerate, isGenerating }) => {
 
 /* ─── Main Cart Component ─────────────────────────────────────── */
 const Cart = () => {
-  const { cart, setCart } = useContext(ProductContext);
+  const { cart, setCart,products } = useContext(ProductContext);
   const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [payMethod, setPayMethod] = useState("upi");

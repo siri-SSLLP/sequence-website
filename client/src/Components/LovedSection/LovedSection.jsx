@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useContext,useState, useRef } from "react";
 import "./LovedSection.css";
-import { product } from "../../assets/assets";
+// import { product } from "../../assets/assets";
 import { Link } from "react-router-dom";
+import { ProductContext } from "../../Context/Context";
 
 const categories = [
     "All",
@@ -12,7 +13,9 @@ const categories = [
 ];
 
 const LovedSection = () => {
+    const {products} = useContext(ProductContext)
     const [activeTab, setActiveTab] = useState("All");
+    const product = products;
     const sliderRef = useRef(null);
 
     const scrollLeft = () => {

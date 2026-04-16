@@ -1574,4 +1574,4 @@ export const callNumber = "+919606901946";
 export const WhatsappNumber = "+918660799143";
 export const Message = "Hello, I am interested in your laminate products.";
 
-export default { category, product, newLaunchProducts, CategoryIcon, inspirationCategory, trendingCollections, exploreThemes, callNumber, WhatsappNumber, Message };
+export default { category, newLaunchProducts, CategoryIcon, inspirationCategory, trendingCollections, exploreThemes, callNumber, WhatsappNumber, Message };
