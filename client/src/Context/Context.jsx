@@ -13,21 +13,58 @@ export const ProductProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
       // 🔥 FETCH DATA FROM BACKEND
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get("https://testingserver-73um.onrender.com/api/products");
-      setProducts(res.data);
-      console.log("Fetched products:", res.data);
-    } catch (err) {
-      console.log("Error fetching products:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+//   const fetchProducts = async () => {
+//   try {
+//     const res = await axios.get(
+//       "http://127.0.0.1:5002/api/products",
+//       {
+//         headers: {
+//           Authorization: "Bearer seq$123",
+//         },
+//       }
+//     );
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+//     setProducts(res.data);
+//     console.log("Fetched products:", res.data);
+//   } catch (err) {
+//     console.log("Error fetching products:", err);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+
+
+const fetchProducts = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(
+      // "http://127.0.0.1:5002/api/products",
+      "https://testingserver-73um.onrender.com/api/products",
+      {
+        headers: {
+          // Authorization: `Bearer ${token}`,seq$123
+          Authorization: `Bearer seq$123`,
+        },
+      }
+    );
+
+    setProducts(res.data);
+  } catch (err) {
+    console.log("Error fetching products:", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+
+
+
+useEffect(() => {
+  fetchProducts();
+}, []);
 
   const addToCart = (e, id) => {
           e.stopPropagation();

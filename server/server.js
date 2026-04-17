@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
-
+import userRoutes from "./routes/userRoutes.js";
 dotenv.config();
 connectDB();
 
@@ -25,9 +25,11 @@ app.get("/test", (req, res) => {
   res.send("Server working ✅");
 });
 
+
 // ✅ ROUTES
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
-app.listen(5001, "0.0.0.0", () => {
-  console.log("🚀 Server running on port 5001");
+app.listen(5002, "0.0.0.0", () => {
+  console.log("🚀 Server running on port 5002");
 });
