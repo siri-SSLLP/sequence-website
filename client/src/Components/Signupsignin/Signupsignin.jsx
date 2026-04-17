@@ -104,8 +104,8 @@ const handleSubmit = async (e) => {
   try {
     const url =
       mode === "signin"
-        ? "http://127.0.0.1:5002/api/users/login"
-        : "http://127.0.0.1:5002/api/users/register";
+        ? "https://testingserver-73um.onrender.com/api/users/login"
+        : "https://testingserver-73um.onrender.com/api/users/register";
 
     const payload = {
       name: form.name,
