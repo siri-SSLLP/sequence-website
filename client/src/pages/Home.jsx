@@ -29,7 +29,7 @@ const Home = () => {
                 <NewLaunch></NewLaunch>
                 <ApplicationCategory name='Find Your Perfect Fit' title='Application'></ApplicationCategory>
                 <CategorySection name='Explore Our Categories'></CategorySection>
-                <PhotoLinks link='3Dvisualisation'></PhotoLinks>
+                <PhotoLinks link='3d-visualisation'></PhotoLinks>
                 <Theme></Theme>
                 <Inspiration></Inspiration>
                 <Trending></Trending>
