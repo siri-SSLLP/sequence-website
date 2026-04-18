@@ -17,9 +17,10 @@ import { FaBlog } from "react-icons/fa6";
 import { callNumber, Message, WhatsappNumber } from '../../assets/assets.js';
 import SignInSignUp from '../Signupsignin/Signupsignin.jsx';
 import { ProductContext } from '../../Context/Context.jsx';
+import ProfilePopup from '../ProfilePopup/ProfilePopup.jsx';
 
 function NavBar() {
-
+    const [showProfile, setShowProfile] = useState(false);
     const { cart, products } = useContext(ProductContext);
     const product = products;
     const [showAuth, setShowAuth] = useState(false);
@@ -113,7 +114,12 @@ function NavBar() {
     return (
         <>
             {showAuth && <SignInSignUp onClose={() => setShowAuth(false)} />}
-
+                {showProfile && (
+    <ProfilePopup 
+        onClose={() => setShowProfile(false)}
+        onLogout={() => setUserName("")}
+    />
+)}
             <ul></ul>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
@@ -224,7 +230,7 @@ function NavBar() {
                         </button> */}
 
 
-                        {userName ? (
+                        {/* {userName ? (
                             <button className='signin-signup-desktop' style={{
                                 background: 'none',
                                 border: '1px solid #ebc76c',
@@ -257,9 +263,46 @@ function NavBar() {
                             >
                                 SignUp / SignIn
                             </button>
-                        )}
+                        )} */}
 
-
+{userName ? (
+    <button 
+        className='signin-signup-desktop' 
+        onClick={() => setShowProfile(true)}  // ✅ ONLY ADD THIS LINE
+        style={{
+            background: 'none',
+            border: '1px solid #ebc76c',
+            borderRadius: '25px',
+            padding: '8px 18px',
+            cursor: 'pointer',
+            color: 'white',
+            fontWeight: '500',
+            fontSize: '14px',
+            marginLeft: '10px',
+            transition: 'all 0.2s ease'
+        }}>
+        👤 {userName}
+    </button>
+) : (
+    <button
+        className='signin-signup-desktop' 
+        style={{
+                                background: 'none',
+                                border: '1px solid #ebc76c',
+                                borderRadius: '25px',
+                                padding: '8px 18px',
+                                cursor: 'pointer',
+                                color: 'white',
+                                fontWeight: '500',
+                                fontSize: '14px',
+                                marginLeft: '10px',
+                                transition: 'all 0.2s ease'
+                            }}
+        onClick={() => setShowAuth(true)}
+    >
+        SignUp / SignIn
+    </button>
+)}
 
 
 
@@ -322,9 +365,25 @@ function NavBar() {
                             </li>
 
                             <li className="nav-item mt-3" data-bs-dismiss="offcanvas">
-                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" onClick={() => setShowAuth(true)}>
+                                {/* <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" onClick={() => setShowAuth(true)}>
                                     <BsCart3 /> <span>SignUp / SignIn</span>
-                                </Link>
+                                </Link> */}
+                                {userName ? (
+    <Link 
+        className="visit-store-btn-navbar nav-link navbar-btn visit-btn" 
+        onClick={() => setShowProfile(true)}
+        data-bs-dismiss="offcanvas"
+    >
+        <IoPerson /> <span>👤 {userName}</span>
+    </Link>
+) : (
+    <Link 
+        className="visit-store-btn-navbar nav-link navbar-btn visit-btn" 
+        onClick={() => setShowAuth(true)}
+    >
+        <BsCart3 /> <span>SignUp / SignIn</span>
+    </Link>
+)}
 
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/cart">
                                     <BsCart3 /> <span>Cart</span>
