@@ -285,8 +285,19 @@ function NavBar() {
     </button>
 ) : (
     <button
-        className='signin-signup-desktop'
-        style={{ /* ...existing styles... */ }}
+        className='signin-signup-desktop' 
+        style={{
+                                background: 'none',
+                                border: '1px solid #ebc76c',
+                                borderRadius: '25px',
+                                padding: '8px 18px',
+                                cursor: 'pointer',
+                                color: 'white',
+                                fontWeight: '500',
+                                fontSize: '14px',
+                                marginLeft: '10px',
+                                transition: 'all 0.2s ease'
+                            }}
         onClick={() => setShowAuth(true)}
     >
         SignUp / SignIn
