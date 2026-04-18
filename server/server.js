@@ -8,7 +8,6 @@ dotenv.config();
 connectDB();
 
 const app = express(); // ✅ CREATE APP FIRST
-
 // ✅ CORS AFTER APP
 app.use(cors({
    origin: [
@@ -19,12 +18,11 @@ app.use(cors({
 }));
 
 app.use(express.json());
-
 // ✅ TEST ROUTE
+
 app.get("/test", (req, res) => {
   res.send("Server working ✅");
 });
-
 
 // ✅ ROUTES
 app.use("/api/products", productRoutes);
