@@ -1,0 +1,787 @@
+/* ==================== OVERLAY ==================== */
+.profile-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.2s ease;
+    padding: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.profile-popup-container {
+    background: #fff;
+    width: 100%;
+    max-width: 950px;
+    height: 90vh;
+    max-height: 700px;
+    border-radius: 15px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.profile-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.2s;
+    color: #333;
+}
+
+.profile-close-btn:hover {
+    background: #ebc76c;
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* ==================== SIDEBAR ==================== */
+.profile-sidebar {
+    width: 280px;
+    background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: white;
+    padding: 30px 0;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.profile-user-card {
+    text-align: center;
+    padding: 0 20px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-image-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ebc76c;
+}
+
+.profile-image-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ebc76c, #d4a93e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 600;
+    color: white;
+    border: 3px solid #ebc76c;
+}
+
+.profile-camera-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ebc76c;
+    border: 3px solid #1a1a1a;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.profile-camera-btn:hover {
+    background: #d4a93e;
+    transform: scale(1.1);
+}
+
+.profile-user-name {
+    font-size: 18px;
+    margin: 10px 0 5px;
+    font-weight: 600;
+}
+
+.profile-user-email {
+    font-size: 13px;
+    opacity: 0.7;
+    margin: 0;
+    word-break: break-all;
+}
+
+.profile-nav {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+}
+
+.profile-nav li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 25px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+}
+
+.profile-nav li:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: #ebc76c;
+}
+
+.profile-nav li.active {
+    background: rgba(235, 199, 108, 0.1);
+    border-left-color: #ebc76c;
+    color: #ebc76c;
+}
+
+.profile-nav li.logout-item {
+    margin-top: 20px;
+    color: #ff6b6b;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+}
+
+.profile-nav li.logout-item:hover {
+    background: rgba(255, 107, 107, 0.1);
+    border-left-color: #ff6b6b;
+}
+
+.profile-nav li svg {
+    font-size: 16px;
+}
+
+/* ==================== CONTENT ==================== */
+.profile-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background: #fafafa;
+}
+
+.profile-message {
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.profile-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.profile-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.tab-content h2 {
+    font-size: 24px;
+    margin: 0 0 5px;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.tab-subtitle {
+    color: #888;
+    font-size: 13px;
+    margin: 0 0 25px;
+}
+
+.tab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* ==================== FORMS ==================== */
+.profile-form,
+.address-form {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.address-form h3 {
+    margin: 0 0 20px;
+    font-size: 18px;
+    color: #1a1a1a;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 14px;
+    transition: all 0.2s;
+    background: #fafafa;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #ebc76c;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(235, 199, 108, 0.15);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding-top: 25px;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.address-type-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.address-type-buttons button {
+    flex: 1;
+    padding: 9px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.address-type-buttons button.type-active {
+    background: #ebc76c;
+    color: white;
+    border-color: #ebc76c;
+}
+
+.profile-save-btn,
+.btn-save {
+    background: #ebc76c;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+}
+
+.profile-save-btn:hover,
+.btn-save:hover {
+    background: #d4a93e;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(235, 199, 108, 0.4);
+}
+
+.profile-save-btn:disabled,
+.btn-save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+.btn-cancel {
+    background: #f0f0f0;
+    color: #555;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+    background: #e0e0e0;
+}
+
+/* ==================== ADDRESSES ==================== */
+.add-address-btn {
+    background: #ebc76c;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.add-address-btn:hover {
+    background: #d4a93e;
+    transform: translateY(-1px);
+}
+
+.address-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+}
+
+.address-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.address-card:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.address-card.default-address {
+    border: 2px solid #ebc76c;
+    background: #fffdf7;
+}
+
+.address-type-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f0f0f0;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #555;
+}
+
+.default-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #ebc76c;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+.address-card h4 {
+    margin: 0 0 10px;
+    font-size: 15px;
+    color: #1a1a1a;
+}
+
+.address-card p {
+    font-size: 13px;
+    color: #666;
+    margin: 4px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.address-card p svg {
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.address-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+    flex-wrap: wrap;
+}
+
+.address-actions button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+}
+
+.btn-default {
+    background: #f0f0f0;
+    color: #555;
+}
+
+.btn-default:hover {
+    background: #ebc76c;
+    color: white;
+}
+
+.btn-edit {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.btn-edit:hover {
+    background: #1976d2;
+    color: white;
+}
+
+.btn-delete {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+.btn-delete:hover {
+    background: #d32f2f;
+    color: white;
+}
+
+/* ==================== ORDERS ==================== */
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.order-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.order-id {
+    font-weight: 600;
+    margin: 0;
+    font-size: 14px;
+}
+
+.order-date {
+    font-size: 12px;
+    color: #888;
+    margin: 4px 0 0;
+}
+
+.order-status {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #fff3cd;
+    color: #856404;
+}
+
+.order-status.delivered {
+    background: #d4edda;
+    color: #155724;
+}
+
+.order-status.cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.order-status.shipped {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.order-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.order-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.order-item p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.order-item small {
+    color: #888;
+    font-size: 12px;
+}
+
+.order-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+    text-align: right;
+}
+
+.order-footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #999;
+}
+
+.empty-state svg {
+    font-size: 50px;
+    margin-bottom: 15px;
+    opacity: 0.3;
+}
+
+.empty-state p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.empty-state small {
+    font-size: 13px;
+}
+
+/* ==================== SCROLLBAR ==================== */
+.profile-content::-webkit-scrollbar,
+.profile-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.profile-content::-webkit-scrollbar-track,
+.profile-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.profile-content::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
+}
+
+.profile-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .profile-popup-overlay {
+        padding: 0;
+    }
+
+    .profile-popup-container {
+        flex-direction: column;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .profile-sidebar {
+        width: 100%;
+        padding: 20px 0 0;
+    }
+
+    .profile-user-card {
+        padding-bottom: 15px;
+    }
+
+    .profile-image-wrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile-image-placeholder {
+        font-size: 32px;
+    }
+
+    .profile-nav {
+        display: flex;
+        overflow-x: auto;
+        padding: 10px;
+        gap: 5px;
+    }
+
+    .profile-nav li {
+        flex-shrink: 0;
+        padding: 10px 15px;
+        border-radius: 7px;
+        border-left: none;
+        font-size: 13px;
+    }
+
+    .profile-nav li.active {
+        background: #ebc76c;
+        color: white;
+    }
+
+    .profile-nav li.logout-item {
+        margin-top: 0;
+        padding-top: 10px;
+        border-top: none;
+    }
+
+    .profile-nav li span {
+        display: none;
+    }
+
+    .profile-nav li svg {
+        font-size: 18px;
+    }
+
+    .profile-content {
+        padding: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .address-list {
+        grid-template-columns: 1fr;
+    }
+
+    .tab-content h2 {
+        font-size: 20px;
+    }
+
+    .tab-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-address-btn {
+        justify-content: center;
+    }
+
+    .checkbox-label {
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-content {
+        padding: 15px;
+    }
+
+    .profile-form,
+    .address-form {
+        padding: 15px;
+    }
+
+    .address-actions {
+        gap: 5px;
+    }
+
+    .address-actions button {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+}
