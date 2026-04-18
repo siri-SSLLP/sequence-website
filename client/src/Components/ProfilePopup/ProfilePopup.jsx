@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { FaUser, FaMapMarkerAlt, FaShoppingBag, FaHeart, FaLock, FaSignOutAlt, FaCamera, FaEdit, FaTrash, FaPlus, FaCheckCircle } from "react-icons/fa";
 import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 
-const API_BASE = "https://testingserver-73um.onrender.com/api/"; // CHANGE THIS TO YOUR BACKEND URL
+const API_BASE = "https://testingserver-73um.onrender.com/"; // CHANGE THIS TO YOUR BACKEND URL
 
 function ProfilePopup({ onClose, onLogout }) {
     const [activeTab, setActiveTab] = useState("profile");
