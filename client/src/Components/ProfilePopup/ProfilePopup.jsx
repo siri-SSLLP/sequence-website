@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { FaUser, FaMapMarkerAlt, FaShoppingBag, FaHeart, FaLock, FaSignOutAlt, FaCamera, FaEdit, FaTrash, FaPlus, FaCheckCircle } from "react-icons/fa";
 import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 
-const API_BASE = "https://sequence-site-new-616y.vercel.app"; // CHANGE THIS TO YOUR BACKEND URL
+const API_BASE = "https://testingserver-73um.onrender.com/api/"; // CHANGE THIS TO YOUR BACKEND URL
 
 function ProfilePopup({ onClose, onLogout }) {
     const [activeTab, setActiveTab] = useState("profile");
@@ -72,7 +72,7 @@ function ProfilePopup({ onClose, onLogout }) {
     // ---------------------- API CALLS ----------------------
     const loadUserData = async () => {
         try {
-            const res = await axios.get(`${API_BASE}/users/profile`, {
+            const res = await axios.get(`${API_BASE}/profile`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUser(res.data);
