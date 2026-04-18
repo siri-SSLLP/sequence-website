@@ -72,7 +72,7 @@ function ProfilePopup({ onClose, onLogout }) {
     // ---------------------- API CALLS ----------------------
     const loadUserData = async () => {
         try {
-            const res = await axios.get(`${API_BASE}/profile`, {
+            const res = await axios.get(`${API_BASE}profile`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUser(res.data);
@@ -89,7 +89,7 @@ function ProfilePopup({ onClose, onLogout }) {
 
     const loadAddresses = async () => {
         try {
-            const res = await axios.get(`${API_BASE}/users/addresses`, {
+            const res = await axios.get(`${API_BASE}addresses`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setAddresses(res.data || []);
@@ -100,7 +100,7 @@ function ProfilePopup({ onClose, onLogout }) {
 
     const loadOrders = async () => {
         try {
-            const res = await axios.get(`${API_BASE}/users/orders`, {
+            const res = await axios.get(`${API_BASE}orders`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setOrders(res.data || []);
@@ -114,7 +114,7 @@ function ProfilePopup({ onClose, onLogout }) {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await axios.put(`${API_BASE}/users/profile`, user, {
+            const res = await axios.put(`${API_BASE}profile`, user, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.data.token) {
@@ -141,7 +141,7 @@ function ProfilePopup({ onClose, onLogout }) {
             // Upload to backend
             try {
                 setLoading(true);
-                await axios.put(`${API_BASE}/users/profile-image`, {
+                await axios.put(`${API_BASE}profile-image`, {
                     profileImage: reader.result
                 }, {
                     headers: { Authorization: `Bearer ${token}` }
@@ -161,12 +161,12 @@ function ProfilePopup({ onClose, onLogout }) {
         setLoading(true);
         try {
             if (editingAddressId) {
-                await axios.put(`${API_BASE}/users/addresses/${editingAddressId}`, addressForm, {
+                await axios.put(`${API_BASE}addresses/${editingAddressId}`, addressForm, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 showMessage("success", "Address updated!");
             } else {
-                await axios.post(`${API_BASE}/users/addresses`, addressForm, {
+                await axios.post(`${API_BASE}addresses`, addressForm, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 showMessage("success", "Address added!");
@@ -188,7 +188,7 @@ function ProfilePopup({ onClose, onLogout }) {
     const handleDeleteAddress = async (id) => {
         if (!window.confirm("Delete this address?")) return;
         try {
-            await axios.delete(`${API_BASE}/users/addresses/${id}`, {
+            await axios.delete(`${API_BASE}addresses/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             showMessage("success", "Address deleted!");
@@ -200,7 +200,7 @@ function ProfilePopup({ onClose, onLogout }) {
 
     const handleSetDefault = async (id) => {
         try {
-            await axios.put(`${API_BASE}/users/addresses/${id}/default`, {}, {
+            await axios.put(`${API_BASE}addresses/${id}/default`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             loadAddresses();
@@ -231,7 +231,7 @@ function ProfilePopup({ onClose, onLogout }) {
 
         setLoading(true);
         try {
-            await axios.put(`${API_BASE}/users/change-password`, {
+            await axios.put(`${API_BASE}change-password`, {
                 currentPassword: passwordForm.currentPassword,
                 newPassword: passwordForm.newPassword,
             }, {
