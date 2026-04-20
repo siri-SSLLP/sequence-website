@@ -58,10 +58,6 @@ const fetchProducts = async () => {
   }
 };
 
-
-
-
-
 useEffect(() => {
   fetchProducts();
 }, []);
