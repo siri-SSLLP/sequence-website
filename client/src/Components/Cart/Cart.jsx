@@ -381,7 +381,7 @@ const UserInfoModal = ({ onClose, onGenerate, isGenerating }) => {
 
 /* ─── Main Cart Component ─────────────────────────────────────── */
 const Cart = () => {
-  const { cart, setCart,products } = useContext(ProductContext);
+  const { cart, setCart, products } = useContext(ProductContext);
   const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [payMethod, setPayMethod] = useState("upi");
@@ -499,7 +499,10 @@ const Cart = () => {
               <p className="empty-text">Add items to get started</p>
               <Link className="cart-shop-link" to="/products">
                 <button className="empty-cta">
-                  Continue Shopping <FaChevronRight />
+                  Continue Shopping 
+                  <div className="empty-cart-icon">
+                  <FaChevronRight />
+                  </div>
                 </button>
               </Link>
             </div>

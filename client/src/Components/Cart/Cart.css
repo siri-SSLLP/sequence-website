@@ -339,6 +339,11 @@
   background: #333;
 }
 
+.empty-state svg{
+  font-size: 20px;
+  margin: 0px;
+}
+
 /* ── Summary Panel ─────────────────────────────────────────── */
 .summary-panel {
   background: #fff;
