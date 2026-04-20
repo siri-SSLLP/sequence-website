@@ -82,28 +82,28 @@ function NavBar() {
     }, []);
 
 
- useEffect(() => {
-    const updateUser = () => {
-        const token = localStorage.getItem("token");
+    useEffect(() => {
+        const updateUser = () => {
+            const token = localStorage.getItem("token");
 
-        if (token) {
-            try {
-                const decoded = JSON.parse(atob(token.split(".")[1]));
-                setUserName(decoded.name || "User");
-            } catch (err) {
-                console.log("Token decode error");
+            if (token) {
+                try {
+                    const decoded = JSON.parse(atob(token.split(".")[1]));
+                    setUserName(decoded.name || "User");
+                } catch (err) {
+                    console.log("Token decode error");
+                }
             }
-        }
-    };
+        };
 
-    // ✅ RUN ON FIRST LOAD
-    updateUser();
+        // ✅ RUN ON FIRST LOAD
+        updateUser();
 
-    // ✅ LISTEN FOR CHANGES (other tabs)
-    window.addEventListener("storage", updateUser);
+        // ✅ LISTEN FOR CHANGES (other tabs)
+        window.addEventListener("storage", updateUser);
 
-    return () => window.removeEventListener("storage", updateUser);
-}, []);
+        return () => window.removeEventListener("storage", updateUser);
+    }, []);
 
 
 
@@ -114,12 +114,12 @@ function NavBar() {
     return (
         <>
             {showAuth && <SignInSignUp onClose={() => setShowAuth(false)} />}
-                {showProfile && (
-    <ProfilePopup 
-        onClose={() => setShowProfile(false)}
-        onLogout={() => setUserName("")}
-    />
-)}
+            {showProfile && (
+                <ProfilePopup
+                    onClose={() => setShowProfile(false)}
+                    onLogout={() => setUserName("")}
+                />
+            )}
             <ul></ul>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
@@ -265,50 +265,44 @@ function NavBar() {
                             </button>
                         )} */}
 
-{userName ? (
-    <button 
-        className='signin-signup-desktop' 
-        onClick={() => setShowProfile(true)}  // ✅ ONLY ADD THIS LINE
-        style={{
-            background: 'none',
-            border: '1px solid #ebc76c',
-            borderRadius: '25px',
-            padding: '8px 18px',
-            cursor: 'pointer',
-            color: 'white',
-            fontWeight: '500',
-            fontSize: '14px',
-            marginLeft: '10px',
-            transition: 'all 0.2s ease'
-        }}>
-        👤 {userName}
-    </button>
-) : (
-    <button
-        className='signin-signup-desktop' 
-        style={{
-                                background: 'none',
-                                border: '1px solid #ebc76c',
-                                borderRadius: '25px',
-                                padding: '8px 18px',
-                                cursor: 'pointer',
-                                color: 'white',
-                                fontWeight: '500',
-                                fontSize: '14px',
-                                marginLeft: '10px',
-                                transition: 'all 0.2s ease'
-                            }}
-        onClick={() => setShowAuth(true)}
-    >
-        SignUp / SignIn
-    </button>
-)}
-
-
-
-
-
-
+                        {userName ? (
+                            <button
+                                className='signin-signup-desktop'
+                                onClick={() => setShowProfile(true)}  // ✅ ONLY ADD THIS LINE
+                                style={{
+                                    background: 'none',
+                                    border: '1px solid #ebc76c',
+                                    borderRadius: '25px',
+                                    padding: '8px 18px',
+                                    cursor: 'pointer',
+                                    color: 'white',
+                                    fontWeight: '500',
+                                    fontSize: '14px',
+                                    marginLeft: '10px',
+                                    transition: 'all 0.2s ease'
+                                }}>
+                                👤 {userName}
+                            </button>
+                        ) : (
+                            <button
+                                className='signin-signup-desktop'
+                                style={{
+                                    background: 'none',
+                                    border: '1px solid #ebc76c',
+                                    borderRadius: '25px',
+                                    padding: '8px 18px',
+                                    cursor: 'pointer',
+                                    color: 'white',
+                                    fontWeight: '500',
+                                    fontSize: '14px',
+                                    marginLeft: '10px',
+                                    transition: 'all 0.2s ease'
+                                }}
+                                onClick={() => setShowAuth(true)}
+                            >
+                                SignUp / SignIn
+                            </button>
+                        )}
 
                     </div>
                 </div>
@@ -369,21 +363,21 @@ function NavBar() {
                                     <BsCart3 /> <span>SignUp / SignIn</span>
                                 </Link> */}
                                 {userName ? (
-    <Link 
-        className="visit-store-btn-navbar nav-link navbar-btn visit-btn" 
-        onClick={() => setShowProfile(true)}
-        data-bs-dismiss="offcanvas"
-    >
-        <IoPerson /> <span>👤 {userName}</span>
-    </Link>
-) : (
-    <Link 
-        className="visit-store-btn-navbar nav-link navbar-btn visit-btn" 
-        onClick={() => setShowAuth(true)}
-    >
-        <BsCart3 /> <span>SignUp / SignIn</span>
-    </Link>
-)}
+                                    <Link
+                                        className="visit-store-btn-navbar nav-link navbar-btn visit-btn"
+                                        onClick={() => setShowProfile(true)}
+                                        data-bs-dismiss="offcanvas"
+                                    >
+                                        <IoPerson /> <span>👤 {userName}</span>
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        className="visit-store-btn-navbar nav-link navbar-btn visit-btn"
+                                        onClick={() => setShowAuth(true)}
+                                    >
+                                         <span>SignUp / SignIn</span>
+                                    </Link>
+                                )}
 
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/cart">
                                     <BsCart3 /> <span>Cart</span>
