@@ -25,7 +25,6 @@ function App() {
       <ScrollToTop />
       <WhatsAppButton />
       <ScrollToTopButton />
-
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
@@ -52,12 +51,9 @@ function App() {
         <Route></Route>
         <Route></Route>
         <Route></Route>
-        
       </Routes>
-
       <Footer />
     </>
   )
 }
-
 export default App

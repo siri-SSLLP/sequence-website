@@ -69,7 +69,7 @@
 import express from "express";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
-
+import Order from "../models/Order.js";
 const router = express.Router();
 
 // ==================== AUTH MIDDLEWARE ====================
@@ -301,8 +301,45 @@ router.put("/addresses/:id/default", protect, async (req, res) => {
 
 // ==================== GET ORDERS ====================
 router.get("/orders", protect, async (req, res) => {
-  const user = await User.findById(req.user._id);
-  res.json(user.orders || []);
+  try {
+    const orders = await Order.find({
+      user: req.user._id,
+      status: { $in: ["paid", "packed", "shipped", "delivered", "cancelled", "refunded"] },
+    }).sort({ createdAt: -1 });
+ 
+    res.json(orders);
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    res.status(500).json({ message: "Failed to fetch orders" });
+  }
 });
+ 
+
+
+
+router.put("/update-status/:orderId", protect, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const validStatuses = ["pending", "paid", "packed", "shipped", "delivered", "cancelled", "refunded"];
+ 
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+ 
+    const order = await Order.findByIdAndUpdate(
+      req.params.orderId,
+      { status },
+      { new: true }
+    );
+ 
+    if (!order) return res.status(404).json({ message: "Order not found" });
+ 
+    res.json({ success: true, order });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to update status" });
+  }
+});
+
+
 
 export default router;
