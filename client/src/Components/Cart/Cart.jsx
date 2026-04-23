@@ -753,7 +753,7 @@ import "./Cart.css";
 import { Link, useNavigate } from "react-router-dom";
 import SignInSignUp from "../Signupsignin/Signupsignin.jsx";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5002";
+const API_BASE = import.meta.env.VITE_API_URL || "https://testingserver-73um.onrender.com";
 
 const loadRazorpayScript = () => {
   return new Promise((resolve) => {
