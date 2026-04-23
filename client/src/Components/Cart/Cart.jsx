@@ -778,7 +778,7 @@ const fetchUserProfile = async () => {
   const token = localStorage.getItem("token");
   if (!token) return null;
   try {
-    const res = await fetch(`${API_BASE}/api/users/profile`, {
+    const res = await fetch(`https://testingserver-73um.onrender.com/api/users/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) return null;
