@@ -1,15 +1,15 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import "./ProductPageComponent.css";
-// import { product } from "../../assets/assets";
 import { FaFilter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { ProductContext } from '../../Context/Context'
+
 const ProductPageComponent = () => {
     const location = useLocation();
     const [filters, setFilters] = useState({
-    category: location.state?.category || "",
-    subcategory: location.state?.subcategory || "",
+        category: location.state?.category || "",
+        subcategory: location.state?.subcategory || "",
         color: "",
         finish: "",
         application: "",
@@ -19,39 +19,34 @@ const ProductPageComponent = () => {
     const [sort, setSort] = useState("popular");
     const [activeFilters, setActiveFilters] = useState([]);
     const [favourites, setFavourites] = useState({});
-    const { changeQty, addToCart, cart, products } = useContext(ProductContext)
+    const { changeQty, addToCart, cart, products, loading } = useContext(ProductContext); // ✅ loading added
     const [modal, setModal] = useState(null);
     const [heartAnim, setHeartAnim] = useState({});
     const product = products;
 
     useEffect(() => {
-    if (location.state?.category) {
-
-        setFilters(prev => ({
-            ...prev,
-            category: location.state.category,
-            subcategory: location.state.subcategory || ""
-        }));
-
-        setActiveFilters([
-            { key: "category", value: location.state.category },
-            ...(location.state.subcategory
-                ? [{ key: "subcategory", value: location.state.subcategory }]
-                : [])
-        ]);
-    }
-}, [location.state]);
+        if (location.state?.category) {
+            setFilters(prev => ({
+                ...prev,
+                category: location.state.category,
+                subcategory: location.state.subcategory || ""
+            }));
+            setActiveFilters([
+                { key: "category", value: location.state.category },
+                ...(location.state.subcategory
+                    ? [{ key: "subcategory", value: location.state.subcategory }]
+                    : [])
+            ]);
+        }
+    }, [location.state]);
 
     useEffect(() => {
-        console.log(cart)
         document.body.style.overflow = modal ? "hidden" : "";
         return () => { document.body.style.overflow = ""; };
     }, [modal]);
 
-    // Get unique parent categories
     const categories = [...new Set(product.map(p => p.parentCategory.name))];
 
-    // Get subcategories based on selected parent category
     const subcategories = useMemo(() => {
         if (!filters.category) return [];
         return [...new Set(
@@ -59,14 +54,13 @@ const ProductPageComponent = () => {
                 .filter(p => p.parentCategory.name === filters.category)
                 .map(p => p.childCategory.name)
         )];
-    }, [filters.category]);
+    }, [filters.category, product]); // ✅ product added
 
     const colors = [...new Set(product.map(p => p.color))];
     const finishes = [...new Set(product.map(p => p.finishType))];
     const applications = [...new Set(product.flatMap(p => p.applications))];
 
     const handleFilterChange = (key, value) => {
-        // If category changes, reset subcategory
         if (key === "category" && value !== filters.category) {
             setFilters(prev => ({ ...prev, [key]: value, subcategory: "" }));
             if (value) {
@@ -120,9 +114,8 @@ const ProductPageComponent = () => {
         data = data.filter(p => p.mrpPrice >= filters.priceMin && p.mrpPrice <= filters.priceMax);
         if (sort === "low") data.sort((a, b) => a.mrpPrice - b.mrpPrice);
         if (sort === "high") data.sort((a, b) => b.mrpPrice - a.mrpPrice);
-        console.log(data)
         return data;
-    }, [filters, sort]);
+    }, [filters, sort, product]); // ✅ product added
 
     const toggleFav = (e, id) => {
         e.stopPropagation();
@@ -131,14 +124,52 @@ const ProductPageComponent = () => {
         setTimeout(() => setHeartAnim(prev => ({ ...prev, [id]: false })), 400);
     };
 
-
-
     const openModal = (e, item) => { e.stopPropagation(); setModal(item); };
     const closeModal = () => setModal(null);
 
+    // ✅ LOADER
+    if (loading) {
     return (
         <div className="ppc-page">
+            <aside className="ppc-sidebar">
+                <div className="ppc-sidebar-header">
+                    <span className="ppc-filter-icon"><FaFilter /></span>
+                    <h3>Filters</h3>
+                </div>
+                {[...Array(5)].map((_, i) => (
+                    <div key={i} className="ppc-filter-group">
+                        <div className="skel skel-label" />
+                        <div className="skel skel-select" />
+                    </div>
+                ))}
+            </aside>
 
+            <main className="ppc-content">
+                <div className="ppc-topbar">
+                    <div className="skel skel-title" />
+                </div>
+                <div className="ppc-grid">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i} className="ppc-card-link">
+                            <div className="ppc-card">
+                                <div className="skel skel-img" />
+                                <div className="ppc-card-body">
+                                    <div className="skel skel-tag" />
+                                    <div className="skel skel-text" />
+                                    <div className="skel skel-text-short" />
+                                    <div className="skel skel-btn" />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </main>
+        </div>
+    );
+}
+
+    return (
+        <div className="ppc-page">
             {/* ── Sidebar ── */}
             <aside className="ppc-sidebar">
                 <div className="ppc-sidebar-header">
@@ -146,7 +177,6 @@ const ProductPageComponent = () => {
                     <h3>Filters</h3>
                 </div>
 
-                {/* Category Filter */}
                 <div className="ppc-filter-group">
                     <label className="ppc-label">Category</label>
                     <div className="ppc-select-wrap">
@@ -158,7 +188,6 @@ const ProductPageComponent = () => {
                     </div>
                 </div>
 
-                {/* Subcategory Filter - Shows only when category is selected */}
                 {filters.category && subcategories.length > 0 && (
                     <div className="ppc-filter-group ppc-subcategory-filter">
                         <label className="ppc-label">Subcategory</label>
@@ -174,7 +203,6 @@ const ProductPageComponent = () => {
                     </div>
                 )}
 
-                {/* Color Filter */}
                 <div className="ppc-filter-group">
                     <label className="ppc-label">Color</label>
                     <div className="ppc-select-wrap">
@@ -186,7 +214,6 @@ const ProductPageComponent = () => {
                     </div>
                 </div>
 
-                {/* Finish Filter */}
                 <div className="ppc-filter-group">
                     <label className="ppc-label">Finish</label>
                     <div className="ppc-select-wrap">
@@ -198,7 +225,6 @@ const ProductPageComponent = () => {
                     </div>
                 </div>
 
-                {/* Application Filter */}
                 <div className="ppc-filter-group">
                     <label className="ppc-label">Application</label>
                     <div className="ppc-select-wrap">
@@ -210,7 +236,6 @@ const ProductPageComponent = () => {
                     </div>
                 </div>
 
-                {/* Price Range */}
                 <div className="ppc-filter-group">
                     <label className="ppc-label">
                         Price Range
@@ -272,53 +297,46 @@ const ProductPageComponent = () => {
 
                 <div className="ppc-grid">
                     {filteredProducts.map((item, index) => (
-                        <>
-                            <div className="ppc-card-link" key={item.productId} style={{ animationDelay: `${index * 0.06}s` }}>
-                                {/* <h5 className="ppc-card-title">{item.productName}</h5> */}
-                                <div className="ppc-card">
-                                    <div className="ppc-card-img-wrap">
-                                        <Link to={`/product/${item.productId}`}>
-                                            <img src={item.imageUrl} alt={item.productName} />
-                                        </Link>
-                                        <button
-                                            className={`ppc-heart ${favourites[item.productId] ? "active" : ""} ${heartAnim[item.productId] ? "pop" : ""}`}
-                                            onClick={(e) => toggleFav(e, item.productId)}
-                                            aria-label="Add to favourites"
-                                        >
-                                            {favourites[item.productId] ? "♥" : "♡"}
+                        <div className="ppc-card-link" key={item.productId} style={{ animationDelay: `${index * 0.06}s` }}>
+                            <div className="ppc-card">
+                                <div className="ppc-card-img-wrap">
+                                    <Link to={`/product/${item.productId}`}>
+                                        <img src={item.imageUrl} alt={item.productName} />
+                                    </Link>
+                                    <button
+                                        className={`ppc-heart ${favourites[item.productId] ? "active" : ""} ${heartAnim[item.productId] ? "pop" : ""}`}
+                                        onClick={(e) => toggleFav(e, item.productId)}
+                                        aria-label="Add to favourites"
+                                    >
+                                        {favourites[item.productId] ? "♥" : "♡"}
+                                    </button>
+                                    <div className="ppc-card-overlay">
+                                        <button className="ppc-view-btn" onClick={(e) => openModal(e, item)}>
+                                            View Details →
                                         </button>
-                                        <div className="ppc-card-overlay">
-                                            <button className="ppc-view-btn" onClick={(e) => openModal(e, item)}>
-                                                View Details →
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="ppc-card-body">
-                                        <span className="ppc-card-cat">{item.parentCategory.name}</span>
-                                        <h5 className="ppc-card-title">{item.productName}</h5>
-                                        <div className="ppc-card-footer">
-                                            <span className="ppc-card-price">₹{item.mrpPrice}</span>
-                                            {item.finishType && <span className="ppc-card-finish">{item.finishType}</span>}
-                                        </div>
-
-
-                                        {!cart[item.productId] ? (
-                                            <button className="ppc-add-cart" onClick={(e) => addToCart(e, item.productId)}>
-                                                + Add to Cart
-                                            </button>
-                                        ) : (
-                                            <div className="ppc-qty-control">
-                                                <button onClick={(e) => changeQty(e, item.productId, -1)}>−</button>
-                                                <span>{cart[item.productId]}</span>
-                                                <button onClick={(e) => changeQty(e, item.productId, +1)}>+</button>
-                                            </div>
-                                        )}
                                     </div>
                                 </div>
+                                <div className="ppc-card-body">
+                                    <span className="ppc-card-cat">{item.parentCategory.name}</span>
+                                    <h5 className="ppc-card-title">{item.productName}</h5>
+                                    <div className="ppc-card-footer">
+                                        <span className="ppc-card-price">₹{item.mrpPrice}</span>
+                                        {item.finishType && <span className="ppc-card-finish">{item.finishType}</span>}
+                                    </div>
+                                    {!cart[item.productId] ? (
+                                        <button className="ppc-add-cart" onClick={(e) => addToCart(e, item.productId)}>
+                                            + Add to Cart
+                                        </button>
+                                    ) : (
+                                        <div className="ppc-qty-control">
+                                            <button onClick={(e) => changeQty(e, item.productId, -1)}>−</button>
+                                            <span>{cart[item.productId]}</span>
+                                            <button onClick={(e) => changeQty(e, item.productId, +1)}>+</button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-
-                            
-                        </>
+                        </div>
                     ))}
                 </div>
 
@@ -336,24 +354,16 @@ const ProductPageComponent = () => {
                 <div className="ppc-modal-backdrop" onClick={closeModal}>
                     <div className="ppc-modal" onClick={(e) => e.stopPropagation()}>
                         <button className="ppc-modal-close" onClick={closeModal}>×</button>
-
                         <div className="ppc-modal-inner">
-                            {/* Left col */}
                             <div className="ppc-modal-img-col">
                                 <div className="ppc-modal-img-wrap">
                                     <Link to={`/product/${modal.productId}`}>
                                         <img src={modal.imageUrl} alt={modal.productName} />
                                     </Link>
                                 </div>
-
-                                {/* 🔥 VIEW FULL PRODUCT BUTTON */}
-                                <Link
-                                    to={`/product/${modal.productId}`}
-                                    className="ppc-full-product-btn"
-                                >
+                                <Link to={`/product/${modal.productId}`} className="ppc-full-product-btn">
                                     View Full Product →
                                 </Link>
-
                                 {modal.tags?.length > 0 && (
                                     <div className="ppc-modal-tags">
                                         {modal.tags.map((t) => (
@@ -363,14 +373,12 @@ const ProductPageComponent = () => {
                                 )}
                             </div>
 
-                            {/* Right col */}
                             <div className="ppc-modal-info-col">
                                 <span className="ppc-modal-breadcrumb">
                                     {modal.parentCategory.name} · {modal.childCategory.name}
                                 </span>
                                 <h2 className="ppc-modal-title">{modal.productName}</h2>
                                 <p className="ppc-modal-code">{modal.productCode} · HSN {modal.hsnCode}</p>
-
                                 <div className="ppc-modal-price-row">
                                     <span className="ppc-modal-price">₹{modal.mrpPrice}</span>
                                     {modal.mrpDiscount > 0 && (
@@ -378,9 +386,7 @@ const ProductPageComponent = () => {
                                     )}
                                     <span className="ppc-modal-gst">+{modal.gst}% GST</span>
                                 </div>
-
                                 <p className="ppc-modal-desc">{modal.description}</p>
-
                                 <div className="ppc-modal-specs">
                                     {[
                                         ["Brand", modal.brand],
@@ -399,7 +405,6 @@ const ProductPageComponent = () => {
                                         </div>
                                     ))}
                                 </div>
-
                                 {modal.whereToUse?.length > 0 && (
                                     <div className="ppc-modal-uses">
                                         <span className="ppc-modal-uses-label">Where to Use</span>
@@ -410,7 +415,6 @@ const ProductPageComponent = () => {
                                         </div>
                                     </div>
                                 )}
-
                                 <div className="ppc-modal-actions">
                                     <button
                                         className={`ppc-modal-fav ${favourites[modal.productId] ? "active" : ""}`}
@@ -418,7 +422,6 @@ const ProductPageComponent = () => {
                                     >
                                         {favourites[modal.productId] ? "♥ Saved" : "♡ Save"}
                                     </button>
-
                                     {!cart[modal.productId] ? (
                                         <button className="ppc-modal-cart" onClick={(e) => addToCart(e, modal.productId)}>
                                             + Add to Cart
@@ -441,6 +444,3 @@ const ProductPageComponent = () => {
 };
 
 export default ProductPageComponent;
-
-
-

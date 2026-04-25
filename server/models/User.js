@@ -79,4 +79,9 @@ const userSchema = mongoose.Schema({
   wishlist: [{ type: String }],
 }, { timestamps: true });
 
+
+
+
+
+
 export default mongoose.model("UserSequence", userSchema);
