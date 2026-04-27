@@ -27,6 +27,7 @@ function NavBar() {
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [userName, setUserName] = useState("");
+    const [userPhoto, setUserPhoto] = useState("");
 
     // Ref for click-outside detection
     const desktopSearchRef = useRef(null);
@@ -82,31 +83,73 @@ function NavBar() {
     }, []);
 
 
-    useEffect(() => {
-        const updateUser = () => {
-            const token = localStorage.getItem("token");
+    // useEffect(() => {
+    //     const updateUser = () => {
+    //         const token = localStorage.getItem("token");
 
-            if (token) {
-                try {
-                    const decoded = JSON.parse(atob(token.split(".")[1]));
-                    setUserName(decoded.name || "User");
-                } catch (err) {
-                    console.log("Token decode error");
-                }
+    //         if (token) {
+    //             try {
+    //                 const decoded = JSON.parse(atob(token.split(".")[1]));
+    //                 setUserName(decoded.name || "User");
+    //             } catch (err) {
+    //                 console.log("Token decode error");
+    //             }
+    //         }
+    //     };
+
+    //     // ✅ RUN ON FIRST LOAD
+    //     updateUser();
+
+    //     // ✅ LISTEN FOR CHANGES (other tabs)
+    //     window.addEventListener("storage", updateUser);
+
+    //     return () => window.removeEventListener("storage", updateUser);
+    // }, []);
+
+
+useEffect(() => {
+    const updateUser = () => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            try {
+                const decoded = JSON.parse(atob(token.split(".")[1]));
+                setUserName(decoded.name || "User");
+            } catch (err) {
+                setUserName("");
+                setUserPhoto("");
             }
-        };
+        } else {
+            setUserName("");
+            setUserPhoto("");
+        }
+    };
 
-        // ✅ RUN ON FIRST LOAD
-        updateUser();
+    // ✅ Fetch actual profile photo from backend
+    const fetchUserPhoto = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        try {
+            const res = await fetch("https://testingserver-73um.onrender.com/api/users/profile", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (data.profileImage) setUserPhoto(data.profileImage);
+        } catch (err) {
+            console.log("Photo fetch error");
+        }
+    };
 
-        // ✅ LISTEN FOR CHANGES (other tabs)
-        window.addEventListener("storage", updateUser);
+    updateUser();
+    fetchUserPhoto();
 
-        return () => window.removeEventListener("storage", updateUser);
-    }, []);
+    window.addEventListener("storage", () => { updateUser(); fetchUserPhoto(); });
+    window.addEventListener("authChange", () => { updateUser(); fetchUserPhoto(); });
 
-
-
+    return () => {
+        window.removeEventListener("storage", updateUser);
+        window.removeEventListener("authChange", updateUser);
+    };
+}, []);
 
 
 
@@ -265,7 +308,7 @@ function NavBar() {
                             </button>
                         )} */}
 
-                        {userName ? (
+                        {/* {userName ? (
                             <button
                                 className='signin-signup-desktop'
                                 onClick={() => setShowProfile(true)}  // ✅ ONLY ADD THIS LINE
@@ -302,7 +345,67 @@ function NavBar() {
                             >
                                 SignUp / SignIn
                             </button>
-                        )}
+                        )} */}
+                    
+
+
+                    {userName ? (
+    <button
+        className='signin-signup-desktop signin-signup-desktop-round'
+        onClick={() => setShowProfile(true)}
+        style={{
+            background: 'none',
+            border: 'none',
+            borderRadius: '25px',
+            padding: userPhoto,
+            cursor: 'pointer',
+            color: 'white',
+            fontWeight: '500',
+            fontSize: '14px',
+            marginLeft: '10px',
+            transition: 'all 0.2s ease',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+        }}>
+        {userPhoto ? (
+            <img
+                src={userPhoto}
+                alt={userName}
+                style={{
+                    width: '49px',
+                    height: '49px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    border: '2px solid #ebc76c'
+                }}
+            />
+        ) : (
+            `👤 ${userName}`
+        )}
+    </button>
+) : (
+    <button
+        className='signin-signup-desktop'
+        style={{
+            background: 'none',
+            border: '1px solid #ebc76c',
+            borderRadius: '25px',
+            padding: '8px 18px',
+            cursor: 'pointer',
+            color: 'white',
+            fontWeight: '500',
+            fontSize: '14px',
+            marginLeft: '10px',
+            transition: 'all 0.2s ease'
+        }}
+        onClick={() => setShowAuth(true)}
+    >
+        SignUp / SignIn
+    </button>
+)}
+
+
 
                     </div>
                 </div>
@@ -368,7 +471,7 @@ function NavBar() {
                                         onClick={() => setShowProfile(true)}
                                         data-bs-dismiss="offcanvas"
                                     >
-                                        <IoPerson /> <span>👤 {userName}</span>
+                                        <IoPerson /> <span>{userName}</span>
                                     </Link>
                                 ) : (
                                     <Link
