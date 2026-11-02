@@ -1007,43 +1007,33 @@ const generatePDF = async (userInfo, cartItems) => {
     }
 
     const img = await loadImage(item.imageUrl);
-    const aspectRatio = img ? img.naturalWidth / img.naturalHeight : 1.5;
     const qrImg = await loadImage(generateQR(productUrl));
 
-    if (aspectRatio < 0.85) {
-      const portraitW = W * 0.45;
-      const portraitH = Math.min(H * 0.85, portraitW / aspectRatio);
+    // The whole picture goes on top, never cropped, stretched or covered
+    let pictureBottom = 130;
+    const fit = img
+      ? Math.min((W - 60) / img.naturalWidth, (H * 0.42) / img.naturalHeight)
+      : 0;
+    const pictureW = img ? img.naturalWidth * fit : 0;
+    const pictureH = img ? img.naturalHeight * fit : 0;
 
-      addImageSafely(img, "JPEG", W - portraitW - 20, (H - portraitH) / 2, portraitW, portraitH);
-
-      doc.setDrawColor(220, 220, 220);
-      doc.line(W * 0.52, 40, W * 0.52, H - 40);
-
-      const textMaxW = W * 0.48 - 60;
-      let y = drawProductInfo(item, productUrl, 40, 80, textMaxW, 6);
-      y = drawProductDetails(item, 40, y + 30, textMaxW, 1, H - 140);
-
-      if (qrImg) {
-        addImageSafely(qrImg, "PNG", 40, y + 6, 80, 80);
-      }
+    if (img && addImageSafely(img, "JPEG", (W - pictureW) / 2, 30, pictureW, pictureH)) {
+      pictureBottom = 30 + pictureH;
     } else {
-      const heroH = !img ? 130 : aspectRatio > 1.4 ? H * 0.45 : H * 0.52;
+      doc.setFillColor(10, 10, 12);
+      doc.rect(0, 0, W, pictureBottom, "F");
+    }
 
-      if (!img || !addImageSafely(img, "JPEG", 0, 0, W, heroH)) {
-        doc.setFillColor(10, 10, 12);
-        doc.rect(0, 0, W, heroH, "F");
-      }
+    // The details card starts below the picture and runs almost to the page edge
+    const cardTop = pictureBottom + 14;
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(30, cardTop, W - 60, H - cardTop - 18, 20, 20, "F");
 
-      // Runs almost to the page edge so every line of text sits inside it
-      doc.setFillColor(255, 255, 255);
-      doc.roundedRect(30, heroH - 20, W - 60, H - heroH + 2, 20, 20, "F");
+    const y = drawProductInfo(item, productUrl, 50, cardTop + 40, W - 210, 3);
+    drawProductDetails(item, 50, y + 28, W - 100, 2, H - 62);
 
-      const y = drawProductInfo(item, productUrl, 50, heroH + 24, W - 210, 3);
-      drawProductDetails(item, 50, y + 28, W - 100, 2, H - 62);
-
-      if (qrImg) {
-        addImageSafely(qrImg, "PNG", W - 140, heroH + 10, 90, 90);
-      }
+    if (qrImg) {
+      addImageSafely(qrImg, "PNG", W - 140, cardTop + 24, 90, 90);
     }
 
     doc.setFontSize(8);
