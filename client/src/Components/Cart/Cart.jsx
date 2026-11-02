@@ -748,6 +748,7 @@ import {
   FaPhone,
   FaEnvelope,
   FaBuilding,
+  FaEye,
 } from "react-icons/fa";
 import "./Cart.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -1125,11 +1126,107 @@ const generatePDF = async (userInfo, cartItems) => {
     });
   });
 
-  doc.save("Sequence_Brochure.pdf");
+  return doc;
+};
+
+const PDF_FILE_NAME = "Sequence_Brochure.pdf";
+const PDFJS_BASE = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174";
+
+const loadPdfJs = async () => {
+  if (!window.pdfjsLib) {
+    await new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = `${PDFJS_BASE}/pdf.min.js`;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = `${PDFJS_BASE}/pdf.worker.min.js`;
+  }
+  return window.pdfjsLib;
+};
+
+/* ─── PDF Preview ───────────────────────────── */
+// Pages are drawn to canvases because phones can't show a PDF inside a page
+const PdfPreview = ({ doc, onClose }) => {
+  const pagesRef = useRef(null);
+  const [status, setStatus] = useState("loading");
+  const [pageCount, setPageCount] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    const container = pagesRef.current;
+
+    const renderPages = async () => {
+      try {
+        const pdfjs = await loadPdfJs();
+        const pdf = await pdfjs.getDocument({ data: doc.output("arraybuffer") }).promise;
+        if (cancelled) return;
+        setPageCount(pdf.numPages);
+
+        for (let n = 1; n <= pdf.numPages; n++) {
+          const page = await pdf.getPage(n);
+          if (cancelled) return;
+
+          const pixelWidth = container.clientWidth * Math.min(window.devicePixelRatio || 1, 2);
+          const viewport = page.getViewport({
+            scale: pixelWidth / page.getViewport({ scale: 1 }).width,
+          });
+
+          const canvas = document.createElement("canvas");
+          canvas.className = "pdf-preview-page";
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          container.appendChild(canvas);
+
+          await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+          if (n === 1 && !cancelled) setStatus("ready");
+        }
+      } catch (err) {
+        console.error(err);
+        if (!cancelled) setStatus("error");
+      }
+    };
+
+    renderPages();
+
+    return () => {
+      cancelled = true;
+      container.replaceChildren();
+    };
+  }, [doc]);
+
+  return (
+    <div className="pdf-preview-overlay" onClick={onClose}>
+      <div className="pdf-preview" onClick={(e) => e.stopPropagation()}>
+        <div className="pdf-preview-header">
+          <span className="pdf-preview-title">
+            PDF preview{pageCount > 0 && ` (${pageCount} pages)`}
+          </span>
+          <button className="pdf-preview-download" onClick={() => doc.save(PDF_FILE_NAME)}>
+            <FaFilePdf />Download
+          </button>
+          <button className="pdf-modal-close" onClick={onClose} aria-label="Close preview">
+            <FaTimes />
+          </button>
+        </div>
+
+        <div className="pdf-preview-body">
+          {status === "loading" && <p className="pdf-preview-note">Loading preview…</p>}
+          {status === "error" && (
+            <p className="pdf-preview-note">
+              The preview couldn't load. You can still download the PDF.
+            </p>
+          )}
+          <div className="pdf-preview-pages" ref={pagesRef} />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 /* ─── User Info Modal ───────────────────────── */
-const UserInfoModal = ({ onClose, onGenerate, isGenerating, prefillData }) => {
+const UserInfoModal = ({ onClose, onGenerate, onPreview, isGenerating, isPreviewing, prefillData }) => {
   const [form, setForm] = useState({
     name: prefillData?.name || "",
     phone: prefillData?.phone || "",
@@ -1195,9 +1292,21 @@ const UserInfoModal = ({ onClose, onGenerate, isGenerating, prefillData }) => {
         </div>
 
         <button
+          className="pdf-preview-btn"
+          onClick={() => validate() && onPreview(form)}
+          disabled={isGenerating || isPreviewing}
+        >
+          {isPreviewing ? (
+            <><span className="pdf-spinner" />Preparing preview…</>
+          ) : (
+            <><FaEye />Preview PDF</>
+          )}
+        </button>
+
+        <button
           className={`pdf-generate-btn ${isGenerating ? "pdf-generating" : ""}`}
           onClick={() => validate() && onGenerate(form)}
-          disabled={isGenerating}
+          disabled={isGenerating || isPreviewing}
         >
           {isGenerating ? (
             <><span className="pdf-spinner" />Generating PDF…</>
@@ -1327,6 +1436,8 @@ const Cart = () => {
   const [payMethod, setPayMethod] = useState("upi");
   const [showPdfModal, setShowPdfModal] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isPreviewing, setIsPreviewing] = useState(false);
+  const [previewDoc, setPreviewDoc] = useState(null);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
@@ -1456,13 +1567,26 @@ const Cart = () => {
   const handleGenerate = async (userInfo) => {
     setIsGenerating(true);
     try {
-      await generatePDF(userInfo, cartItems, finalTotal, appliedCoupon, discountFromCoupon, subtotal, totalBeforeCoupon);
+      const doc = await generatePDF(userInfo, cartItems);
+      doc.save(PDF_FILE_NAME);
     } catch (err) {
       console.error(err);
       alert("Failed to generate PDF. Please try again.");
     } finally {
       setIsGenerating(false);
       setShowPdfModal(false);
+    }
+  };
+
+  const handlePreview = async (userInfo) => {
+    setIsPreviewing(true);
+    try {
+      setPreviewDoc(await generatePDF(userInfo, cartItems));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsPreviewing(false);
     }
   };
 
@@ -1648,9 +1772,15 @@ const Cart = () => {
         <UserInfoModal
           onClose={() => setShowPdfModal(false)}
           onGenerate={handleGenerate}
+          onPreview={handlePreview}
           isGenerating={isGenerating}
+          isPreviewing={isPreviewing}
           prefillData={userProfile}
         />
+      )}
+
+      {previewDoc && (
+        <PdfPreview doc={previewDoc} onClose={() => setPreviewDoc(null)} />
       )}
 
       {showCheckoutModal && (

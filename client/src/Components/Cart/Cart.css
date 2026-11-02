@@ -936,6 +936,147 @@
   font-size: 15px;
 }
 
+/* Keep the taller form reachable on short phones */
+.pdf-modal {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+/* ── Preview Button ────────────────────────────────────────── */
+.pdf-preview-btn {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 14px;
+  background: transparent;
+  color: #d4af5f;
+  border: 1.5px solid #d4af5f;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.03em;
+  transition: background 0.2s;
+}
+
+.pdf-preview-btn:hover:not(:disabled) {
+  background: rgba(212, 175, 95, 0.12);
+}
+
+.pdf-preview-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.pdf-preview-btn .pdf-spinner {
+  border-color: rgba(212, 175, 95, 0.3);
+  border-top-color: #d4af5f;
+}
+
+/* ── PDF Preview ───────────────────────────────────────────── */
+.pdf-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.pdf-preview {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 760px;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #141420;
+}
+
+.pdf-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #2d2d3e;
+}
+
+.pdf-preview-title {
+  flex: 1;
+  min-width: 0;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pdf-preview-download {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #d4af5f;
+  color: #0a0a0e;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.pdf-preview-download:hover {
+  background: #e8c96a;
+}
+
+.pdf-preview-body {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pdf-preview-note {
+  margin: 24px 0;
+  text-align: center;
+  color: #b8b6c4;
+  font-size: 14px;
+}
+
+.pdf-preview-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pdf-preview-page {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .pdf-preview-overlay {
+    padding: 0;
+  }
+
+  .pdf-preview {
+    border-radius: 0;
+  }
+
+  .pdf-preview-body {
+    padding: 10px;
+  }
+}
+
 /* Spinner */
 .pdf-spinner {
   width: 16px;
