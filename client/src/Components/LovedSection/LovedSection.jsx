@@ -3,6 +3,7 @@ import "./LovedSection.css";
 // import { product } from "../../assets/assets";
 import { Link } from "react-router-dom";
 import { ProductContext } from "../../Context/Context";
+import { scrollSlider } from "../../utils/scrollSlider";
 
 const categories = [
     "All",
@@ -22,6 +23,7 @@ const LovedSection = () => {
     // On mobile the tabs are a swipe row, so centre the one that was tapped
     const selectTab = (e, cat) => {
         setActiveTab(cat);
+        sliderRef.current.scrollTo({ left: 0 });
         const tabs = tabsRef.current.getBoundingClientRect();
         const tab = e.currentTarget.getBoundingClientRect();
         tabsRef.current.scrollBy({
@@ -30,19 +32,9 @@ const LovedSection = () => {
         });
     };
 
-    const scrollLeft = () => {
-        sliderRef.current.scrollBy({
-            left: -300,
-            behavior: "smooth",
-        });
-    };
+    const scrollLeft = () => scrollSlider(sliderRef.current, -1);
 
-    const scrollRight = () => {
-        sliderRef.current.scrollBy({
-            left: 300,
-            behavior: "smooth",
-        });
-    };
+    const scrollRight = () => scrollSlider(sliderRef.current, 1);
 
     const filteredProducts =
         activeTab === "All"

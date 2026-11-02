@@ -2,6 +2,7 @@ import './Inspiration.css'
 import React, { useState, useRef } from "react";
 import { inspirationCategory } from "../../assets/assets";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { scrollSlider } from "../../utils/scrollSlider";
 
 const Inspiration = () => {
 
@@ -16,6 +17,7 @@ const Inspiration = () => {
     // On mobile the tabs are a swipe row, so centre the one that was tapped
     const selectCategory = (e, name) => {
         setActiveCategory(name);
+        sliderRef.current.scrollTo({ left: 0 });
         const tabs = tabsRef.current.getBoundingClientRect();
         const tab = e.currentTarget.getBoundingClientRect();
         tabsRef.current.scrollBy({
@@ -25,19 +27,9 @@ const Inspiration = () => {
     };
 
     // 👉 Scroll Functions
-    const scrollLeft = () => {
-        sliderRef.current.scrollBy({
-            left: -300,
-            behavior: "smooth"
-        });
-    };
+    const scrollLeft = () => scrollSlider(sliderRef.current, -1);
 
-    const scrollRight = () => {
-        sliderRef.current.scrollBy({
-            left: 300,
-            behavior: "smooth"
-        });
-    };
+    const scrollRight = () => scrollSlider(sliderRef.current, 1);
 
     return (
         <div className="insp-container">

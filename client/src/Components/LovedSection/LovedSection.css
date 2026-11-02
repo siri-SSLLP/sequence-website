@@ -142,9 +142,12 @@
     /* translate:; */
 }
 
-.slider-btn:hover {
-    background: #ebc76c;
-    color: white;
+/* Only on real pointers, otherwise a tapped arrow stays gold on phones */
+@media (hover: hover) {
+    .slider-btn:hover {
+        background: #ebc76c;
+        color: white;
+    }
 }
 
 /* Left & Right */
@@ -180,5 +183,18 @@
         flex: 0 0 auto;
         white-space: nowrap;
         scroll-snap-align: center;
+    }
+
+    /* Photos stop in the middle of the screen */
+    .product-section .slider {
+        padding: 0 max(0px, calc(50% - 100px));
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .product-section .loved-link {
+        flex: 0 0 200px;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
     }
 }

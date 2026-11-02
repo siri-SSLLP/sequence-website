@@ -148,8 +148,27 @@
   right: 5px;
 }
 
-.insp-arrow:hover {
-  background: #f4c400;
+@media (hover: hover) {
+  .insp-arrow:hover {
+    background: #f4c400;
+  }
+}
+
+/* Mobile: fixed-width photos that stop in the middle of the screen */
+@media (max-width: 768px) {
+  .insp-slider {
+    padding: 10px max(0px, calc(50% - 140px));
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .insp-card {
+    flex: 0 0 280px;
+    width: 280px;
+    min-width: 0;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
 }
 
 /* OPTIONAL: hide scrollbar */
