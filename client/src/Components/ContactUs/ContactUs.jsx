@@ -134,7 +134,7 @@ export default function ContactUs() {
           />
         </div>
 
-        <button type="submit" className="ct-submit">Send on WhatsApp</button>
+        <button type="submit" className="ct-submit">Send Message</button>
 
         <p className="ct-note" role="status">
           {sent
