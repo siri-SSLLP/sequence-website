@@ -875,7 +875,7 @@ const generatePDF = async (userInfo, cartItems) => {
   };
 
   // Specs table: only shows what the product actually has. Returns the y below it.
-  const drawProductDetails = (item, x, startY, width, columns) => {
+  const drawProductDetails = (item, x, startY, width, columns, bottomY) => {
     const rows = [
       ["Product code", item.productCode],
       ["Brand", item.brand],
@@ -895,21 +895,32 @@ const generatePDF = async (userInfo, cartItems) => {
       ["GST", item.gst ? `${item.gst}%` : null],
     ].filter(([, value]) => value);
 
-    const LABEL_W = 66;
-    const ROW_H = 16;
+    const LABEL_W = 78;
     const columnW = width / columns;
     let y = startY;
 
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(12);
+    doc.setFontSize(13);
     doc.setTextColor(20, 20, 20);
     doc.text("Product details", x, y);
-    y += 8;
+    y += 9;
     doc.setDrawColor(235, 199, 108);
     doc.line(x, y, x + width, y);
-    y += 15;
+    y += 18;
 
-    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10.5);
+
+    const uses = item.whereToUse?.length ? item.whereToUse : item.applications;
+    const useLines = uses?.length
+      ? doc.splitTextToSize(uses.join(", "), width - LABEL_W)
+      : [];
+
+    // Spread the rows over the space left on this page, within readable limits
+    const rowCount = Math.ceil(rows.length / columns) + (useLines.length ? 1 : 0);
+    const spareH = bottomY - y - Math.max(useLines.length - 1, 0) * 14;
+    const ROW_H = Math.min(Math.max(spareH / Math.max(rowCount, 1), 17), 26);
+
     rows.forEach(([label, value], i) => {
       const rowX = x + (i % columns) * columnW;
       const rowY = y + Math.floor(i / columns) * ROW_H;
@@ -925,14 +936,12 @@ const generatePDF = async (userInfo, cartItems) => {
     });
     y += Math.ceil(rows.length / columns) * ROW_H;
 
-    const uses = item.whereToUse?.length ? item.whereToUse : item.applications;
-    if (uses?.length) {
-      const useLines = doc.splitTextToSize(uses.join(", "), width - LABEL_W);
+    if (useLines.length) {
       doc.setTextColor(120, 120, 120);
       doc.text("Where to use", x, y);
       doc.setTextColor(30, 30, 30);
       doc.text(useLines, x + LABEL_W, y);
-      y += useLines.length * 12 + 4;
+      y += useLines.length * 14 + 4;
     }
 
     return y;
@@ -1000,7 +1009,7 @@ const generatePDF = async (userInfo, cartItems) => {
 
       const textMaxW = W * 0.48 - 60;
       let y = drawProductInfo(item, productUrl, 40, 80, textMaxW, 6);
-      y = drawProductDetails(item, 40, y + 30, textMaxW, 1);
+      y = drawProductDetails(item, 40, y + 30, textMaxW, 1, H - 140);
 
       if (qrImg) {
         doc.addImage(qrImg, "PNG", 40, y + 6, 80, 80);
@@ -1019,7 +1028,7 @@ const generatePDF = async (userInfo, cartItems) => {
       doc.roundedRect(30, heroH - 20, W - 60, H - heroH - 10, 20, 20, "F");
 
       const y = drawProductInfo(item, productUrl, 50, heroH + 24, W - 210, 3);
-      drawProductDetails(item, 50, y + 28, W - 100, 2);
+      drawProductDetails(item, 50, y + 28, W - 100, 2, H - 54);
 
       if (qrImg) {
         doc.addImage(qrImg, "PNG", W - 140, heroH + 10, 90, 90);
