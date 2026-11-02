@@ -7,10 +7,22 @@ const Inspiration = () => {
 
     const [activeCategory, setActiveCategory] = useState("Living Room");
     const sliderRef = useRef(null);
+    const tabsRef = useRef(null);
 
     const selectedCategory = inspirationCategory.find(
         (cat) => cat.name === activeCategory
     );
+
+    // On mobile the tabs are a swipe row, so centre the one that was tapped
+    const selectCategory = (e, name) => {
+        setActiveCategory(name);
+        const tabs = tabsRef.current.getBoundingClientRect();
+        const tab = e.currentTarget.getBoundingClientRect();
+        tabsRef.current.scrollBy({
+            left: tab.left + tab.width / 2 - (tabs.left + tabs.width / 2),
+            behavior: "smooth"
+        });
+    };
 
     // 👉 Scroll Functions
     const scrollLeft = () => {
@@ -32,12 +44,12 @@ const Inspiration = () => {
             {/* TITLE */}
             <h2 className="insp-title">Inspirational and Stunning Designs</h2>
             {/* CATEGORY TABS */}
-            <div className="insp-tabs">
+            <div className="insp-tabs" ref={tabsRef}>
                 {inspirationCategory.map((cat) => (
                     <button
                         key={cat.name}
                         className={`insp-tab ${activeCategory === cat.name ? "active" : ""}`}
-                        onClick={() => setActiveCategory(cat.name)}
+                        onClick={(e) => selectCategory(e, cat.name)}
                     >
                         {cat.name}
                     </button>

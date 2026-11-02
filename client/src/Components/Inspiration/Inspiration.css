@@ -35,8 +35,38 @@
   /* font-weight: 600; */
 }
 
-.insp-tab:hover {
-  background: #ebc76c;
+/* Only on real pointers, otherwise a tapped tab stays gold on phones */
+@media (hover: hover) {
+  .insp-tab:hover {
+    background: #ebc76c;
+  }
+}
+
+/* Mobile: one swipeable row, running edge to edge past the page padding */
+@media (max-width: 768px) {
+  .insp-tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    justify-content: safe center;
+    gap: 10px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 2px 20px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scroll-padding: 0 20px;
+    scrollbar-width: none;
+  }
+
+  .insp-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .insp-tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    scroll-snap-align: center;
+  }
 }
 
 /* SLIDER */
