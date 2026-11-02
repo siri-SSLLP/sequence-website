@@ -218,18 +218,58 @@ a:hover {
 /* DESKTOP SEARCH INPUT      */
 /* ========================= */
 .navbar-search-input {
-    width: clamp(160px, 20vw, 300px);
-    border-radius: 5px;
+    width: clamp(200px, 100vw - 1060px, 400px);
+    height: 42px;
+    border-radius: 25px;
     outline: none;
     padding-left: 18px;
-    padding-right: 18px;
-    border: 1px solid #333;
-    transition: border-color 0.2s ease;
+    padding-right: 44px;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-size: 14px;
+    border: 1px solid #ebc76c;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navbar-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .navbar-search-input:focus {
+    background-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 0 0 2px rgba(235, 199, 108, 0.25);
+}
+
+.offcanvas-search-field {
+    height: 42px;
+    border-radius: 25px;
     border-color: #ebc76c;
-    box-shadow: 0 0 0 2px rgba(235, 199, 108, 0.15);
+    padding-left: 18px;
+    padding-right: 44px;
+}
+
+/* Search icon inside the bar, on the right */
+.d-flex .navbar-search-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: #ebc76c;
+    color: black;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.d-flex .navbar-search-btn:hover {
+    background-color: #c59826;
 }
 
 /* ========================= */
@@ -615,6 +655,10 @@ a:hover {
     }
 }
 
+.desktop-menu .search-dropdown {
+    min-width: 320px;
+}
+
 @media (max-width: 768px) {
     .search-dropdown {
         width: 100%;
@@ -634,16 +678,10 @@ a:hover {
     }
 }
 
-/* Keep cart and sign in on screen on small laptops — search results
-   already show while typing, so the Search button can go */
+/* Keep cart and sign in on screen on small laptops */
 @media (min-width: 992px) and (max-width: 1240px) {
-    .desktop-menu form .navbar-btn {
-        display: none;
-    }
-
     .navbar-search-input {
-        width: 150px;
-        margin-right: 0 !important;
+        width: 170px;
     }
 
     .img-cart-icon {

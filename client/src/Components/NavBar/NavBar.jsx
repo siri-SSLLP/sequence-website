@@ -5,7 +5,7 @@ import './NavBar.css';
 import { ImWhatsapp } from "react-icons/im";
 import { IoCall } from "react-icons/io5";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { BsCart3, BsHeart } from "react-icons/bs";
+import { BsCart3, BsHeart, BsSearch } from "react-icons/bs";
 import { IoPerson } from "react-icons/io5";
 import { MdOutlineStorefront } from "react-icons/md";
 import { IoLogIn } from "react-icons/io5";
@@ -46,6 +46,12 @@ function NavBar() {
             groupedCategories[parentId].children.push(item.childCategory);
         }
     });
+
+    // Results show while typing, so the search icon just focuses the field
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        e.currentTarget.querySelector("input")?.focus();
+    };
 
     // Search filter effect
     useEffect(() => {
@@ -206,16 +212,18 @@ useEffect(() => {
                             className="d-flex"
                             style={{ position: "relative" }}
                             ref={desktopSearchRef}
-                            onSubmit={(e) => e.preventDefault()}
+                            onSubmit={handleSearchSubmit}
                         >
                             <input
-                                className="navbar-search-input me-2"
+                                className="navbar-search-input"
                                 type="search"
                                 placeholder="Search products..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
-                            <button className="navbar-btn btn btn-outline-success" type="submit">Search</button>
+                            <button className="navbar-search-btn" type="submit" aria-label="Search">
+                                <BsSearch />
+                            </button>
 
                             {/* SEARCH DROPDOWN */}
                             {search.trim() !== "" && (
@@ -510,17 +518,17 @@ useEffect(() => {
                         className="d-flex mt-3"
                         style={{ position: "relative" }}
                         ref={mobileSearchRef}
-                        onSubmit={(e) => e.preventDefault()}
+                        onSubmit={handleSearchSubmit}
                     >
                         <input
-                            className="offcanvas-search-field form-control me-2"
+                            className="offcanvas-search-field form-control"
                             type="search"
                             placeholder="Search products..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
-                        <button className="btn btn-outline-success" type="submit">
-                            <span>Search</span>
+                        <button className="navbar-search-btn" type="submit" aria-label="Search">
+                            <BsSearch />
                         </button>
 
                         {/* MOBILE SEARCH DROPDOWN */}
