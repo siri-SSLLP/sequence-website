@@ -962,21 +962,6 @@ const generatePDF = async (userInfo, cartItems) => {
   doc.setTextColor(180, 180, 180);
   doc.text("Premium Laminate Catalogue", W / 2, 280, { align: "center" });
 
-  doc.setFontSize(12);
-  doc.setTextColor(235, 199, 108);
-  doc.text(COMPANY.name, W / 2, H - 150, { align: "center" });
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-  doc.setTextColor(180, 180, 180);
-  doc.text(COMPANY.showroom.join(", "), W / 2, H - 132, { align: "center" });
-  doc.text(
-    `${COMPANY.phones.join(" / ")}  |  ${COMPANY.email}  |  ${COMPANY.website}`,
-    W / 2,
-    H - 116,
-    { align: "center" }
-  );
-
   const now = new Date().toLocaleString("en-IN");
   doc.setFontSize(10);
   doc.setTextColor(120, 120, 120);
