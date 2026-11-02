@@ -1,59 +1,81 @@
 import { useEffect, useState } from "react";
 import "./Loader.css";
 
-const MIN_MS = 1400; // long enough for every sheet to be laid
-const MAX_MS = 6000; // don't hold the site back if the API is slow
-const EXIT_MS = 1000; // matches the sheet lift in Loader.css
+export default function Loader({ onComplete }) {
+  const [progress, setProgress] = useState(0);
+  const [hiding, setHiding] = useState(false);
 
-const SHEETS = ["walnut", "oak", "stone", "charcoal", "gold"];
-
-export default function Loader({ ready, onComplete }) {
-  const [minPassed, setMinPassed] = useState(false);
-  const [maxPassed, setMaxPassed] = useState(false);
-
-  const hiding = minPassed && (ready || maxPassed);
+  const brand = "SEQUENCE";
+  const sub = "SURFACE";
 
   useEffect(() => {
-    const min = setTimeout(() => setMinPassed(true), MIN_MS);
-    const max = setTimeout(() => setMaxPassed(true), MAX_MS);
+    // Simulate loading progress
+    let current = 0;
+    const interval = setInterval(() => {
+      current += Math.random() * 14 + 4;
+      if (current >= 100) {
+        current = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          setHiding(true);
+          setTimeout(() => {
+            onComplete?.();
+          }, 700);
+        }, 400);
+      }
+      setProgress(Math.min(current, 100));
+    }, 120);
 
-    return () => {
-      clearTimeout(min);
-      clearTimeout(max);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!hiding) return;
-    const exit = setTimeout(() => onComplete?.(), EXIT_MS);
-    return () => clearTimeout(exit);
-  }, [hiding, onComplete]);
+    return () => clearInterval(interval);
+  }, [onComplete]);
 
   return (
-    <div
-      className={`loader-root${hiding ? " loader-hide" : ""}`}
-      role="status"
-      aria-label="Loading Sequence Surfaces"
-    >
-      {/* Laminate sheets — laid in sequence, then lifted in sequence */}
-      <div className="loader-sheets" aria-hidden="true">
-        {SHEETS.map((sheet, i) => (
-          <div
-            key={sheet}
-            className={`loader-sheet loader-sheet-${sheet}`}
-            style={{ "--i": i }}
-          />
-        ))}
+    <div className={`loader-root${hiding ? " loader-hide" : ""}`}>
+      {/* Grain overlay */}
+      <div className="loader-grain" />
+
+      {/* Center content */}
+      <div className="loader-center">
+        {/* Brand name — letters stagger in */}
+        <div className="loader-brand">
+          {brand.split("").map((char, i) => (
+            <span
+              key={i}
+              className="loader-letter"
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
+              {char}
+            </span>
+          ))}
+        </div>
+
+        {/* Sub word */}
+        <div className="loader-sub">
+          {sub.split("").map((char, i) => (
+            <span
+              key={i}
+              className="loader-sub-letter"
+              style={{ animationDelay: `${300 + i * 50}ms` }}
+            >
+              {char}
+            </span>
+          ))}
+        </div>
+
+        {/* Tagline */}
+        <p className="loader-tagline">Exclusive Laminate Company · Bangalore</p>
       </div>
 
-      <div className="loader-plaque">
-        <img
-          className="loader-logo"
-          src="https://sequencesurface.com/images/logo.png"
-          alt=""
+      {/* Progress bar at bottom */}
+      <div className="loader-progress-track">
+        <div
+          className="loader-progress-fill"
+          style={{ width: `${progress}%` }}
         />
-        <p className="loader-tagline">Exclusive Laminate Company, Bangalore</p>
       </div>
+
+      {/* Progress number */}
+      <div className="loader-progress-num">{Math.round(progress)}</div>
     </div>
   );
 }

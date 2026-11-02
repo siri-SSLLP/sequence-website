@@ -1,121 +1,170 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:wght@300;400&display=swap'); */
+
 /* ─── Root ──────────────────────────────────────────────── */
 
 .loader-root {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #000000;
+  background: #0d0d0b;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .loader-hide {
-  background: transparent;
+  opacity: 0;
   pointer-events: none;
 }
 
-/* ─── Laminate sheets ───────────────────────────────────── */
+/* ─── Grain texture overlay ─────────────────────────────── */
 
-.loader-sheets {
+.loader-grain {
   position: absolute;
-  inset: 0;
-  display: flex;
-  gap: 1px;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  animation: loader-grain-shift 0.5s steps(2) infinite;
 }
 
-.loader-sheet {
-  flex: 1;
-  transform-origin: bottom;
-  animation: loader-sheet-lay 0.7s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 120ms) backwards;
-  transition: transform 0.65s cubic-bezier(0.7, 0, 0.2, 1) calc(var(--i) * 70ms);
+@keyframes loader-grain-shift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2%, -1%); }
+  50%  { transform: translate(1%, 2%); }
+  75%  { transform: translate(-1%, 1%); }
+  100% { transform: translate(2%, -2%); }
 }
 
-@keyframes loader-sheet-lay {
-  from { transform: scaleY(0); }
-}
+/* ─── Horizontal accent line (top) ─────────────────────── */
 
-.loader-hide .loader-sheet {
-  transform: translateY(-100%);
-}
-
-/* Wood sheets get a stretched noise grain; solid sheets stay flat */
-.loader-sheet-walnut,
-.loader-sheet-oak {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='900'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035 0.002' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.8 -0.2'/%3E%3C/filter%3E%3Crect width='400' height='900' filter='url(%23grain)'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-}
-
-.loader-sheet-walnut   { background-color: #6b4429; }
-.loader-sheet-oak      { background-color: #c0935f; }
-.loader-sheet-stone    { background-color: #dcd6ca; }
-.loader-sheet-charcoal { background-color: #2b2a28; }
-.loader-sheet-gold     { background-color: #ebc76c; }
-
-/* Light passing over the finished surface while we wait */
-.loader-sheets::after {
+.loader-root::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.16) 50%, transparent 60%);
-  transform: translateX(-100%);
-  animation: loader-sheen 2.4s ease-in-out 1.2s infinite;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #f5c400 40%, #f5c400 60%, transparent);
+  animation: loader-line-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: scaleX(0);
+  transform-origin: center;
 }
 
-@keyframes loader-sheen {
-  to { transform: translateX(100%); }
+@keyframes loader-line-in {
+  to { transform: scaleX(1); }
 }
 
-.loader-hide .loader-sheets::after {
-  display: none;
-}
+/* ─── Center content ────────────────────────────────────── */
 
-/* ─── Logo plaque ───────────────────────────────────────── */
-
-.loader-plaque {
-  position: relative;
-  background: #000000;
-  padding: 32px 44px 26px;
+.loader-center {
   text-align: center;
   user-select: none;
-  max-width: calc(100vw - 32px);
-  box-sizing: border-box;
-  transition: opacity 0.25s ease;
 }
 
-.loader-hide .loader-plaque {
+/* ─── Brand name ────────────────────────────────────────── */
+
+.loader-brand {
+  display: flex;
+  justify-content: center;
+  gap: 0.04em;
+  margin-bottom: 6px;
+}
+
+.loader-letter {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(44px, 10vw, 92px);
+  font-weight: 800;
+  color: #f7f6f2;
+  letter-spacing: 0.12em;
+  display: inline-block;
   opacity: 0;
+  transform: translateY(24px);
+  animation: loader-letter-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.loader-logo {
-  display: block;
-  max-height: 64px;
-  max-width: 100%;
-  margin: 0 auto 14px;
+@keyframes loader-letter-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
+/* ─── Sub word ──────────────────────────────────────────── */
+
+.loader-sub {
+  display: flex;
+  justify-content: center;
+  gap: 0.1em;
+  margin-bottom: 20px;
+}
+
+.loader-sub-letter {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(14px, 3vw, 22px);
+  font-weight: 800;
+  color: #f5c400;
+  letter-spacing: 0.55em;
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: loader-letter-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Tagline ────────────────────────────────────────────── */
 
 .loader-tagline {
-  margin: 0;
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  color: #ebc76c;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #555;
+  opacity: 0;
+  animation: loader-fade-in 0.6s ease 0.8s forwards;
 }
 
-/* ─── Reduced motion ────────────────────────────────────── */
+@keyframes loader-fade-in {
+  to { opacity: 1; }
+}
 
-@media (prefers-reduced-motion: reduce) {
-  .loader-sheet {
-    animation: none;
-    transition: opacity 0.3s ease;
-  }
+/* ─── Progress track (bottom) ───────────────────────────── */
 
-  .loader-hide .loader-sheet {
-    transform: none;
-    opacity: 0;
-  }
+.loader-progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #1e1e1a;
+  overflow: hidden;
+}
 
-  .loader-sheets::after {
-    display: none;
-  }
+.loader-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #c49a00, #f5c400);
+  transition: width 0.15s ease;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 12px #f5c40080;
+}
+
+/* ─── Progress number ───────────────────────────────────── */
+
+.loader-progress-num {
+  position: absolute;
+  bottom: 18px;
+  right: 24px;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  color: #333;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  min-width: 2.5ch;
+  text-align: right;
+  transition: color 0.3s;
 }
