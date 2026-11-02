@@ -826,12 +826,24 @@ const generatePDF = async (userInfo, cartItems) => {
     new Promise((resolve) => {
       const img = new Image();
       img.crossOrigin = "anonymous";
-      img.onload = () => resolve(img);
+      // A photo can finish loading with no usable data; treat that as failed
+      img.onload = () => resolve(img.naturalWidth > 0 ? img : null);
       img.onerror = () => resolve(null);
       // Separate URL so the browser can't reuse the page's non-CORS cached copy
       img.src = `${url}${url.includes("?") ? "&" : "?"}pdf=1`;
       setTimeout(() => resolve(null), 8000);
     });
+
+  // One bad image should cost that image, not the whole PDF
+  const addImageSafely = (...args) => {
+    try {
+      doc.addImage(...args);
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  };
 
   const generateQR = (text) =>
     `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(text)}`;
@@ -958,7 +970,7 @@ const generatePDF = async (userInfo, cartItems) => {
   const drawLogo = (y) => {
     if (!logo) return;
     const logoW = 60 * (logo.naturalWidth / logo.naturalHeight);
-    doc.addImage(logo, "PNG", W / 2 - logoW / 2, y, logoW, 60);
+    addImageSafely(logo, "PNG", W / 2 - logoW / 2, y, logoW, 60);
   };
 
   drawLogo(120);
@@ -1002,7 +1014,7 @@ const generatePDF = async (userInfo, cartItems) => {
       const portraitW = W * 0.45;
       const portraitH = Math.min(H * 0.85, portraitW / aspectRatio);
 
-      doc.addImage(img, "JPEG", W - portraitW - 20, (H - portraitH) / 2, portraitW, portraitH);
+      addImageSafely(img, "JPEG", W - portraitW - 20, (H - portraitH) / 2, portraitW, portraitH);
 
       doc.setDrawColor(220, 220, 220);
       doc.line(W * 0.52, 40, W * 0.52, H - 40);
@@ -1012,26 +1024,25 @@ const generatePDF = async (userInfo, cartItems) => {
       y = drawProductDetails(item, 40, y + 30, textMaxW, 1, H - 140);
 
       if (qrImg) {
-        doc.addImage(qrImg, "PNG", 40, y + 6, 80, 80);
+        addImageSafely(qrImg, "PNG", 40, y + 6, 80, 80);
       }
     } else {
       const heroH = !img ? 130 : aspectRatio > 1.4 ? H * 0.45 : H * 0.52;
 
-      if (img) {
-        doc.addImage(img, "JPEG", 0, 0, W, heroH);
-      } else {
+      if (!img || !addImageSafely(img, "JPEG", 0, 0, W, heroH)) {
         doc.setFillColor(10, 10, 12);
         doc.rect(0, 0, W, heroH, "F");
       }
 
+      // Runs almost to the page edge so every line of text sits inside it
       doc.setFillColor(255, 255, 255);
-      doc.roundedRect(30, heroH - 20, W - 60, H - heroH - 10, 20, 20, "F");
+      doc.roundedRect(30, heroH - 20, W - 60, H - heroH + 2, 20, 20, "F");
 
       const y = drawProductInfo(item, productUrl, 50, heroH + 24, W - 210, 3);
-      drawProductDetails(item, 50, y + 28, W - 100, 2, H - 54);
+      drawProductDetails(item, 50, y + 28, W - 100, 2, H - 62);
 
       if (qrImg) {
-        doc.addImage(qrImg, "PNG", W - 140, heroH + 10, 90, 90);
+        addImageSafely(qrImg, "PNG", W - 140, heroH + 10, 90, 90);
       }
     }
 
@@ -1041,7 +1052,7 @@ const generatePDF = async (userInfo, cartItems) => {
     doc.text(
       `${COMPANY.name}  |  ${COMPANY.showroom.join(", ")}  |  ${COMPANY.phones[0]}  |  ${COMPANY.email}`,
       W / 2,
-      H - 36,
+      H - 44,
       { align: "center" }
     );
 
@@ -1051,7 +1062,7 @@ const generatePDF = async (userInfo, cartItems) => {
     doc.text(
       `${userInfo.name || ""} · ${userInfo.phone || ""} · ${userInfo.email || ""}`,
       W / 2,
-      H - 22,
+      H - 30,
       { align: "center" }
     );
 
