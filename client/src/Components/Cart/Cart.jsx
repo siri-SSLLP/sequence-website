@@ -745,11 +745,11 @@ import {
   FaFilePdf,
   FaTimes,
   FaUser,
-  FaPhone,
   FaEnvelope,
   FaBuilding,
   FaEye,
 } from "react-icons/fa";
+import { IoCall } from "react-icons/io5";
 import "./Cart.css";
 import { Link, useNavigate } from "react-router-dom";
 import SignInSignUp from "../Signupsignin/Signupsignin.jsx";
@@ -1280,7 +1280,7 @@ const UserInfoModal = ({ onClose, onGenerate, onPreview, isGenerating, isPreview
         <div className="pdf-fields">
           {[
             { key: "name", icon: <FaUser />, label: "Full Name", placeholder: "Arjun Sharma", type: "text" },
-            { key: "phone", icon: <FaPhone />, label: "Phone Number", placeholder: "+91 98765 43210", type: "tel" },
+            { key: "phone", icon: <IoCall />, label: "Phone Number", placeholder: "+91 98765 43210", type: "tel" },
             { key: "email", icon: <FaEnvelope />, label: "Email", placeholder: "arjun@example.com", type: "email" },
             { key: "company", icon: <FaBuilding />, label: "Company", placeholder: "Acme Pvt. Ltd. (optional)", type: "text" },
           ].map(({ key, icon, label, placeholder, type }) => (
@@ -1390,7 +1390,7 @@ const CheckoutInfoModal = ({ onClose, onProceed, isProcessing, amount, payMethod
         <div className="pdf-fields">
           {[
             { key: "name", icon: <FaUser />, label: "Full Name", placeholder: "Arjun Sharma", type: "text" },
-            { key: "phone", icon: <FaPhone />, label: "Phone Number", placeholder: "9876543210", type: "tel" },
+            { key: "phone", icon: <IoCall />, label: "Phone Number", placeholder: "9876543210", type: "tel" },
             { key: "email", icon: <FaEnvelope />, label: "Email", placeholder: "arjun@example.com", type: "email" },
             { key: "address", icon: <FaBuilding />, label: "Street Address", placeholder: "Flat 12, MG Road", type: "text" },
             { key: "city", icon: <FaBuilding />, label: "City", placeholder: "Bengaluru", type: "text" },
