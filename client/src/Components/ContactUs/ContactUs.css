@@ -1,13 +1,8 @@
-/* ─── Walnut laminate page ──────────────────────────────── */
+/* ─── Page ──────────────────────────────────────────────── */
 
 .ct-page {
   margin-top: 186px;
   padding: 44px 16px 56px;
-  background-color: #6b4429;
-  background-image:
-    linear-gradient(rgba(28, 16, 8, 0.42), rgba(28, 16, 8, 0.42)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='900'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05 0.003' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 -0.15'/%3E%3C/filter%3E%3Crect width='400' height='900' filter='url(%23grain)'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
   font-family: 'DM Sans', sans-serif;
 }
 
@@ -18,13 +13,13 @@
   font-size: clamp(40px, 6vw, 64px);
   font-weight: 600;
   line-height: 1.1;
-  color: #ffffff;
+  color: #1E0F02;
 }
 
 .ct-title em {
   font-style: italic;
   font-weight: 500;
-  color: #ebc76c;
+  color: #BF7A38;
 }
 
 /* ─── Form card ─────────────────────────────────────────── */
@@ -37,8 +32,9 @@
   margin: 0 auto;
   padding: 36px 32px 28px;
   background: #ffffff;
+  border: 1px solid #ece7e0;
   border-radius: 24px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 40px rgba(30, 15, 2, 0.1);
 }
 
 .ct-row {
@@ -129,7 +125,7 @@
   gap: 32px;
   max-width: 880px;
   margin: 44px auto 0;
-  color: rgba(255, 255, 255, 0.85);
+  color: #5f5a54;
   font-size: 14px;
   line-height: 1.7;
 }
@@ -139,7 +135,7 @@
   font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
   font-weight: 600;
-  color: #ebc76c;
+  color: #1E0F02;
 }
 
 .ct-details p {
@@ -147,10 +143,15 @@
 }
 
 .ct-details a {
-  color: #ffffff;
+  color: #1E0F02;
   text-decoration: underline;
   text-underline-offset: 3px;
   overflow-wrap: anywhere;
+}
+
+/* The site-wide link hover is gold, too faint on a light page */
+.ct-details a:hover {
+  color: #BF7A38 !important;
 }
 
 /* ─── Responsive ────────────────────────────────────────── */
