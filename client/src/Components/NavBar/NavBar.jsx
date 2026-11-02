@@ -5,7 +5,7 @@ import './NavBar.css';
 import { ImWhatsapp } from "react-icons/im";
 import { IoCall } from "react-icons/io5";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { BsCart3 } from "react-icons/bs";
+import { BsCart3, BsHeart } from "react-icons/bs";
 import { IoPerson } from "react-icons/io5";
 import { MdOutlineStorefront } from "react-icons/md";
 import { IoLogIn } from "react-icons/io5";
@@ -21,7 +21,7 @@ import ProfilePopup from '../ProfilePopup/ProfilePopup.jsx';
 
 function NavBar() {
     const [showProfile, setShowProfile] = useState(false);
-    const { cart, products } = useContext(ProductContext);
+    const { cart, products, favourites } = useContext(ProductContext);
     const product = products;
     const [showAuth, setShowAuth] = useState(false);
     const [search, setSearch] = useState("");
@@ -245,6 +245,13 @@ useEffect(() => {
                                 </div>
                             )}
                         </form>
+
+                        <div className='div-desktop-cart' style={{ display: "flex" }}>
+                            <Link to={'/favourites'} className='img-cart-icon' aria-label='Favourites'>
+                                <BsHeart />
+                            </Link>
+                            <div className='cart-count-desktop'>{Object.keys(favourites).length}</div>
+                        </div>
 
                         <div className='div-desktop-cart' style={{ display: "flex" }}>
                             <Link to={'/cart'} className='img-cart-icon'>
@@ -481,6 +488,10 @@ useEffect(() => {
                                          <span>SignUp / SignIn</span>
                                     </Link>
                                 )}
+
+                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/favourites">
+                                    <BsHeart /> <span>Favourites</span>
+                                </Link>
 
                                 <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/cart">
                                     <BsCart3 /> <span>Cart</span>

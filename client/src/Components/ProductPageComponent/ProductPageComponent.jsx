@@ -18,8 +18,7 @@ const ProductPageComponent = () => {
     });
     const [sort, setSort] = useState("popular");
     const [activeFilters, setActiveFilters] = useState([]);
-    const [favourites, setFavourites] = useState({});
-    const { changeQty, addToCart, cart, products, loading } = useContext(ProductContext); // ✅ loading added
+    const { changeQty, addToCart, cart, products, loading, favourites, toggleFavourite } = useContext(ProductContext); // ✅ loading added
     const [modal, setModal] = useState(null);
     const [heartAnim, setHeartAnim] = useState({});
     const product = products;
@@ -118,8 +117,7 @@ const ProductPageComponent = () => {
     }, [filters, sort, product]); // ✅ product added
 
     const toggleFav = (e, id) => {
-        e.stopPropagation();
-        setFavourites(prev => ({ ...prev, [id]: !prev[id] }));
+        toggleFavourite(e, id);
         setHeartAnim(prev => ({ ...prev, [id]: true }));
         setTimeout(() => setHeartAnim(prev => ({ ...prev, [id]: false })), 400);
     };
@@ -306,7 +304,7 @@ const ProductPageComponent = () => {
                                     <button
                                         className={`ppc-heart ${favourites[item.productId] ? "active" : ""} ${heartAnim[item.productId] ? "pop" : ""}`}
                                         onClick={(e) => toggleFav(e, item.productId)}
-                                        aria-label="Add to favourites"
+                                        aria-label={favourites[item.productId] ? "Remove from favourites" : "Add to favourites"}
                                     >
                                         {favourites[item.productId] ? "♥" : "♡"}
                                     </button>

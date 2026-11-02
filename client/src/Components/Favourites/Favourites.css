@@ -1,0 +1,38 @@
+/* Card, grid and empty-state styles come from ProductPageComponent.css */
+
+.ppc-page.fav-page {
+    margin-top: 186px;
+    min-height: 60vh;
+}
+
+.fav-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.fav-title {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--ppc-text-primary);
+}
+
+.ppc-clear-btn.fav-browse {
+    display: inline-block;
+    width: auto;
+    padding: 9px 22px;
+    text-decoration: none;
+}
+
+@media (max-width: 991px) {
+    .ppc-page.fav-page {
+        margin-top: 70px;
+    }
+
+    .fav-page .ppc-content {
+        padding: 24px 16px;
+    }
+}

@@ -7,23 +7,13 @@ import PhotoLinks from '../Components/PhotoLinks/PhotoLinks'
 import Theme from '../Components/Theme/Theme'
 import Inspiration from '../Components/Inspiration/Inspiration'
 import Trending from '../Components/Trending/Trending'
-import { useEffect, useState } from "react";
-import Loader from "../Components/Loader/Loader";
 import LovedSection from '../Components/LovedSection/LovedSection'
 
 
 
 const Home = () => {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000); // simulate loading
-    }, []);
     return (
         <>
-            {loading ? <Loader /> : <h1></h1>}
             <div>
                 <Hero></Hero>
                 <NewLaunch></NewLaunch>

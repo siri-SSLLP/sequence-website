@@ -7,7 +7,7 @@ import { ProductContext } from "../../Context/Context.jsx";
 const ProductDescription = () => {
     const { products } = useContext(ProductContext);
     const { id } = useParams();
-    const { changeQty, addToCart, cart, setCart } = useContext(ProductContext);
+    const { changeQty, addToCart, cart, setCart, favourites, toggleFavourite } = useContext(ProductContext);
 
     const singleProduct =
         products.find((item) => String(item.productId) === String(id) && item.images) ||
@@ -35,7 +35,6 @@ const ProductDescription = () => {
     const [mainIndex, setMainIndex] = useState(0);
     const [showZoom, setShowZoom] = useState(false);
     const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
-    const [wishlist, setWishlist] = useState(false);
     const [activeTab, setActiveTab] = useState("details");
 
     const imgRef = useRef();
@@ -90,6 +89,7 @@ const ProductDescription = () => {
     const displayMRP = singleProduct.displayMRP;
 
     const mainInCart = (cart[singleProduct.productId] || 0) > 0;
+    const isFavourite = !!favourites[singleProduct.productId];
 
     return (
         <div className="pdp-page">
@@ -148,7 +148,7 @@ const ProductDescription = () => {
                             {discountPct > 0 && (
                                 <div className="pdp-badge">{discountPct}% OFF</div>
                             )}
-                            {wishlist && (
+                            {isFavourite && (
                                 <div className="pdp-saved-badge">♥ Saved</div>
                             )}
                             {imageList.length > 1 && (
@@ -293,12 +293,12 @@ const ProductDescription = () => {
                         <button className="pdp-btn-buy">Buy Now</button>
                     </div>
 
-                    {/* WISHLIST */}
+                    {/* FAVOURITES */}
                     <button
-                        className={`pdp-wishlist-btn ${wishlist ? "active" : ""}`}
-                        onClick={() => setWishlist(w => !w)}
+                        className={`pdp-wishlist-btn ${isFavourite ? "active" : ""}`}
+                        onClick={(e) => toggleFavourite(e, singleProduct.productId)}
                     >
-                        {wishlist ? "♥ Saved to Wishlist" : "♡ Add to Wishlist"}
+                        {isFavourite ? "♥ Saved to Favourites" : "♡ Add to Favourites"}
                     </button>
 
                     {/* TRUST BADGES */}

@@ -122,8 +122,22 @@ const loadCart = () => {
   }
 };
 
+// ── Helper: get favourites key for current user ─────────────────
+const getFavouritesKey = () => `favourites_${getUserId()}`;
+
+// ── Helper: load favourites from localStorage for current user ──
+const loadFavourites = () => {
+  try {
+    const saved = localStorage.getItem(getFavouritesKey());
+    return saved ? JSON.parse(saved) : {};
+  } catch {
+    return {};
+  }
+};
+
 export const ProductProvider = ({ children }) => {
   const [cart, setCartState] = useState(() => loadCart());
+  const [favourites, setFavourites] = useState(() => loadFavourites());
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -144,6 +158,7 @@ export const ProductProvider = ({ children }) => {
     const handleAuthChange = () => {
       const freshCart = loadCart();
       setCartState(freshCart);
+      setFavourites(loadFavourites());
     };
 
     window.addEventListener("storage", handleAuthChange);
@@ -199,6 +214,17 @@ export const ProductProvider = ({ children }) => {
     });
   };
 
+  // ── Favourites action ───────────────────────────────────────────
+  const toggleFavourite = (e, id) => {
+    e.stopPropagation();
+    setFavourites((prev) => {
+      const { [id]: saved, ...rest } = prev;
+      const next = saved ? rest : { ...prev, [id]: true };
+      localStorage.setItem(getFavouritesKey(), JSON.stringify(next));
+      return next;
+    });
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -207,6 +233,8 @@ export const ProductProvider = ({ children }) => {
         removeFromCart,
         cart,
         setCart,
+        favourites,
+        toggleFavourite,
         loading,
         products,
         setLoading,

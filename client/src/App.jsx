@@ -1,4 +1,5 @@
 import './App.css'
+import { useCallback, useContext, useState } from 'react'
 import NavBar from './Components/NavBar/NavBar'
 import Footer from './Components/Footer/Footer'
 import Home from './pages/Home'
@@ -17,10 +18,18 @@ import Career from './Components/Career/Career.jsx'
 import PrivacyPolicy from './Components/Privacypolicy/Privacypolicy.jsx'
 import CancellationPolicy from './Components/Cancellationpolicy/Cancellationpolicy.jsx'
 import { BlogListing, BlogPost } from './Components/Blog/Blog.jsx'
+import Favourites from './Components/Favourites/Favourites.jsx'
+import Loader from './Components/Loader/Loader.jsx'
+import { ProductContext } from './Context/Context.jsx'
 
 function App() {
+  const { loading } = useContext(ProductContext)
+  const [showLoader, setShowLoader] = useState(true)
+  const hideLoader = useCallback(() => setShowLoader(false), [])
+
   return (
     <>
+      {showLoader && <Loader ready={!loading} onComplete={hideLoader} />}
       <NavBar />
       <ScrollToTop />
       <WhatsAppButton />
@@ -34,6 +43,7 @@ function App() {
         <Route path='/product/:id' element={<ProductDescription />} />
         <Route path='/maintenance-guide' element={<MaintenanceGuidePage />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/favourites' element={<Favourites />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/career' element={<Career />} />
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />

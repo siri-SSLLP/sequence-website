@@ -215,7 +215,7 @@
 
 .ppc-count { margin: 0; }
 .ppc-count-num {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'DM Sans', sans-serif;
     font-size: 32px;
     font-weight: 600;
     color: var(--ppc-text-primary);
