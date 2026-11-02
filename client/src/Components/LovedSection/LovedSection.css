@@ -166,12 +166,11 @@
         flex-wrap: nowrap;
         justify-content: flex-start;
         justify-content: safe center;
+        gap: 8px;
         margin-left: -30px;
         margin-right: -30px;
         padding: 2px 30px;
         overflow-x: auto;
-        scroll-snap-type: x proximity;
-        scroll-padding: 0 30px;
         scrollbar-width: none;
     }
 
@@ -181,8 +180,14 @@
 
     .product-section .tab-btn {
         flex: 0 0 auto;
+        padding: 7px 14px;
+        font-size: 13px;
         white-space: nowrap;
-        scroll-snap-align: center;
+    }
+
+    /* Same size as the other tabs, so the row doesn't shift when selected */
+    .product-section .tab-btn.active {
+        border: 1px solid #ebc76c;
     }
 
     /* Photos stop in the middle of the screen */
