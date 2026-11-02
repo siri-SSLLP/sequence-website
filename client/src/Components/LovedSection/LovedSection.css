@@ -157,8 +157,28 @@
 }
 
 
-@media (max-width:455px){
-    .tab-btn{
-        font-size: 0.7rem;
+/* Mobile: one swipeable row, running edge to edge past the page padding */
+@media (max-width: 768px) {
+    .product-section .tabs {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        justify-content: safe center;
+        margin-left: -30px;
+        margin-right: -30px;
+        padding: 2px 30px;
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        scroll-padding: 0 30px;
+        scrollbar-width: none;
+    }
+
+    .product-section .tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .product-section .tab-btn {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        scroll-snap-align: center;
     }
 }

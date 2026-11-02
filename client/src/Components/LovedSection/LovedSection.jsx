@@ -17,6 +17,18 @@ const LovedSection = () => {
     const [activeTab, setActiveTab] = useState("All");
     const product = products;
     const sliderRef = useRef(null);
+    const tabsRef = useRef(null);
+
+    // On mobile the tabs are a swipe row, so centre the one that was tapped
+    const selectTab = (e, cat) => {
+        setActiveTab(cat);
+        const tabs = tabsRef.current.getBoundingClientRect();
+        const tab = e.currentTarget.getBoundingClientRect();
+        tabsRef.current.scrollBy({
+            left: tab.left + tab.width / 2 - (tabs.left + tabs.width / 2),
+            behavior: "smooth",
+        });
+    };
 
     const scrollLeft = () => {
         sliderRef.current.scrollBy({
@@ -44,12 +56,12 @@ const LovedSection = () => {
             <h2 className="title">Our Most Loved Materials</h2>
 
             {/* Tabs */}
-            <div className="tabs">
+            <div className="tabs" ref={tabsRef}>
                 {categories.map((cat, index) => (
                     <button
                         key={index}
                         className={`tab-btn ${activeTab === cat ? "active" : ""}`}
-                        onClick={() => setActiveTab(cat)}
+                        onClick={(e) => selectTab(e, cat)}
                     >
                         {cat}
                     </button>
