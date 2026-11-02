@@ -1,6 +1,7 @@
 import React from 'react'
 import Hero from '../Components/HeroSection/Hero'
 import ApplicationCategory from '../Components/ApplicationCategory/ApplicationCategory'
+import '../Components/ApplicationCategory/ApplicationCategoryMobile.css'
 import NewLaunch from '../Components/NewLaunch/NewLaunch'
 import CategorySection from '../Components/CategorySection/CategorySection'
 import PhotoLinks from '../Components/PhotoLinks/PhotoLinks'

@@ -1,0 +1,38 @@
+/* ── MOBILE — product cards ─────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* "safe" stops centring from pushing the first cards out of reach */
+    .appcat-container .appcat-child-list {
+        justify-content: flex-start;
+        justify-content: safe center;
+        align-items: stretch;
+        gap: 8px;
+        padding-left: 2px;
+        padding-right: 2px;
+        scroll-padding: 0 2px;
+    }
+
+    /* Two whole, equal cards on screen */
+    .appcat-container .appcat-child-item {
+        flex: 0 0 calc((100% - 8px) / 2);
+        min-width: 0;
+        padding: 8px;
+    }
+
+    .appcat-container .appcat-child-item img {
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .appcat-container .appcat-child-item p {
+        margin: 8px 0 0;
+        font-size: 13px;
+    }
+}
+
+/* ── LARGE PHONES & SMALL TABLETS — three cards ─────────── */
+@media (min-width: 560px) and (max-width: 768px) {
+    .appcat-container .appcat-child-item {
+        flex-basis: calc((100% - 16px) / 3);
+    }
+}
