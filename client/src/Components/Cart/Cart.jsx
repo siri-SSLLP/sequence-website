@@ -752,6 +752,7 @@ import {
 import "./Cart.css";
 import { Link, useNavigate } from "react-router-dom";
 import SignInSignUp from "../Signupsignin/Signupsignin.jsx";
+import logoMark from "../../assets/logo.png";
 
 const API_BASE = import.meta.env.VITE_API_URL || "https://testingserver-73um.onrender.com";
 
@@ -788,6 +789,21 @@ const fetchUserProfile = async () => {
   }
 };
 
+/* Company details printed in the PDF catalogue (same as the site footer) */
+const COMPANY = {
+  name: "Sequence Surfaces LLP",
+  tagline: "Exclusive Laminate Company, Bangalore",
+  showroom: ["No 269/1 Mysore Road, Kasturiba Nagar", "Bangalore - 560026"],
+  showroomMap: "https://maps.app.goo.gl/uoXK3vrvdthMMRck7",
+  warehouse: ["46/1, 1st Main Road, Kamakshipalya", "Bangalore - 560079"],
+  warehouseMap: "https://maps.app.goo.gl/noSpS8DtiZXgM16KA",
+  phones: ["+91 9164001231", "+91 6363865515"],
+  whatsapp: "+91 8660799143",
+  email: "experience@sequencesurface.com",
+  website: "sequencesurface.com",
+  hours: "Mon - Fri, 11 AM to 7 PM",
+};
+
 const generatePDF = async (userInfo, cartItems) => {
   if (!window.jspdf) {
     await new Promise((resolve, reject) => {
@@ -811,20 +827,131 @@ const generatePDF = async (userInfo, cartItems) => {
       img.crossOrigin = "anonymous";
       img.onload = () => resolve(img);
       img.onerror = () => resolve(null);
-      img.src = url;
-      setTimeout(() => resolve(null), 2000);
+      // Separate URL so the browser can't reuse the page's non-CORS cached copy
+      img.src = `${url}${url.includes("?") ? "&" : "?"}pdf=1`;
+      setTimeout(() => resolve(null), 8000);
     });
 
   const generateQR = (text) =>
     `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(text)}`;
 
+  // Name, description, price and link. Returns the y below the link.
+  const drawProductInfo = (item, productUrl, x, startY, width, maxLines) => {
+    let y = startY;
+
+    doc.setTextColor(20, 20, 20);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    const name = doc.splitTextToSize(item.productName, width);
+    doc.text(name, x, y);
+    y += name.length * 24 + 6;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.setTextColor(100, 100, 100);
+    const desc =
+      item.description ||
+      "Premium decorative laminate designed for elegant interiors with high durability and modern aesthetics.";
+    const allLines = doc.splitTextToSize(desc, width);
+    const lines = allLines.slice(0, maxLines);
+    if (allLines.length > maxLines) lines[maxLines - 1] += "...";
+    doc.text(lines, x, y);
+    y += lines.length * 15 + 12;
+
+    const price = item.salePrice ?? item.mrpPrice;
+    doc.setFontSize(15);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(20, 20, 20);
+    doc.text(`Rs. ${price}${item.unit ? ` / ${item.unit}` : ""}`, x, y);
+
+    y += 22;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.setTextColor(0, 102, 204);
+    doc.textWithLink("View product online", x, y, { url: productUrl });
+
+    return y;
+  };
+
+  // Specs table: only shows what the product actually has. Returns the y below it.
+  const drawProductDetails = (item, x, startY, width, columns) => {
+    const rows = [
+      ["Product code", item.productCode],
+      ["Brand", item.brand],
+      ["Category", item.parentCategory?.name],
+      ["Collection", item.childCategory?.name],
+      ["Size", item.size],
+      ["Area", item.area],
+      ["Finish", item.finishType],
+      ["Texture", item.finishTexture],
+      ["Colour", item.color],
+      ["Colour tone", item.colorTone],
+      ["Material", item.materialComposition],
+      ["Orientation", item.orientation],
+      ["Style", item.styleFit],
+      ["Net weight", item.netWeight],
+      ["HSN code", item.hsnCode],
+      ["GST", item.gst ? `${item.gst}%` : null],
+    ].filter(([, value]) => value);
+
+    const LABEL_W = 66;
+    const ROW_H = 16;
+    const columnW = width / columns;
+    let y = startY;
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.setTextColor(20, 20, 20);
+    doc.text("Product details", x, y);
+    y += 8;
+    doc.setDrawColor(235, 199, 108);
+    doc.line(x, y, x + width, y);
+    y += 15;
+
+    doc.setFontSize(9);
+    rows.forEach(([label, value], i) => {
+      const rowX = x + (i % columns) * columnW;
+      const rowY = y + Math.floor(i / columns) * ROW_H;
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(120, 120, 120);
+      doc.text(label, rowX, rowY);
+      doc.setTextColor(30, 30, 30);
+      doc.text(
+        doc.splitTextToSize(String(value), columnW - LABEL_W - 8)[0],
+        rowX + LABEL_W,
+        rowY
+      );
+    });
+    y += Math.ceil(rows.length / columns) * ROW_H;
+
+    const uses = item.whereToUse?.length ? item.whereToUse : item.applications;
+    if (uses?.length) {
+      const useLines = doc.splitTextToSize(uses.join(", "), width - LABEL_W);
+      doc.setTextColor(120, 120, 120);
+      doc.text("Where to use", x, y);
+      doc.setTextColor(30, 30, 30);
+      doc.text(useLines, x + LABEL_W, y);
+      y += useLines.length * 12 + 4;
+    }
+
+    return y;
+  };
+
   doc.setFillColor(10, 10, 12);
   doc.rect(0, 0, W, H, "F");
 
-  const logo = await loadImage("https://sequencesurface.com/images/logo.png");
-  if (logo) {
-    doc.addImage(logo, "PNG", W / 2 - 80, 120, 160, 60);
-  }
+  // The full logo is blocked for PDFs on other domains, so fall back to the local mark
+  const logo =
+    (await loadImage("https://sequencesurface.com/images/logo.png")) ||
+    (await loadImage(logoMark));
+
+  const drawLogo = (y) => {
+    if (!logo) return;
+    const logoW = 60 * (logo.naturalWidth / logo.naturalHeight);
+    doc.addImage(logo, "PNG", W / 2 - logoW / 2, y, logoW, 60);
+  };
+
+  drawLogo(120);
 
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
@@ -834,6 +961,21 @@ const generatePDF = async (userInfo, cartItems) => {
   doc.setFontSize(14);
   doc.setTextColor(180, 180, 180);
   doc.text("Premium Laminate Catalogue", W / 2, 280, { align: "center" });
+
+  doc.setFontSize(12);
+  doc.setTextColor(235, 199, 108);
+  doc.text(COMPANY.name, W / 2, H - 150, { align: "center" });
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.setTextColor(180, 180, 180);
+  doc.text(COMPANY.showroom.join(", "), W / 2, H - 132, { align: "center" });
+  doc.text(
+    `${COMPANY.phones.join(" / ")}  |  ${COMPANY.email}  |  ${COMPANY.website}`,
+    W / 2,
+    H - 116,
+    { align: "center" }
+  );
 
   const now = new Date().toLocaleString("en-IN");
   doc.setFontSize(10);
@@ -858,104 +1000,55 @@ const generatePDF = async (userInfo, cartItems) => {
     }
 
     const img = await loadImage(item.imageUrl);
+    const aspectRatio = img ? img.naturalWidth / img.naturalHeight : 1.5;
+    const qrImg = await loadImage(generateQR(productUrl));
 
-    let heroH = H * 0.55;
-    let imgX = 0, imgY = 0, imgW = W, imgDrawH = heroH;
+    if (aspectRatio < 0.85) {
+      const portraitW = W * 0.45;
+      const portraitH = Math.min(H * 0.85, portraitW / aspectRatio);
 
-    if (img) {
-      const aspectRatio = img.naturalWidth / img.naturalHeight;
+      doc.addImage(img, "JPEG", W - portraitW - 20, (H - portraitH) / 2, portraitW, portraitH);
 
-      if (aspectRatio < 0.85) {
-        const portraitW = W * 0.45;
-        const portraitH = Math.min(H * 0.85, portraitW / aspectRatio);
-        imgX = W - portraitW - 20;
-        imgY = (H - portraitH) / 2;
-        imgW = portraitW;
-        imgDrawH = portraitH;
+      doc.setDrawColor(220, 220, 220);
+      doc.line(W * 0.52, 40, W * 0.52, H - 40);
 
-        doc.addImage(img, "JPEG", imgX, imgY, imgW, imgDrawH);
+      const textMaxW = W * 0.48 - 60;
+      let y = drawProductInfo(item, productUrl, 40, 80, textMaxW, 6);
+      y = drawProductDetails(item, 40, y + 30, textMaxW, 1);
 
-        doc.setDrawColor(220, 220, 220);
-        doc.line(W * 0.52, 40, W * 0.52, H - 40);
+      if (qrImg) {
+        doc.addImage(qrImg, "PNG", 40, y + 6, 80, 80);
+      }
+    } else {
+      const heroH = !img ? 130 : aspectRatio > 1.4 ? H * 0.45 : H * 0.52;
 
-        let y = 80;
-        const textMaxW = W * 0.48 - 60;
-
-        doc.setTextColor(20, 20, 20);
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(20);
-        doc.text(item.productName, 40, y, { maxWidth: textMaxW });
-
-        y += 36;
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(11);
-        doc.setTextColor(100, 100, 100);
-        const desc =
-          item.description ||
-          "Premium decorative laminate designed for elegant interiors with high durability and modern aesthetics.";
-        const split = doc.splitTextToSize(desc, textMaxW);
-        doc.text(split, 40, y);
-        y += split.length * 15 + 24;
-
-        const price = item.salePrice ?? item.mrpPrice;
-        doc.setFontSize(16);
-        doc.setFont("helvetica", "bold");
-        doc.setTextColor(20, 20, 20);
-        doc.text(`Rs. ${price}`, 40, y);
-
-        y += 28;
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(11);
-        doc.setTextColor(0, 102, 204);
-        doc.textWithLink("Explore Product \u2192", 40, y, { url: productUrl });
-
-        const qrImg = await loadImage(generateQR(productUrl));
-        if (qrImg) {
-          doc.addImage(qrImg, "PNG", 40, y + 20, 90, 90);
-        }
-      } else {
-        heroH = aspectRatio > 1.4 ? H * 0.45 : H * 0.52;
+      if (img) {
         doc.addImage(img, "JPEG", 0, 0, W, heroH);
+      } else {
+        doc.setFillColor(10, 10, 12);
+        doc.rect(0, 0, W, heroH, "F");
+      }
 
-        doc.setFillColor(255, 255, 255);
-        doc.roundedRect(30, heroH - 20, W - 60, H - heroH - 10, 20, 20, "F");
+      doc.setFillColor(255, 255, 255);
+      doc.roundedRect(30, heroH - 20, W - 60, H - heroH - 10, 20, 20, "F");
 
-        let y = heroH + 24;
+      const y = drawProductInfo(item, productUrl, 50, heroH + 24, W - 210, 3);
+      drawProductDetails(item, 50, y + 28, W - 100, 2);
 
-        doc.setTextColor(20, 20, 20);
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(22);
-        doc.text(item.productName, 50, y, { maxWidth: W - 100 });
-
-        y += 30;
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(12);
-        doc.setTextColor(100, 100, 100);
-        const desc =
-          item.description ||
-          "Premium decorative laminate designed for elegant interiors with high durability and modern aesthetics.";
-        const split = doc.splitTextToSize(desc, W - 120);
-        doc.text(split, 50, y);
-        y += split.length * 16 + 20;
-
-        const price = item.salePrice ?? item.mrpPrice;
-        doc.setFontSize(15);
-        doc.setFont("helvetica", "bold");
-        doc.setTextColor(20, 20, 20);
-        doc.text(`Rs. ${price}`, 50, y);
-
-        y += 28;
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(12);
-        doc.setTextColor(0, 102, 204);
-        doc.textWithLink("Explore Product \u2192", 50, y, { url: productUrl });
-
-        const qrImg = await loadImage(generateQR(productUrl));
-        if (qrImg) {
-          doc.addImage(qrImg, "PNG", W - 140, heroH + 20, 90, 90);
-        }
+      if (qrImg) {
+        doc.addImage(qrImg, "PNG", W - 140, heroH + 10, 90, 90);
       }
     }
+
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(120, 120, 120);
+    doc.text(
+      `${COMPANY.name}  |  ${COMPANY.showroom.join(", ")}  |  ${COMPANY.phones[0]}  |  ${COMPANY.email}`,
+      W / 2,
+      H - 36,
+      { align: "center" }
+    );
 
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
@@ -967,8 +1060,85 @@ const generatePDF = async (userInfo, cartItems) => {
       { align: "center" }
     );
 
-    if (i !== cartItems.length - 1) doc.addPage();
+    doc.addPage();
   }
+
+  // Back page with the full company details
+  doc.setFillColor(10, 10, 12);
+  doc.rect(0, 0, W, H, "F");
+
+  drawLogo(90);
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(24);
+  doc.setTextColor(235, 199, 108);
+  doc.text(COMPANY.name, W / 2, 200, { align: "center" });
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(12);
+  doc.setTextColor(180, 180, 180);
+  doc.text(COMPANY.tagline, W / 2, 222, { align: "center" });
+
+  const sections = [
+    {
+      title: "Showroom",
+      lines: [
+        ...COMPANY.showroom.map((text) => ({ text })),
+        { text: "View on map", url: COMPANY.showroomMap },
+      ],
+    },
+    {
+      title: "Warehouse",
+      lines: [
+        ...COMPANY.warehouse.map((text) => ({ text })),
+        { text: "View on map", url: COMPANY.warehouseMap },
+      ],
+    },
+    {
+      title: "Call or WhatsApp",
+      lines: [
+        ...COMPANY.phones.map((text) => ({
+          text,
+          url: `tel:${text.replace(/\s/g, "")}`,
+        })),
+        {
+          text: `WhatsApp ${COMPANY.whatsapp}`,
+          url: `https://wa.me/${COMPANY.whatsapp.replace(/\D/g, "")}`,
+        },
+      ],
+    },
+    {
+      title: "Email and website",
+      lines: [
+        { text: COMPANY.email, url: `mailto:${COMPANY.email}` },
+        { text: COMPANY.website, url: `https://${COMPANY.website}` },
+        { text: COMPANY.hours },
+      ],
+    },
+  ];
+
+  sections.forEach((section, i) => {
+    const x = i % 2 === 0 ? 80 : W / 2 + 30;
+    let y = 300 + Math.floor(i / 2) * 130;
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.setTextColor(235, 199, 108);
+    doc.text(section.title, x, y);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    section.lines.forEach(({ text, url }) => {
+      y += 19;
+      if (url) {
+        doc.setTextColor(235, 199, 108);
+        doc.textWithLink(text, x, y, { url });
+      } else {
+        doc.setTextColor(220, 220, 220);
+        doc.text(text, x, y);
+      }
+    });
+  });
 
   doc.save("Sequence_Brochure.pdf");
 };
