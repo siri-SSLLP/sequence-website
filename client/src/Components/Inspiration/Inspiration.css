@@ -73,6 +73,28 @@
   }
 }
 
+/* Phones: exactly three whole tabs on screen, swiping one at a time.
+   Edge padding matches the gap so the next tab sits fully off screen. */
+@media (max-width: 540px) {
+  .insp-tabs {
+    padding: 2px 8px;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 8px;
+  }
+
+  .insp-tab {
+    flex-basis: calc((100% - 16px) / 3);
+    padding: 7px 6px;
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 360px) {
+  .insp-tab {
+    font-size: 12px;
+  }
+}
+
 /* SLIDER */
 .insp-slider {
   display: flex;

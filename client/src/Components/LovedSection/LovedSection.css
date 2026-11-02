@@ -203,3 +203,31 @@
         scroll-snap-stop: always;
     }
 }
+
+/* Below this the tabs no longer fit: show only whole tabs, swiping one at a time.
+   Edge padding matches the gap so the next tab sits fully off screen. */
+@media (max-width: 749px) {
+    .product-section .tabs {
+        padding: 2px 8px;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 0 8px;
+    }
+
+    .product-section .tab-btn {
+        flex-basis: calc((100% - 16px) / 3);
+        padding: 7px 6px;
+        scroll-snap-align: start;
+    }
+}
+
+@media (max-width: 600px) {
+    .product-section .tab-btn {
+        flex-basis: calc((100% - 8px) / 2);
+    }
+}
+
+@media (max-width: 360px) {
+    .product-section .tab-btn {
+        font-size: 12px;
+    }
+}
