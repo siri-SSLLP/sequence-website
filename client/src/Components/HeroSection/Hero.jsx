@@ -25,7 +25,7 @@ const Hero = () => {
 
                         <div className="carousel-item active">
                             <img
-                                src="https://materialdepot-images-hbh2cjbvbtfmanhx.z02.azurefd.net/application_image/floating-materials-homepage-desktop.jpg?width=800"
+                                src="https://image-transform.materialdepot.com/azure/application_image/04_acrylic-laminates-home-page-banner-desktop.jpg?height=800&format=webp"
                                 className="d-block w-100 carousel-img"
                                 alt="..."
                             />
@@ -33,7 +33,7 @@ const Hero = () => {
 
                         <div className="carousel-item">
                             <img
-                                src="https://materialdepot-images-hbh2cjbvbtfmanhx.z02.azurefd.net/application_image/karigari-laminate-home-page-main-banner.jpg?width=800"
+                                src="https://image-transform.materialdepot.com/azure/application_image/04_acrylic-laminates-home-page-banner-desktop.jpg?height=800&format=webp"
                                 className="d-block w-100 carousel-img"
                                 alt="..."
                             />
@@ -41,7 +41,7 @@ const Hero = () => {
 
                         <div className="carousel-item">
                             <img
-                                src="https://materialdepot-images-hbh2cjbvbtfmanhx.z02.azurefd.net/application_image/karigari-laminate-home-page-main-banner.jpg?width=800"
+                                src="https://image-transform.materialdepot.com/azure/application_image/04_acrylic-laminates-home-page-banner-desktop.jpg?height=800&format=webp"
                                 className="d-block w-100 carousel-img"
                                 alt="..."
                             />
@@ -49,7 +49,7 @@ const Hero = () => {
 
                         <div className="carousel-item">
                             <img
-                                src="https://materialdepot-images-hbh2cjbvbtfmanhx.z02.azurefd.net/application_image/home-page-tile-main-banner-web.webp?width=800"
+                                src="https://image-transform.materialdepot.com/azure/application_image/wallpaper-wooden-flooring-sale-desktopv01.jpg?height=800&format=webp"
                                 className="d-block w-100 carousel-img"
                                 alt="..."
                             />
@@ -57,7 +57,7 @@ const Hero = () => {
 
                         <div className="carousel-item">
                             <img
-                                src="https://materialdepot-images-hbh2cjbvbtfmanhx.z02.azurefd.net/application_image/home-page-tile-main-banner-web.webp?width=800"
+                                src="https://image-transform.materialdepot.com/azure/application_image/wallpaper-wooden-flooring-sale-desktopv01.jpg?height=800&format=webp"
                                 className="d-block w-100 carousel-img"
                                 alt="..."
                             />

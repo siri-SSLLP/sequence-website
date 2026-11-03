@@ -38,6 +38,31 @@
     flex-direction: column;
     align-items: center;
     /* justify-self:; */
+    position: relative;
+    isolation: isolate;
+    cursor: pointer;
+}
+
+/* ── COLUMN HIGHLIGHT ───────────────────────────────────── */
+/* Absolutely positioned so selecting a column never shifts the row */
+.appcat-parent-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: -12px -5px -8px;
+    z-index: -1;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.appcat-column-active::before {
+    background-color: rgba(235, 199, 108, 0.22);
+    border-color: #ebc76c;
+    box-shadow: inset 0 3px 0 #c59826, 0 6px 16px rgba(197, 152, 38, 0.18);
+}
+
+.appcat-column-active .appcat-parent-label {
+    color: #1a1a1a;
 }
 
 /* ── ICON CIRCLE ────────────────────────────────────────── */
@@ -193,6 +218,9 @@
 @media (min-width:798px) {
     .appcat-parent-list{
         gap: 30px !important;
+    }
+    .appcat-parent-wrapper::before {
+        inset: -14px -14px -10px;
     }
     .application-image {
     width: 50px !important;

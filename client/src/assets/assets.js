@@ -1,6 +1,8 @@
-import kitchen from './kitchen.png'
-import bathroom from './bathroom.png'
+import livingroom from './livingroom.png'
+import tvunit from './tvunit.png'
 import bedroom from './bedroom.png'
+import wardrobe from './wardrobe.png'
+import wall from './wall.png'
 
 
 
@@ -1419,9 +1421,9 @@ export const newLaunchProducts = [
 
 export const CategoryIcon = [
     {
-        'Interior Decor': kitchen,
-        'Furniture': bathroom,
-        'Interior Walls': bedroom,
+        'Interior Decor': livingroom,
+        'Furniture': tvunit,
+        'Interior Walls': wall,
         "Interior": bedroom,
         "Decorative Laminates": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6",
         "Textured Laminates": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=958&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -1431,7 +1433,7 @@ export const CategoryIcon = [
         "Fabric Finish Laminates": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92",
         "Fabric Finish Laminates temp": "https://images.unsplash.com/photo-1615874959474-d609969a20ed",
         "Fabric Laminates": "https://images.unsplash.com/photo-1564466809058-bf4114d55352?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "Wardrobes": kitchen
+        "Wardrobes": wardrobe
     }
 ];
 

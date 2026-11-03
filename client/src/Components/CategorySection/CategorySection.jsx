@@ -90,7 +90,7 @@ const CategorySection = ({ name }) => {
                             return (
                                 <div
                                     key={index}
-                                    className="cat-parent-wrapper"
+                                    className={`cat-parent-wrapper ${selectedParent?.name === category.name ? "active" : ""}`}
                                     onClick={() => handleParentClickDesktop(category)}
                                 >
                                     <div className={`cat-parent-item ${selectedParent?.name === category.name ? "active" : ""}`}>
@@ -148,7 +148,7 @@ const CategorySection = ({ name }) => {
                                 return (
                                     <div
                                         key={index}
-                                        className='mob-cat-card'
+                                        className={`mob-cat-card ${selectedParent?.name === category.name ? "active" : ""}`}
                                         onClick={() => handleParentClickMobile(category)}
                                         style={{
                                             backgroundImage: `url(${imageSrc})`

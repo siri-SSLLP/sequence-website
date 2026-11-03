@@ -37,6 +37,25 @@
 .cat-parent-wrapper {
     text-align: center;
     cursor: pointer;
+    position: relative;
+    isolation: isolate;
+}
+
+/* Absolutely positioned so selecting a column never shifts the row */
+.cat-parent-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0 -4px 6px;
+    z-index: -1;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cat-parent-wrapper.active::before {
+    background-color: rgba(235, 199, 108, 0.22);
+    border-color: #ebc76c;
+    box-shadow: inset 0 3px 0 #c59826, 0 6px 16px rgba(197, 152, 38, 0.18);
 }
 
 .cat-parent-item img {
@@ -142,6 +161,22 @@
     .mob-cat-card:first-child {
         grid-column: 1 / -1;
         height: 220px;
+    }
+
+    .mob-cat-card {
+        transition: box-shadow 0.25s ease;
+    }
+
+    .mob-cat-card.active {
+        box-shadow: 0 0 0 3px #ebc76c, 0 6px 16px rgba(197, 152, 38, 0.3);
+    }
+
+    .mob-cat-card.active .mob-cat-overlay {
+        background: linear-gradient(
+            to bottom,
+            rgba(235, 199, 108, 0.3) 0%,
+            rgba(0, 0, 0, 0.65) 100%
+        );
     }
 
     .mob-cat-overlay {

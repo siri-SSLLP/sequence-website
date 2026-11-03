@@ -83,11 +83,12 @@ const ApplicationCategory = ({ title, name }) => {
                 {/* PARENT CATEGORIES */}
                 <div className="appcat-parent-list mt-4">
                     {categoriesArray.map((category, index) => (
-                        <div key={index} className='appcat-parent-wrapper'>
-                            <div
-                                className={`application-image-div ${selectedParent?.name === category.name ? "appcat-active" : ""}`}
-                                onClick={() => setSelectedParent(category)}
-                            >
+                        <div
+                            key={index}
+                            className={`appcat-parent-wrapper ${selectedParent?.name === category.name ? "appcat-column-active" : ""}`}
+                            onClick={() => setSelectedParent(category)}
+                        >
+                            <div className={`application-image-div ${selectedParent?.name === category.name ? "appcat-active" : ""}`}>
                                 <div className='application-image-test'>
                                     <img
                                         src={CategoryIcon[0][category.name]}
