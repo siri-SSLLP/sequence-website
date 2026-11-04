@@ -213,9 +213,7 @@ useEffect(() => {
                                 <Link to="/products" className={`nav-link${currentClass('collections')}`} {...current('collections')} style={{ color: "white" }}>Our Collections</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className={`visit-store-btn-navbar nav-link navbar-btn${currentClass('visit')}`} {...current('visit')} style={{ color: "white" }} to="/visit-store">
-                                    Visit Store
-                                </Link>
+                                <Link className={`nav-link${currentClass('visit')}`} {...current('visit')} style={{ color: "white" }} to="/visit-store">Visit Store</Link>
                             </li>
                         </ul>
 

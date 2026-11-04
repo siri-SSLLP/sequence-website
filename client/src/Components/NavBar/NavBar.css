@@ -741,7 +741,7 @@ a:hover {
 /* ========================= */
 /* CURRENT PAGE              */
 /* ========================= */
-/* Desktop: the page you're on gets a solid gold pill, like Visit Store */
+/* Desktop: the page you're on gets a solid gold pill */
 .navbar-item-test1 .nav-link.nav-current {
     padding: 8px 20px !important;
     border-radius: 30px;
@@ -761,15 +761,6 @@ a:hover {
     .navbar-item-test1 .nav-link.nav-current {
         padding: 6px 10px !important;
     }
-}
-
-/* On the Visit Store page its pill gets a gold ring */
-.navbar-item-test1 .visit-store-btn-navbar.nav-current {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    color: black !important;
-    background-color: #ebc76c;
-    box-shadow: 0 0 0 2px #000, 0 0 0 3px #ebc76c;
 }
 
 /* Phone menu: the current page's row is shaded gold */
