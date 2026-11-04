@@ -95,13 +95,13 @@ const ProductDescription = () => {
         <div className="pdp-page">
 
             {/* ── BREADCRUMB ── */}
-            <div className="pdp-breadcrumb">
-                <span>Home</span>
+            <nav className="pdp-breadcrumb" aria-label="Breadcrumb">
+                <Link to="/" className="pdp-bc-link">Home</Link>
                 <span className="pdp-bc-sep">›</span>
-                <span>Products</span>
+                <Link to="/products" className="pdp-bc-link">Products</Link>
                 <span className="pdp-bc-sep">›</span>
-                <span className="pdp-bc-current">{singleProduct.productName}</span>
-            </div>
+                <span className="pdp-bc-current" aria-current="page">{singleProduct.productName}</span>
+            </nav>
 
             {/* ── MAIN TWO-COLUMN SECTION ── */}
             <div className="pdp-section container">
