@@ -311,6 +311,7 @@ a:hover {
 .div-desktop-cart {
     position: relative;
     align-items: center;
+    margin-left: 8px;
 }
 
 .img-cart-icon {
