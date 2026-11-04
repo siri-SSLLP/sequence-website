@@ -3,9 +3,160 @@
 
 }
 
+/* ── Slides: a photo with the collection's message over a soft shade ── */
+.hero-slide {
+    position: relative;
+    height: clamp(340px, 32vw, 520px);
+    overflow: hidden;
+    border-radius: 6px;
+    background: #1a1410;
+}
+
 .carousel-img {
-    /* height: 400px; */
+    height: 100%;
     object-fit: cover;
+}
+
+.hero-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(14, 10, 6, 0.78) 0%, rgba(14, 10, 6, 0.5) 38%, rgba(14, 10, 6, 0) 70%);
+    pointer-events: none;
+}
+
+.hero-caption {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: clamp(56px, 7vw, 120px);
+    transform: translateY(-50%);
+    max-width: min(520px, 46%);
+    color: #fff;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.hero-eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #ebc76c;
+}
+
+.hero-title {
+    margin: 0 0 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 3.6vw, 58px);
+    font-weight: 600;
+    line-height: 1.05;
+    color: #fff;
+}
+
+.hero-text {
+    margin: 0 0 26px;
+    font-size: clamp(14px, 1.1vw, 17px);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 12px 26px;
+    border-radius: 30px;
+    border: 1px solid #ebc76c;
+    background: #ebc76c;
+    color: #1a1208;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.hero-btn:hover,
+.hero-btn:focus-visible {
+    background: #c59826;
+    border-color: #c59826;
+    color: #fff !important;
+}
+
+.hero-btn--ghost {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.75);
+    color: #fff;
+}
+
+.hero-btn--ghost:hover,
+.hero-btn--ghost:focus-visible {
+    background: #fff;
+    border-color: #fff;
+    color: #1a1208 !important;
+}
+
+/* Keep the arrows and dots above the shade */
+#carouselExample .carousel-indicators,
+#carouselExample .carousel-control-prev,
+#carouselExample .carousel-control-next {
+    z-index: 3;
+}
+
+#carouselExample .carousel-control-prev,
+#carouselExample .carousel-control-next {
+    width: 6%;
+}
+
+/* Phones: taller slide, message along the bottom */
+@media (max-width: 767px) {
+    .hero-slide {
+        height: 440px;
+    }
+
+    .hero-slide::after {
+        background: linear-gradient(0deg, rgba(14, 10, 6, 0.85) 0%, rgba(14, 10, 6, 0.55) 45%, rgba(14, 10, 6, 0.05) 75%);
+    }
+
+    .hero-caption {
+        top: auto;
+        bottom: 40px;
+        left: 22px;
+        right: 22px;
+        transform: none;
+        max-width: none;
+    }
+
+    .hero-eyebrow {
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .hero-text {
+        margin-bottom: 18px;
+        font-size: 14px;
+    }
+
+    .hero-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    #carouselExample .carousel-control-prev,
+    #carouselExample .carousel-control-next {
+        display: none;
+    }
 }
 
 @media (max-width: 991px) {
