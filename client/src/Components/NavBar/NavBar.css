@@ -307,6 +307,14 @@ a:hover {
 /* ========================= */
 /* CART ICON                 */
 /* ========================= */
+/* Desktop: the yellow category bar is pinned at 116px, so the black bar
+   keeps that height whatever sits in it */
+@media (min-width: 992px) {
+    .navbar {
+        min-height: 116px;
+    }
+}
+
 /* Plain icons like the text links: white, gold on hover, no ring */
 .div-desktop-cart {
     position: relative;
