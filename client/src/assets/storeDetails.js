@@ -33,9 +33,26 @@ export const storeDetails = {
   },
   timeSlots: ["11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"],
   visitPurposes: ["My home", "Office / commercial space", "Architect / interior designer", "Dealer / trade enquiry"],
+  // Photos for the "Why visit us" cards. Swap in real showroom photos when you have them.
   highlights: [
-    { title: "See every finish", text: "Touch and compare matte, gloss, textured and woodgrain laminates in full-size sheets." },
-    { title: "Expert guidance", text: "Our team helps you match shades and finishes to your space, furniture and lighting." },
-    { title: "Take samples home", text: "Pick swatches of your shortlisted designs to try against your walls and fittings." },
+    {
+      title: "See every finish",
+      text: "Touch and compare matte, gloss, textured and woodgrain laminates in full-size sheets.",
+      // Dark Walnut laminate from the Sequence product catalogue
+      image: "https://imagesm.plexussquare.in/SEQUENCE/Images/12-03-2025/1741786221943.jpg",
+      imageAlt: "Close-up of a walnut woodgrain laminate sheet",
+    },
+    {
+      title: "Expert guidance",
+      text: "Our team helps you match shades and finishes to your space, furniture and lighting.",
+      image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=75&auto=format&fit=crop",
+      imageAlt: "Designer sketching an interior plan at a desk",
+    },
+    {
+      title: "Take samples home",
+      text: "Pick swatches of your shortlisted designs to try against your walls and fittings.",
+      image: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=800&q=75&auto=format&fit=crop",
+      imageAlt: "Kitchen with grey cabinets, white counter and brass fittings",
+    },
   ],
 };

@@ -267,9 +267,16 @@ export default function VisitStore() {
         <div className="vs-highlight-grid">
           {highlights.map((h, i) => (
             <div className="vs-highlight" key={h.title}>
-              <span className="vs-highlight-num">0{i + 1}</span>
-              <h3>{h.title}</h3>
-              <p>{h.text}</p>
+              {h.image && (
+                <div className="vs-highlight-img">
+                  <img src={h.image} alt={h.imageAlt || ""} loading="lazy" width="800" height="520" />
+                </div>
+              )}
+              <div className="vs-highlight-body">
+                <span className="vs-highlight-num">0{i + 1}</span>
+                <h3>{h.title}</h3>
+                <p>{h.text}</p>
+              </div>
             </div>
           ))}
         </div>
