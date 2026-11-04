@@ -741,17 +741,19 @@ a:hover {
 /* ========================= */
 /* CURRENT PAGE              */
 /* ========================= */
-/* Desktop: the page you're on gets a gold pill, the same shape as Visit Store */
+/* Desktop: the page you're on gets a solid gold pill, like Visit Store */
 .navbar-item-test1 .nav-link.nav-current {
     padding: 8px 20px !important;
     border-radius: 30px;
-    border: 1px solid #ebc76c;
-    color: #ebc76c !important;
-    background-color: rgba(235, 199, 108, 0.12);
+    background-color: #ebc76c;
+    color: black !important;
+    font-weight: 550 !important;
+    transition: all 0.3s ease;
 }
 
 .navbar-item-test1 .nav-link.nav-current:hover {
-    color: #ebc76c !important;
+    background-color: #c59826;
+    color: white !important;
 }
 
 /* Small laptops: the menu is tight, so keep the pill slim */
