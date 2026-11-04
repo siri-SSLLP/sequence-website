@@ -169,7 +169,7 @@ export const ProductProvider = ({ children }) => {
   const fetchProducts = async () => {
     try {
       const res = await axios.get(
-        "https://sequence-website-i1dz-git-main-ssllp.vercel.app/api/products",
+        "https://sequence-website-backend.vercel.app/api/products",
         {
           headers: {
             Authorization: `Bearer seq$123`,
