@@ -1,9 +1,16 @@
 /* ── CONTAINER ──────────────────────────────────────────────────────────── */
 .about-container {
-  /* Clears the fixed navbar */
-  margin-top: 180px;
+  /* Starts right below the fixed navbar */
+  margin-top: 116px;
   padding: 50px 10%;
   background: #f9f9f9;
+}
+
+/* The navbar is a single shorter row once it collapses to the menu button */
+@media (max-width: 991px) {
+  .about-container {
+    margin-top: 70px;
+  }
 }
 
 /* ── PAGE TITLE ─────────────────────────────────────────────────────────── */
