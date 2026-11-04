@@ -180,6 +180,21 @@
   }
 }
 
+/* Desktop: exactly three equal photos on screen; the arrows move a full set */
+@media (min-width: 769px) {
+  .insp-slider {
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 10px;
+    scrollbar-width: none;
+  }
+
+  .insp-card {
+    flex: 0 0 calc((100% - 40px) / 3);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+}
+
 /* Mobile: fixed-width photos that stop in the middle of the screen */
 @media (max-width: 768px) {
   .insp-slider {

@@ -27,9 +27,9 @@ const Inspiration = () => {
     };
 
     // 👉 Scroll Functions
-    const scrollLeft = () => scrollSlider(sliderRef.current, -1);
+    const scrollLeft = () => scrollSlider(sliderRef.current, -1, { page: true });
 
-    const scrollRight = () => scrollSlider(sliderRef.current, 1);
+    const scrollRight = () => scrollSlider(sliderRef.current, 1, { page: true });
 
     return (
         <div className="insp-container">

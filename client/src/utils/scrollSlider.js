@@ -1,8 +1,19 @@
 // Arrow buttons for the home page photo sliders.
-// Desktop scrolls a fixed distance; mobile moves one photo and centres it.
-export const scrollSlider = (slider, direction) => {
+// Desktop scrolls a fixed distance, or a whole screenful of photos when
+// `page` is set; mobile moves one photo and centres it.
+export const scrollSlider = (slider, direction, { page = false } = {}) => {
     if (!window.matchMedia("(max-width: 768px)").matches) {
-        slider.scrollBy({ left: direction * 300, behavior: "smooth" });
+        let distance = 300;
+        if (page && slider.children.length > 1) {
+            // One step = card width + gap; a page is as many as fit on screen
+            const step = slider.children[1].offsetLeft - slider.children[0].offsetLeft;
+            distance = step * Math.max(1, Math.round(slider.clientWidth / step));
+        }
+        // Clamp to the ends: a smooth scroll that overshoots is dropped
+        // when the slider uses scroll snapping
+        const max = slider.scrollWidth - slider.clientWidth;
+        const left = Math.min(Math.max(slider.scrollLeft + direction * distance, 0), max);
+        slider.scrollTo({ left, behavior: "smooth" });
         return;
     }
 
