@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'sequence@2026';
+// The admin login is read from Admin-Panel/.env.local, which git ignores,
+// so it never lands in the repository. See Admin-Panel/.env.example.
+const ADMIN_USER = import.meta.env.VITE_ADMIN_USERNAME;
+const ADMIN_PASS = import.meta.env.VITE_ADMIN_PASSWORD;
+const LOGIN_CONFIGURED = Boolean(ADMIN_USER && ADMIN_PASS);
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -18,7 +21,10 @@ export default function LoginPage() {
     setLoading(true);
 
     setTimeout(() => {
-      if (username === ADMIN_USER && password === ADMIN_PASS) {
+      if (!LOGIN_CONFIGURED) {
+        setError('Admin login is not set up. Add VITE_ADMIN_USERNAME and VITE_ADMIN_PASSWORD to Admin-Panel/.env.local.');
+        setLoading(false);
+      } else if (username === ADMIN_USER && password === ADMIN_PASS) {
         sessionStorage.setItem('adminToken', 'true');
         navigate('/', { replace: true });
       } else {
@@ -92,9 +98,6 @@ export default function LoginPage() {
             ) : 'Sign In →'}
           </button>
 
-          <div style={{ textAlign: 'center', fontSize: '12px', color: '#333333', marginTop: '8px' }}>
-            Hint: admin / sequence@2026
-          </div>
         </form>
       </div>
     </div>
