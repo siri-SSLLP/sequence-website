@@ -4,12 +4,29 @@ import "./NewLaunch.css";
 // import { product } from "../../assets/assets.js";
 import { Link } from "react-router-dom";
 import { ProductContext } from "../../Context/Context";
+import { generatePDF } from "../../utils/brochure";
 
 const NewLaunch = () => {
   const {products} = useContext(ProductContext);
   const scrollRef = useRef(null);
   const [activeDot, setActiveDot] = useState(0);
   const product =products;
+  const [downloading, setDownloading] = useState(false);
+
+  // Build a brochure of the whole collection and save it
+  const downloadCatalogue = async () => {
+    if (downloading || !products?.length) return;
+    setDownloading(true);
+    try {
+      const doc = await generatePDF({}, products);
+      doc.save("Sequence_Catalogue.pdf");
+    } catch (err) {
+      console.error(err);
+      alert("Couldn't prepare the catalogue. Please try again.");
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const DOTS = 4;
   const CARD_WIDTH = 208; // 190px + 18px gap
@@ -145,8 +162,14 @@ const NewLaunch = () => {
         <div className="nl-divider" />
 
         <div className="nl-cta">
-          <button className="nl-cta-btn">View All Designs</button>
-          <button className="nl-cta-link">Download Catalogue &#8594;</button>
+          <Link to="/products" className="nl-cta-btn">View All Designs</Link>
+          <button
+            className="nl-cta-link"
+            onClick={downloadCatalogue}
+            disabled={downloading || !products?.length}
+          >
+            {downloading ? "Preparing catalogue…" : <>Download Catalogue &#8594;</>}
+          </button>
         </div>
 
       </div>

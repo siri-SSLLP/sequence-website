@@ -349,6 +349,17 @@
   background: #9E6028;
 }
 
+/* It's a link, so keep it looking like the button it was */
+a.nl-cta-btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+a.nl-cta-btn:hover,
+a.nl-cta-btn:focus {
+  color: #fff;
+}
+
 .nl-cta-link {
   font-size: 12px;
   color: #4A3020;
@@ -363,6 +374,11 @@
 
 .nl-cta-link:hover {
   color: #BF7A38;
+}
+
+.nl-cta-link:disabled {
+  cursor: progress;
+  color: #8a7565;
 }
 
 /* ── Responsive ── */
