@@ -19,15 +19,19 @@ const bump = (el) => {
     el.addEventListener("animationend", () => el.classList.remove("fav-bump"), { once: true });
 };
 
-// Products whose heart has already flown. Each product flies once per visit,
-// so liking, unliking and liking again (or rapid clicks) don't replay it.
-const flown = new Set();
+// Every like flies, but fast repeat clicks on the same product don't stack
+// up hearts: after a flight starts, that product waits until the heart has
+// landed and the icon has finished bouncing before it can fly again.
+const FLIGHT_MS = 1000;
+const COOLDOWN_MS = FLIGHT_MS + 500;
+const lastFlight = new Map();
 
 export const flyToFavourites = (fromEl, id) => {
-    if (flown.has(id)) return;
+    const now = Date.now();
+    if (now - (lastFlight.get(id) ?? -Infinity) < COOLDOWN_MS) return;
     const target = findTarget();
     if (!fromEl || !target) return;
-    flown.add(id);
+    lastFlight.set(id, now);
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion || !document.body.animate) {
@@ -74,7 +78,7 @@ export const flyToFavourites = (fromEl, id) => {
         });
     }
 
-    const flight = heart.animate(keyframes, { duration: 1000, easing: "cubic-bezier(0.45, 0, 0.25, 1)" });
+    const flight = heart.animate(keyframes, { duration: FLIGHT_MS, easing: "cubic-bezier(0.45, 0, 0.25, 1)" });
     const land = () => {
         heart.remove();
         bump(target);
