@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './NavBar.css';
 // import { product } from '../../assets/assets.js';
 import { ImWhatsapp } from "react-icons/im";
@@ -20,6 +20,18 @@ import { ProductContext } from '../../Context/Context.jsx';
 import ProfilePopup from '../ProfilePopup/ProfilePopup.jsx';
 
 function NavBar() {
+    // Highlight the menu link for the page you're on
+    const { pathname } = useLocation();
+    const pages = {
+        home: pathname === '/' || pathname === '/home',
+        about: pathname === '/about-us',
+        contact: pathname === '/contact-us',
+        blog: pathname.startsWith('/blog'),
+        collections: pathname === '/products' || pathname.startsWith('/product/'),
+        visit: pathname === '/visit-store',
+    };
+    const current = (page) => (pages[page] ? { 'aria-current': 'page' } : {});
+    const currentClass = (page) => (pages[page] ? ' nav-current' : '');
     const [showProfile, setShowProfile] = useState(false);
     const { cart, products, favourites } = useContext(ProductContext);
     const product = products;
@@ -186,22 +198,22 @@ useEffect(() => {
                     <div className="collapse navbar-collapse desktop-menu">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0 navbar-item-test1">
                             <li className="nav-item">
-                                <Link className="nav-link" style={{ color: "white" }} to="/home">Home</Link>
+                                <Link className={`nav-link${currentClass('home')}`} {...current('home')} style={{ color: "white" }} to="/home">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" style={{ color: "white" }} to="/about-us">About Us</Link>
+                                <Link className={`nav-link${currentClass('about')}`} {...current('about')} style={{ color: "white" }} to="/about-us">About Us</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" style={{ color: "white" }} to="/contact-us">Contact Us</Link>
+                                <Link className={`nav-link${currentClass('contact')}`} {...current('contact')} style={{ color: "white" }} to="/contact-us">Contact Us</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" style={{ color: "white" }} to="/blog">Blog</Link>
+                                <Link className={`nav-link${currentClass('blog')}`} {...current('blog')} style={{ color: "white" }} to="/blog">Blog</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/products" className="nav-link" style={{ color: "white" }}>Our Collections</Link>
+                                <Link to="/products" className={`nav-link${currentClass('collections')}`} {...current('collections')} style={{ color: "white" }}>Our Collections</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="visit-store-btn-navbar nav-link navbar-btn" style={{ color: "white" }} to="/visit-store">
+                                <Link className={`visit-store-btn-navbar nav-link navbar-btn${currentClass('visit')}`} {...current('visit')} style={{ color: "white" }} to="/visit-store">
                                     Visit Store
                                 </Link>
                             </li>
@@ -441,7 +453,7 @@ useEffect(() => {
                         <div className='colasped-side-bar'>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/home">
+                                <Link className={`nav-link${currentClass('home')}`} {...current('home')} to="/home">
                                     <div className='row' data-bs-dismiss="offcanvas">
                                         <div className='col-6 text-end offcanvas-icons'><FaHome /></div>
                                         <div className='col-4 text-start offcanvas-home'><span> Home</span></div>
@@ -450,7 +462,7 @@ useEffect(() => {
                             </li>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/about-us">
+                                <Link className={`nav-link${currentClass('about')}`} {...current('about')} to="/about-us">
                                     <div className='row' data-bs-dismiss="offcanvas">
                                         <div className='col-6 text-end offcanvas-icons'><FaPersonChalkboard /></div>
                                         <div className='col-4 text-start offcanvas-about-us'><span> About Us</span></div>
@@ -459,7 +471,7 @@ useEffect(() => {
                             </li>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/contact-us">
+                                <Link className={`nav-link${currentClass('contact')}`} {...current('contact')} to="/contact-us">
                                     <div className='row' data-bs-dismiss="offcanvas">
                                         <div className='col-6 text-end offcanvas-icons'><BiSolidContact /></div>
                                         <div className='col-4 text-start offcanvas-contact-us'><span> Contact Us</span></div>
@@ -468,7 +480,7 @@ useEffect(() => {
                             </li>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/blog">
+                                <Link className={`nav-link${currentClass('blog')}`} {...current('blog')} to="/blog">
                                     <div className='row' data-bs-dismiss="offcanvas">
                                         <div className='col-6 text-end offcanvas-icons'><FaBlog /></div>
                                         <div className='col-4 text-start'><span> Blog</span></div>
@@ -505,7 +517,7 @@ useEffect(() => {
                                     <BsCart3 /> <span>Cart</span>
                                 </Link>
 
-                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/visit-store">
+                                <Link className={`visit-store-btn-navbar nav-link navbar-btn visit-btn${currentClass('visit')}`} {...current('visit')} to="/visit-store">
                                     <MdOutlineStorefront /> <span data-bs-dismiss="offcanvas">Visit Store</span>
                                 </Link>
                             </li>

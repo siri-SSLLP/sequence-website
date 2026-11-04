@@ -735,6 +735,41 @@ a:hover {
         gap: 5px;
         padding:26px 0px 10px 0px;
     }
-}      
+}
 
 
+/* ========================= */
+/* CURRENT PAGE              */
+/* ========================= */
+/* Desktop: the page you're on gets a gold pill, the same shape as Visit Store */
+.navbar-item-test1 .nav-link.nav-current {
+    padding: 8px 20px !important;
+    border-radius: 30px;
+    border: 1px solid #ebc76c;
+    color: #ebc76c !important;
+    background-color: rgba(235, 199, 108, 0.12);
+}
+
+.navbar-item-test1 .nav-link.nav-current:hover {
+    color: #ebc76c !important;
+}
+
+/* On the Visit Store page its pill gets a gold ring */
+.navbar-item-test1 .visit-store-btn-navbar.nav-current {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    color: black !important;
+    background-color: #ebc76c;
+    box-shadow: 0 0 0 2px #000, 0 0 0 3px #ebc76c;
+}
+
+/* Phone menu: the current page's row is shaded gold */
+.colasped-side-bar .nav-link.nav-current {
+    border-radius: 25px;
+    background-color: #f7e7bf;
+    font-weight: 600;
+}
+
+.colasped-side-bar .visit-store-btn-navbar.nav-current {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 3px #c59826;
+}
