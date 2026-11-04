@@ -486,6 +486,15 @@ useEffect(() => {
                                 </Link>
                             </li>
 
+                            <li className="nav-item">
+                                <Link className={`nav-link${currentClass('visit')}`} {...current('visit')} to="/visit-store">
+                                    <div className='row' data-bs-dismiss="offcanvas">
+                                        <div className='col-6 text-end offcanvas-icons'><MdOutlineStorefront /></div>
+                                        <div className='col-4 text-start'><span> Visit Store</span></div>
+                                    </div>
+                                </Link>
+                            </li>
+
                             <li className="nav-item mt-3" data-bs-dismiss="offcanvas">
                                 {/* <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" onClick={() => setShowAuth(true)}>
                                     <BsCart3 /> <span>SignUp / SignIn</span>
@@ -515,9 +524,6 @@ useEffect(() => {
                                     <BsCart3 /> <span>Cart</span>
                                 </Link>
 
-                                <Link className={`visit-store-btn-navbar nav-link navbar-btn visit-btn${currentClass('visit')}`} {...current('visit')} to="/visit-store">
-                                    <MdOutlineStorefront /> <span data-bs-dismiss="offcanvas">Visit Store</span>
-                                </Link>
                             </li>
 
                         </div>

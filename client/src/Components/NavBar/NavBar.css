@@ -769,7 +769,3 @@ a:hover {
     background-color: #f7e7bf;
     font-weight: 600;
 }
-
-.colasped-side-bar .visit-store-btn-navbar.nav-current {
-    box-shadow: 0 0 0 2px #fff, 0 0 0 3px #c59826;
-}
