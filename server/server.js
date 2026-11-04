@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 });
 
 // ✅ TEST ROUTE
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Server working ✅");
 });
 
