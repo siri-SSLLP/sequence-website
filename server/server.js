@@ -7,7 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js"; // ✅ NEW
 
 dotenv.config();
-connectDB();
+connectDB().catch(() => {}); // requests retry below if this first attempt fails
 
 import mongoose from "mongoose";
 
@@ -36,9 +36,24 @@ app.use(cors({
 
 app.use(express.json());
 
+// ✅ HOME — this is an API with no website, so answer instead of "Cannot GET /"
+app.get("/", (req, res) => {
+  res.json({ status: "ok", message: "Sequence Surfaces API is running" });
+});
+
 // ✅ TEST ROUTE
 app.get("/test", (req, res) => {
   res.send("Server working ✅");
+});
+
+// ✅ DATABASE — reconnect if needed, and reply clearly instead of crashing
+app.use("/api", async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch {
+    res.status(503).json({ message: "Database unavailable, please try again shortly" });
+  }
 });
 
 // ✅ ROUTES
