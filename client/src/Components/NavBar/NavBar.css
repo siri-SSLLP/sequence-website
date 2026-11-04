@@ -754,6 +754,13 @@ a:hover {
     color: #ebc76c !important;
 }
 
+/* Small laptops: the menu is tight, so keep the pill slim */
+@media (min-width: 992px) and (max-width: 1240px) {
+    .navbar-item-test1 .nav-link.nav-current {
+        padding: 6px 10px !important;
+    }
+}
+
 /* On the Visit Store page its pill gets a gold ring */
 .navbar-item-test1 .visit-store-btn-navbar.nav-current {
     padding-left: 20px !important;
