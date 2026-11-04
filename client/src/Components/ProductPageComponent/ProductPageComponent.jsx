@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import "./ProductPageComponent.css";
 import { FaFilter } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ProductContext } from '../../Context/Context'
 
 const ProductPageComponent = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [filters, setFilters] = useState({
         category: location.state?.category || "",
         subcategory: location.state?.subcategory || "",
@@ -19,7 +19,6 @@ const ProductPageComponent = () => {
     const [sort, setSort] = useState("popular");
     const [activeFilters, setActiveFilters] = useState([]);
     const { changeQty, addToCart, cart, products, loading, favourites, toggleFavourite } = useContext(ProductContext); // ✅ loading added
-    const [modal, setModal] = useState(null);
     const [heartAnim, setHeartAnim] = useState({});
     const product = products;
 
@@ -38,11 +37,6 @@ const ProductPageComponent = () => {
             ]);
         }
     }, [location.state]);
-
-    useEffect(() => {
-        document.body.style.overflow = modal ? "hidden" : "";
-        return () => { document.body.style.overflow = ""; };
-    }, [modal]);
 
     const categories = [...new Set(product.map(p => p.parentCategory.name))];
 
@@ -121,9 +115,6 @@ const ProductPageComponent = () => {
         setHeartAnim(prev => ({ ...prev, [id]: true }));
         setTimeout(() => setHeartAnim(prev => ({ ...prev, [id]: false })), 400);
     };
-
-    const openModal = (e, item) => { e.stopPropagation(); setModal(item); };
-    const closeModal = () => setModal(null);
 
     // ✅ LOADER
     if (loading) {
@@ -296,9 +287,9 @@ const ProductPageComponent = () => {
                 <div className="ppc-grid">
                     {filteredProducts.map((item, index) => (
                         <div className="ppc-card-link" key={item.productId} style={{ animationDelay: `${index * 0.06}s` }}>
-                            <div className="ppc-card">
+                            <div className="ppc-card" onClick={() => navigate(`/product/${item.productId}`)}>
                                 <div className="ppc-card-img-wrap">
-                                    <Link to={`/product/${item.productId}`}>
+                                    <Link to={`/product/${item.productId}`} onClick={(e) => e.stopPropagation()} tabIndex={-1}>
                                         <img src={item.imageUrl} alt={item.productName} />
                                     </Link>
                                     <button
@@ -308,15 +299,12 @@ const ProductPageComponent = () => {
                                     >
                                         {favourites[item.productId] ? "♥" : "♡"}
                                     </button>
-                                    <div className="ppc-card-overlay">
-                                        <button className="ppc-view-btn" onClick={(e) => openModal(e, item)}>
-                                            View Details →
-                                        </button>
-                                    </div>
                                 </div>
                                 <div className="ppc-card-body">
                                     <span className="ppc-card-cat">{item.parentCategory.name}</span>
-                                    <h5 className="ppc-card-title">{item.productName}</h5>
+                                    <h5 className="ppc-card-title">
+                                        <Link to={`/product/${item.productId}`} onClick={(e) => e.stopPropagation()}>{item.productName}</Link>
+                                    </h5>
                                     <div className="ppc-card-footer">
                                         <span className="ppc-card-price">₹{item.mrpPrice}</span>
                                         {item.finishType && <span className="ppc-card-finish">{item.finishType}</span>}
@@ -347,96 +335,6 @@ const ProductPageComponent = () => {
                 )}
             </main>
 
-            {/* ── Product Detail Modal ── */}
-            {modal && (
-                <div className="ppc-modal-backdrop" onClick={closeModal}>
-                    <div className="ppc-modal" onClick={(e) => e.stopPropagation()}>
-                        <button className="ppc-modal-close" onClick={closeModal}>×</button>
-                        <div className="ppc-modal-inner">
-                            <div className="ppc-modal-img-col">
-                                <div className="ppc-modal-img-wrap">
-                                    <Link to={`/product/${modal.productId}`}>
-                                        <img src={modal.imageUrl} alt={modal.productName} />
-                                    </Link>
-                                </div>
-                                <Link to={`/product/${modal.productId}`} className="ppc-full-product-btn">
-                                    View Full Product →
-                                </Link>
-                                {modal.tags?.length > 0 && (
-                                    <div className="ppc-modal-tags">
-                                        {modal.tags.map((t) => (
-                                            <span key={t} className="ppc-modal-tag">#{t}</span>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="ppc-modal-info-col">
-                                <span className="ppc-modal-breadcrumb">
-                                    {modal.parentCategory.name} · {modal.childCategory.name}
-                                </span>
-                                <h2 className="ppc-modal-title">{modal.productName}</h2>
-                                <p className="ppc-modal-code">{modal.productCode} · HSN {modal.hsnCode}</p>
-                                <div className="ppc-modal-price-row">
-                                    <span className="ppc-modal-price">₹{modal.mrpPrice}</span>
-                                    {modal.mrpDiscount > 0 && (
-                                        <span className="ppc-modal-discount">{modal.mrpDiscount}% off</span>
-                                    )}
-                                    <span className="ppc-modal-gst">+{modal.gst}% GST</span>
-                                </div>
-                                <p className="ppc-modal-desc">{modal.description}</p>
-                                <div className="ppc-modal-specs">
-                                    {[
-                                        ["Brand", modal.brand],
-                                        ["Color", modal.color],
-                                        ["Finish", modal.finishType],
-                                        ["Texture", modal.finishTexture],
-                                        ["Size", modal.size],
-                                        ["Weight", modal.netWeight],
-                                        ["Material", modal.materialComposition],
-                                        ["Style", modal.styleFit],
-                                        ["Stock", `${modal.stock} units`],
-                                    ].map(([k, v]) => v && (
-                                        <div key={k} className="ppc-modal-spec-row">
-                                            <span className="ppc-modal-spec-key">{k}</span>
-                                            <span className="ppc-modal-spec-val">{v}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                                {modal.whereToUse?.length > 0 && (
-                                    <div className="ppc-modal-uses">
-                                        <span className="ppc-modal-uses-label">Where to Use</span>
-                                        <div className="ppc-modal-uses-list">
-                                            {modal.whereToUse.map((u) => (
-                                                <span key={u} className="ppc-modal-use-chip">{u}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                                <div className="ppc-modal-actions">
-                                    <button
-                                        className={`ppc-modal-fav ${favourites[modal.productId] ? "active" : ""}`}
-                                        onClick={(e) => toggleFav(e, modal.productId)}
-                                    >
-                                        {favourites[modal.productId] ? "♥ Saved" : "♡ Save"}
-                                    </button>
-                                    {!cart[modal.productId] ? (
-                                        <button className="ppc-modal-cart" onClick={(e) => addToCart(e, modal.productId)}>
-                                            + Add to Cart
-                                        </button>
-                                    ) : (
-                                        <div className="ppc-qty-control ppc-qty-modal">
-                                            <button onClick={(e) => changeQty(e, modal.productId, -1)}>−</button>
-                                            <span>{cart[modal.productId]}</span>
-                                            <button onClick={(e) => changeQty(e, modal.productId, +1)}>+</button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
