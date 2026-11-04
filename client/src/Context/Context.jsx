@@ -219,7 +219,7 @@ export const ProductProvider = ({ children }) => {
   const toggleFavourite = (e, id) => {
     e.stopPropagation();
     // Only celebrate adding; removing a favourite stays quiet
-    if (!favourites[id]) flyToFavourites(e.currentTarget);
+    if (!favourites[id]) flyToFavourites(e.currentTarget, id);
     setFavourites((prev) => {
       const { [id]: saved, ...rest } = prev;
       const next = saved ? rest : { ...prev, [id]: true };

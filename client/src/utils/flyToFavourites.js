@@ -19,9 +19,15 @@ const bump = (el) => {
     el.addEventListener("animationend", () => el.classList.remove("fav-bump"), { once: true });
 };
 
-export const flyToFavourites = (fromEl) => {
+// Products whose heart has already flown. Each product flies once per visit,
+// so liking, unliking and liking again (or rapid clicks) don't replay it.
+const flown = new Set();
+
+export const flyToFavourites = (fromEl, id) => {
+    if (flown.has(id)) return;
     const target = findTarget();
     if (!fromEl || !target) return;
+    flown.add(id);
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion || !document.body.animate) {
