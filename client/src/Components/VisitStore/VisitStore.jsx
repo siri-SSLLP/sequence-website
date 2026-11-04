@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEnvelope, FaWarehouse } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEnvelope, FaWarehouse, FaStore } from "react-icons/fa";
 import "./VisitStore.css";
 import { storeDetails } from "../../assets/storeDetails.js";
 import { WhatsappNumber } from "../../assets/assets.js";
@@ -49,6 +49,63 @@ const toInputDate = (d) => {
   const pad = (n) => String(n).padStart(2, "0");
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 };
+
+// Address block shared by the showroom and warehouse cards
+const AddressItem = ({ location }) => (
+  <div className="vs-info-item">
+    <FaMapMarkerAlt className="vs-icon" />
+    <div>
+      <h3>Address</h3>
+      <p>
+        {location.addressLines.map((line) => (
+          <React.Fragment key={line}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
+      </p>
+      {location.landmarks.length > 0 && (
+        <ul className="vs-landmarks">
+          {location.landmarks.map((l) => (
+            <li key={l}>{l}</li>
+          ))}
+        </ul>
+      )}
+      <a href={location.mapLink} target="_blank" rel="noreferrer">
+        Open in Google Maps
+      </a>
+    </div>
+  </div>
+);
+
+const PhoneItem = () => (
+  <div className="vs-info-item">
+    <FaPhoneAlt className="vs-icon" />
+    <div>
+      <h3>Call us</h3>
+      <p>
+        {phones.map((p) => (
+          <React.Fragment key={p}>
+            <a href={`tel:${p.replace(/\s/g, "")}`}>{p}</a>
+            <br />
+          </React.Fragment>
+        ))}
+      </p>
+    </div>
+  </div>
+);
+
+const LocationMap = ({ location }) => (
+  <div className="vs-map">
+    <iframe
+      title={`${location.name} location`}
+      src={location.mapEmbed}
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      allowFullScreen
+    />
+  </div>
+);
 
 const emptyForm = { name: "", phone: "", date: "", slot: "", purpose: visitPurposes[0], notes: "", withFavourites: true };
 
@@ -128,79 +185,79 @@ export default function VisitStore() {
             Book a visit
           </a>
         </div>
+        <p className="vs-hero-sub">
+          Looking for our warehouse? <a href="#vs-warehouse">See the warehouse location</a>
+        </p>
       </header>
 
-      {/* ─── Details + map ─── */}
-      <section className="vs-info">
-        <div className="vs-info-card">
-          <div className="vs-info-item">
-            <FaMapMarkerAlt className="vs-icon" />
-            <div>
-              <h2>Address</h2>
-              <p>
-                {showroom.addressLines.map((line) => (
-                  <React.Fragment key={line}>
-                    {line}
-                    <br />
-                  </React.Fragment>
-                ))}
-              </p>
-              {showroom.landmarks.length > 0 && (
-                <ul className="vs-landmarks">
-                  {showroom.landmarks.map((l) => (
-                    <li key={l}>{l}</li>
-                  ))}
-                </ul>
-              )}
-              <a href={showroom.mapLink} target="_blank" rel="noreferrer">
-                Open in Google Maps
-              </a>
-            </div>
-          </div>
-
-          <div className="vs-info-item">
-            <FaRegClock className="vs-icon" />
-            <div>
-              <h2>Opening hours</h2>
-              <p>{hours.label}</p>
-              <p className="vs-muted">Closed on Saturday and Sunday</p>
-            </div>
-          </div>
-
-          <div className="vs-info-item">
-            <FaPhoneAlt className="vs-icon" />
-            <div>
-              <h2>Call us</h2>
-              <p>
-                {phones.map((p) => (
-                  <React.Fragment key={p}>
-                    <a href={`tel:${p.replace(/\s/g, "")}`}>{p}</a>
-                    <br />
-                  </React.Fragment>
-                ))}
-              </p>
-            </div>
-          </div>
-
-          <div className="vs-info-item">
-            <FaEnvelope className="vs-icon" />
-            <div>
-              <h2>Email</h2>
-              <p>
-                <a href={`mailto:${email}`}>{email}</a>
-              </p>
-            </div>
-          </div>
+      {/* ─── Showroom details + map ─── */}
+      <section className="vs-location" id="vs-showroom">
+        <div className="vs-location-head">
+          <span className="vs-location-tag">
+            <FaStore /> Showroom
+          </span>
+          <h2 className="vs-location-title">Laminate Experience Center</h2>
         </div>
+        <div className="vs-info">
+          <div className="vs-info-card">
+            <AddressItem location={showroom} />
 
-        <div className="vs-map">
-          <iframe
-            title="Sequence Surfaces showroom location"
-            src={showroom.mapEmbed}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
+            <div className="vs-info-item">
+              <FaRegClock className="vs-icon" />
+              <div>
+                <h3>Opening hours</h3>
+                <p>{hours.label}</p>
+                <p className="vs-muted">Closed on Saturday and Sunday</p>
+              </div>
+            </div>
+
+            <PhoneItem />
+
+            <div className="vs-info-item">
+              <FaEnvelope className="vs-icon" />
+              <div>
+                <h3>Email</h3>
+                <p>
+                  <a href={`mailto:${email}`}>{email}</a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <LocationMap location={showroom} />
+        </div>
+      </section>
+
+      {/* ─── Warehouse details + map ─── */}
+      <section className="vs-location" id="vs-warehouse">
+        <div className="vs-location-head">
+          <span className="vs-location-tag">
+            <FaWarehouse /> Warehouse
+          </span>
+          <h2 className="vs-location-title">Kamakshipalya Warehouse</h2>
+        </div>
+        <div className="vs-info vs-info-reverse">
+          <div className="vs-info-card">
+            <AddressItem location={warehouse} />
+
+            {warehouse.hoursLabel && (
+              <div className="vs-info-item">
+                <FaRegClock className="vs-icon" />
+                <div>
+                  <h3>Timings</h3>
+                  <p>{warehouse.hoursLabel}</p>
+                </div>
+              </div>
+            )}
+
+            <PhoneItem />
+
+            <a className="vs-btn vs-btn-primary vs-card-btn" href={warehouse.mapLink} target="_blank" rel="noreferrer">
+              <FaMapMarkerAlt /> Get directions to warehouse
+            </a>
+          </div>
+
+          <LocationMap location={warehouse} />
         </div>
       </section>
 
@@ -295,16 +352,6 @@ export default function VisitStore() {
               : "We'll open WhatsApp with your visit details filled in, ready to send."}
           </p>
         </form>
-      </section>
-
-      {/* ─── Warehouse ─── */}
-      <section className="vs-warehouse">
-        <FaWarehouse className="vs-icon" />
-        <div>
-          <h2>Our warehouse</h2>
-          <p>{warehouse.addressLines.slice(1).join(", ")}</p>
-          <a href={warehouse.mapLink} target="_blank" rel="noreferrer">View warehouse on map</a>
-        </div>
       </section>
     </div>
   );

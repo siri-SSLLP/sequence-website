@@ -12,9 +12,15 @@ export const storeDetails = {
     landmarks: [],
   },
   warehouse: {
-    name: "Warehouse",
+    name: "Sequence Surfaces Warehouse",
     addressLines: ["Sequence Surfaces LLP", "46/1, 1st Main Road, Kamakshipalya", "Bangalore - 560079"],
     mapLink: "https://maps.app.goo.gl/noSpS8DtiZXgM16KA",
+    // Coordinates of the "Sequence Surfaces LLP" warehouse Google Maps listing
+    mapEmbed: "https://maps.google.com/maps?q=12.9884674,77.5301561&z=16&output=embed",
+    // Add nearby landmarks or loading/parking notes here. Left empty until confirmed.
+    landmarks: [],
+    // Warehouse timings, e.g. "Mon - Sat, 9 AM to 6 PM". Shown on the page only when filled in.
+    hoursLabel: "",
   },
   phones: ["+91 9164001231", "+91 6363865515"],
   email: "experience@sequencesurface.com",

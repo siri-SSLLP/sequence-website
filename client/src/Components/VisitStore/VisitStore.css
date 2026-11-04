@@ -128,12 +128,69 @@
 
 /* ─── Details + map ────────────────────────────────────── */
 
+.vs-location {
+  max-width: 1100px;
+  margin: 56px auto 0;
+  scroll-margin-top: 200px;
+}
+
+.vs-location + .vs-location {
+  margin-top: 64px;
+}
+
+.vs-location-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-bottom: 18px;
+}
+
+.vs-location-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #fbf1d6;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a5a1e;
+}
+
+.vs-location-title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 3.4vw, 34px);
+  font-weight: 600;
+}
+
 .vs-info {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
   gap: 24px;
-  max-width: 1100px;
-  margin: 56px auto 0;
+}
+
+/* Warehouse: map on the left, card on the right */
+.vs-info-reverse {
+  grid-template-columns: 1.3fr 1fr;
+}
+
+.vs-info-reverse .vs-info-card {
+  order: 2;
+}
+
+.vs-page .vs-card-btn {
+  justify-content: center;
+  margin-top: auto;
+}
+
+.vs-hero-sub {
+  margin: 16px 0 0;
+  font-size: 14px;
+  color: #5f5a54;
 }
 
 .vs-info-card {
@@ -155,8 +212,7 @@
   color: #5f5a54;
 }
 
-.vs-info-item h2,
-.vs-warehouse h2 {
+.vs-info-item h3 {
   margin: 0 0 4px;
   font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
@@ -447,25 +503,6 @@
   color: #5f5a54;
 }
 
-/* ─── Warehouse ────────────────────────────────────────── */
-
-.vs-warehouse {
-  display: flex;
-  gap: 14px;
-  max-width: 680px;
-  margin: 48px auto 0;
-  padding: 24px 28px;
-  border: 1px dashed #d8cfc4;
-  border-radius: 20px;
-  font-size: 14px;
-  line-height: 1.7;
-  color: #5f5a54;
-}
-
-.vs-warehouse p {
-  margin: 0 0 4px;
-}
-
 /* ─── Responsive ───────────────────────────────────────── */
 
 @media (max-width: 991px) {
@@ -474,12 +511,18 @@
     padding-top: 32px;
   }
 
-  .vs-book {
+  .vs-book,
+  .vs-location {
     scroll-margin-top: 90px;
   }
 
-  .vs-info {
+  .vs-info,
+  .vs-info-reverse {
     grid-template-columns: 1fr;
+  }
+
+  .vs-info-reverse .vs-info-card {
+    order: 0;
   }
 
   .vs-map,
