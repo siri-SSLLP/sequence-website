@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./Checkout.css";
+import { FaArrowLeft } from "react-icons/fa";
+import { useGoBack } from "../../utils/useGoBack";
 
 const CheckoutIcon = ({ type }) => {
   const icons = {
@@ -89,6 +91,7 @@ const formatExpiry = (val) => {
 };
 
 export default function Checkout() {
+  const goBack = useGoBack();
   const [activeMethod, setActiveMethod] = useState("card");
   const [cardType, setCardType] = useState("debit");
   const [cardNumber, setCardNumber] = useState("");
@@ -145,6 +148,10 @@ export default function Checkout() {
         {/* Header */}
         <div className="checkout-header">
           <div className="checkout-header-inner">
+            {/* Its own Back button: a floating one could sit on the card fields */}
+            <button type="button" className="checkout-back" onClick={goBack} aria-label="Go back to the previous page">
+              <FaArrowLeft aria-hidden="true" /> Back
+            </button>
             <div className="checkout-header-lock">
               <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
                 <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="2" />

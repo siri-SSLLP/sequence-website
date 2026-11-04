@@ -13,7 +13,8 @@ const BackButton = () => {
     const { pathname } = useLocation();
     const goBack = useGoBack();
 
-    if (pathname === "/" || pathname === "/home") return null;
+    // Home needs none; Checkout has its own in the header, away from the card fields
+    if (pathname === "/" || pathname === "/home" || pathname === "/checkout") return null;
 
     const ownBack = PAGES_WITH_OWN_BACK.includes(pathname);
 

@@ -54,6 +54,33 @@
   gap: 0.75rem;
 }
 
+/* Back button, left of "Secure Checkout" */
+.checkout-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 30px;
+  background: transparent;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.checkout-back svg {
+  font-size: 0.75rem;
+}
+
+.checkout-back:hover,
+.checkout-back:focus-visible {
+  background: #fff;
+  color: #1e1b4b;
+}
+
 .checkout-header-lock {
   display: flex;
   align-items: center;
