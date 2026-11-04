@@ -47,6 +47,32 @@
     border-bottom: 1px solid var(--ppc-border);
 }
 .ppc-filter-icon { font-size: 20px; color: var(--ppc-accent); }
+
+/* Back button on the Filters row (the floating one would cover the filters) */
+.ppc-back {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid #ebc76c;
+    border-radius: 30px;
+    background: #000;
+    color: #ebc76c;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+.ppc-back svg { font-size: 11px; }
+.ppc-back:hover,
+.ppc-back:focus-visible { background: #ebc76c; color: #000; }
+
+/* Phones: the panel scrolls away, so the floating Back button is used instead */
+@media (max-width: 600px) {
+    .ppc-back { display: none; }
+}
 .ppc-sidebar-header h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;

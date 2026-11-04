@@ -61,3 +61,11 @@
         display: none;
     }
 }
+
+/* Our Collections: its Filters panel runs down the left edge and carries its
+   own Back button; on phones the panel scrolls away, so the float returns. */
+@media (min-width: 601px) {
+    .back-float--page-has-own {
+        display: none;
+    }
+}

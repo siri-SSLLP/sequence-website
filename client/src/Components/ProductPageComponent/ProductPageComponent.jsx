@@ -1,8 +1,10 @@
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import "./ProductPageComponent.css";
 import { FaFilter } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ProductContext } from '../../Context/Context'
+import { useGoBack } from '../../utils/useGoBack'
 
 const ProductPageComponent = () => {
     const location = useLocation();
@@ -19,6 +21,7 @@ const ProductPageComponent = () => {
     const [sort, setSort] = useState("popular");
     const [activeFilters, setActiveFilters] = useState([]);
     const { changeQty, addToCart, cart, products, loading, favourites, toggleFavourite } = useContext(ProductContext); // ✅ loading added
+    const goBack = useGoBack();
     const [heartAnim, setHeartAnim] = useState({});
     const product = products;
 
@@ -124,6 +127,9 @@ const ProductPageComponent = () => {
                 <div className="ppc-sidebar-header">
                     <span className="ppc-filter-icon"><FaFilter /></span>
                     <h3>Filters</h3>
+                    <button type="button" className="ppc-back" onClick={goBack} aria-label="Go back to the previous page">
+                        <FaArrowLeft aria-hidden="true" /> Back
+                    </button>
                 </div>
                 {[...Array(5)].map((_, i) => (
                     <div key={i} className="ppc-filter-group">
@@ -164,6 +170,9 @@ const ProductPageComponent = () => {
                 <div className="ppc-sidebar-header">
                     <span className="ppc-filter-icon"><FaFilter /></span>
                     <h3>Filters</h3>
+                    <button type="button" className="ppc-back" onClick={goBack} aria-label="Go back to the previous page">
+                        <FaArrowLeft aria-hidden="true" /> Back
+                    </button>
                 </div>
 
                 <div className="ppc-filter-group">
