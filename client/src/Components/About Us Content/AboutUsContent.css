@@ -1,5 +1,7 @@
 /* ── CONTAINER ──────────────────────────────────────────────────────────── */
 .about-container {
+  /* Clears the fixed navbar */
+  margin-top: 180px;
   padding: 50px 10%;
   background: #f9f9f9;
 }
