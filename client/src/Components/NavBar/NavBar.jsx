@@ -201,7 +201,7 @@ useEffect(() => {
                                 <Link to="/products" className="nav-link" style={{ color: "white" }}>Our Collections</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="visit-store-btn-navbar nav-link navbar-btn" style={{ color: "white" }} to="/products">
+                                <Link className="visit-store-btn-navbar nav-link navbar-btn" style={{ color: "white" }} to="/visit-store">
                                     Visit Store
                                 </Link>
                             </li>
@@ -505,7 +505,7 @@ useEffect(() => {
                                     <BsCart3 /> <span>Cart</span>
                                 </Link>
 
-                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/products">
+                                <Link className="visit-store-btn-navbar nav-link navbar-btn visit-btn" to="/visit-store">
                                     <MdOutlineStorefront /> <span data-bs-dismiss="offcanvas">Visit Store</span>
                                 </Link>
                             </li>

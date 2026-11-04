@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { storeDetails } from "../../assets/storeDetails.js";
 
 
 const Footer = () => {
@@ -22,8 +23,8 @@ const Footer = () => {
                         <div className="footer-map-container map-top">
                             <iframe
                             className="footer-main-map"
-                                title="map"
-                                src="https://maps.google.com/maps?q=12.9716,77.5946&output=embedhttps://maps.google.com/maps?q=Bangalore&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                title="Sequence Surfaces showroom map"
+                                src={storeDetails.showroom.mapEmbed}
                                 frameBorder="0"
                                 allowFullScreen
                             ></iframe>
@@ -85,6 +86,7 @@ const Footer = () => {
                         <li><Link to={"/privacy-policy"}>Privacy Policy</Link></li>
                         <li><Link to={"/maintenance-guide"}>Maintenance Guide</Link></li>
                         <li><Link to={"/contact-us"}>Contact Us</Link></li>
+                        <li><Link to={"/visit-store"}>Visit Store</Link></li>
                         <li><Link to={"/cancellation-policy"}>Cancellation Policy</Link></li>
                         <li><Link to={"/career"}>Career</Link></li>
                     </ul>
@@ -119,8 +121,8 @@ const Footer = () => {
                         <div className="footer-map-container map-bottum">
                             <iframe
                             className="footer-main-map"
-                                title="map"
-                                src="https://maps.google.com/maps?q=12.9716,77.5946&output=embedhttps://maps.google.com/maps?q=Bangalore&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                title="Sequence Surfaces showroom map"
+                                src={storeDetails.showroom.mapEmbed}
                                 frameBorder="0"
                                 allowFullScreen
                             ></iframe>

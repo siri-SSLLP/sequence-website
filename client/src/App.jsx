@@ -18,6 +18,7 @@ import PrivacyPolicy from './Components/Privacypolicy/Privacypolicy.jsx'
 import CancellationPolicy from './Components/Cancellationpolicy/Cancellationpolicy.jsx'
 import { BlogListing, BlogPost } from './Components/Blog/Blog.jsx'
 import Favourites from './Components/Favourites/Favourites.jsx'
+import VisitStore from './Components/VisitStore/VisitStore.jsx'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/about-us' element={<AboutUs />} />
         <Route path='/contact-us' element={<ContactUsPage />} />
+        <Route path='/visit-store' element={<VisitStore />} />
         <Route path='/products' element={<ProductPage />} />
         <Route path='/product/:id' element={<ProductDescription />} />
         <Route path='/maintenance-guide' element={<MaintenanceGuidePage />} />
