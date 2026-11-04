@@ -272,7 +272,7 @@ useEffect(() => {
                         </div>
 
                         <div className='div-desktop-cart' style={{ display: "flex" }}>
-                            <Link to={'/cart'} className='img-cart-icon'>
+                            <Link to={'/cart'} className='img-cart-icon' aria-label='Cart'>
                                 <BsCart3 />
                             </Link>
                             <div className='cart-count-desktop'>{Object.keys(cart).length}</div>
@@ -414,9 +414,9 @@ useEffect(() => {
         className='signin-signup-desktop'
         style={{
             background: 'none',
-            border: '1px solid #ebc76c',
+            border: 'none',
             borderRadius: '25px',
-            padding: '8px 18px',
+            padding: '8px 10px',
             cursor: 'pointer',
             color: 'white',
             fontWeight: '500',

@@ -307,49 +307,44 @@ a:hover {
 /* ========================= */
 /* CART ICON                 */
 /* ========================= */
+/* Plain icons like the text links: white, gold on hover, no ring */
+.div-desktop-cart {
+    position: relative;
+    align-items: center;
+}
+
 .img-cart-icon {
-    font-size: 20px;
-    color: #ebc76c;
-    padding: 7px 12px 7px 12px;
-    margin: 10px;
-    border-radius: 50%;
-    border: 1px solid white;
+    display: inline-flex;
+    align-items: center;
+    font-size: 21px;
+    color: white;
+    padding: 8px 10px;
+    margin: 0 4px;
+    transition: color 0.3s ease;
 }
 
 .img-cart-icon:hover {
-    border-color: #ebc76c;
-    color: black !important;
-    transition: 0.3s;
-    background-color: #ebc76c;
+    color: #ebc76c !important;
 }
 
+/* Count: a small gold badge on the icon's corner */
 .cart-count-desktop {
-    height: 15px;
-    background-color: #ebc76c;
-    padding: 15px 12px 15px 10px;
-    color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
     display: flex;
     align-items: center;
-    font-weight: 600;
-    border-radius: 50px;
-    position: relative;
-    margin-left: -30px;
-}
-
-.img-cart-icon:hover + .cart-count-desktop {
-    transition: 0.3s;
-    color: white;
-    background-color: #c59826;
-}
-
-.cart-count-desktop:hover {
-    transition: 0.3s;
-    color: white;
-}
-
-.div-desktop-cart:hover {
-    border-color: #ebc76c;
-    transition: 0.3s;
+    justify-content: center;
+    border-radius: 9px;
+    background-color: #ebc76c;
+    color: black;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    pointer-events: none;
 }
 
 /* ========================= */
@@ -361,8 +356,7 @@ a:hover {
 }
 
 .signin-signup-desktop:hover {
-    background-color: #ebc76c !important;
-    color: #111 !important;
+    color: #ebc76c !important;
 }
 
 .signin-signup-desktop-round:hover {
@@ -685,7 +679,7 @@ a:hover {
     }
 
     .img-cart-icon {
-        margin: 10px 4px;
+        margin: 0 2px;
     }
 
     .navbar-item-test1 .visit-store-btn-navbar {
