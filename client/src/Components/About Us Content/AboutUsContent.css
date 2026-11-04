@@ -1,12 +1,12 @@
 /* ── CONTAINER ──────────────────────────────────────────────────────────── */
 .about-container {
-  /* Starts right below the fixed navbar */
-  margin-top: 116px;
+  /* Starts below the fixed black navbar (116px) and yellow category bar (70px) */
+  margin-top: 186px;
   padding: 50px 10%;
   background: #f9f9f9;
 }
 
-/* The navbar is a single shorter row once it collapses to the menu button */
+/* Tablets and phones: no yellow bar, and the black navbar is 70px tall */
 @media (max-width: 991px) {
   .about-container {
     margin-top: 70px;
