@@ -94,6 +94,7 @@
 // src/context/ProductContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { flyToFavourites } from "../utils/flyToFavourites";
 
 export const ProductContext = createContext();
 
@@ -217,6 +218,8 @@ export const ProductProvider = ({ children }) => {
   // ── Favourites action ───────────────────────────────────────────
   const toggleFavourite = (e, id) => {
     e.stopPropagation();
+    // Only celebrate adding; removing a favourite stays quiet
+    if (!favourites[id]) flyToFavourites(e.currentTarget);
     setFavourites((prev) => {
       const { [id]: saved, ...rest } = prev;
       const next = saved ? rest : { ...prev, [id]: true };

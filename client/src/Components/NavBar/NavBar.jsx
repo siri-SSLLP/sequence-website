@@ -177,7 +177,7 @@ useEffect(() => {
                         <img className='img-logo' src='https://sequencesurface.com/images/logo.png' alt="logo" />
                     </Link>
 
-                    <button className="navbar-toggler custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                    <button className="navbar-toggler custom-toggler" data-fav-fallback type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
                         <span className="hamburger-line"></span>
                         <span className="hamburger-line"></span>
                         <span className="hamburger-line"></span>
@@ -254,7 +254,7 @@ useEffect(() => {
                             )}
                         </form>
 
-                        <div className='div-desktop-cart' style={{ display: "flex" }}>
+                        <div className='div-desktop-cart' data-fav-target style={{ display: "flex" }}>
                             <Link to={'/favourites'} className='img-cart-icon' aria-label='Favourites'>
                                 <BsHeart />
                             </Link>
