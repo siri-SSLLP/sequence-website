@@ -47,6 +47,32 @@ export const generatePDF = async (userInfo, cartItems) => {
       setTimeout(() => resolve(null), 8000);
     });
 
+  // Product photos arrive at camera size (often ~5000px). Scale them down to
+  // print size first, or the PDF takes minutes to build and runs to ~20MB.
+  const shrinkPhoto = async (img, maxSide = 1600) => {
+    if (!img || Math.max(img.naturalWidth, img.naturalHeight) <= maxSide) return img;
+    try {
+      const scale = maxSide / Math.max(img.naturalWidth, img.naturalHeight);
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.naturalWidth * scale);
+      canvas.height = Math.round(img.naturalHeight * scale);
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const small = await new Promise((resolve) => {
+        const out = new Image();
+        out.onload = () => resolve(out);
+        out.onerror = () => resolve(null);
+        out.src = canvas.toDataURL("image/jpeg", 0.85);
+      });
+      return small || img;
+    } catch (err) {
+      console.error(err);
+      return img;
+    }
+  };
+
   // One bad image should cost that image, not the whole PDF
   const addImageSafely = (...args) => {
     try {
@@ -204,11 +230,23 @@ export const generatePDF = async (userInfo, cartItems) => {
 
   doc.addPage();
 
+  const productUrlFor = (item) =>
+    item.productLink || `https://sequencesurface.com/product/${item.productId}`;
+
+  // Fetch every photo and QR code at once rather than one page at a time
+  const pictures = await Promise.all(
+    cartItems.map(async (item) => {
+      const [photo, qr] = await Promise.all([
+        loadImage(item.imageUrl).then((img) => shrinkPhoto(img)),
+        loadImage(generateQR(productUrlFor(item))),
+      ]);
+      return { photo, qr };
+    })
+  );
+
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];
-    const productUrl =
-      item.productLink ||
-      `https://sequencesurface.com/product/${item.productId}`;
+    const productUrl = productUrlFor(item);
 
     doc.setFillColor(250, 250, 250);
     doc.rect(0, 0, W, H, "F");
@@ -219,8 +257,7 @@ export const generatePDF = async (userInfo, cartItems) => {
       doc.rect(0, g, W, 4, "F");
     }
 
-    const img = await loadImage(item.imageUrl);
-    const qrImg = await loadImage(generateQR(productUrl));
+    const { photo: img, qr: qrImg } = pictures[i];
 
     // The whole picture goes on top, never cropped, stretched or covered
     let pictureBottom = 130;
