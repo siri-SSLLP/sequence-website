@@ -29,7 +29,7 @@ const app = express(); // ✅ CREATE APP FIRST
 app.use(cors({
   origin: [
     "http://localhost:5175", "http://localhost:5173","http://localhost:5174",
-    "https://sequence-site-new-616y.vercel.app"
+    "https://sequence-site-new-616y.vercel.app","https://sequence-website-qvc99.vercel.app"
   ],
   credentials: true
 }));
