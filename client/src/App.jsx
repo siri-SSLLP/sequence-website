@@ -11,6 +11,7 @@ import ProductDescription from './Components/ProductDescription/ProductDescripti
 import MaintenanceGuidePage from './pages/MaintenanceGuidePage.jsx'
 import WhatsAppButton from './Components/WhatsAppButton/WhatsAppButton.jsx'
 import ScrollToTopButton from './Components/ScrollToTopButton/ScrollToTopButton.jsx'
+import BackButton from './Components/BackButton/BackButton.jsx'
 import Cart from './Components/Cart/Cart.jsx'
 import Checkout from './Components/Checkout/Checkout.jsx'
 import Career from './Components/Career/Career.jsx'
@@ -27,6 +28,7 @@ function App() {
       <ScrollToTop />
       <WhatsAppButton />
       <ScrollToTopButton />
+      <BackButton />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />

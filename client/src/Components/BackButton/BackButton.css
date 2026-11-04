@@ -1,0 +1,51 @@
+.back-float {
+    position: fixed;
+    left: 28px;
+    bottom: 52px;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border: 1px solid #ebc76c;
+    border-radius: 30px;
+    background: #000;
+    color: #ebc76c;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.back-float svg {
+    font-size: 14px;
+}
+
+.back-float:hover,
+.back-float:focus-visible {
+    background: #ebc76c;
+    color: #000;
+    transform: translateX(-2px);
+}
+
+.back-float:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .back-float {
+        left: 12px;
+        bottom: 50px;
+        padding: 9px 15px;
+        font-size: 14px;
+    }
+}
+
+@media print {
+    .back-float {
+        display: none;
+    }
+}
