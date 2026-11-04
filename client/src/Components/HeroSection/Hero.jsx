@@ -36,13 +36,13 @@ const slides = [
         alt: "Dining room with green velvet chairs and a round mirror",
     },
     {
-        photoId: "1595428774223-ef52624120d2",
+        photoId: "1600585152220-90363fe7e115",
         eyebrow: "Textured Laminates",
         title: "Feel the grain, not just see it",
-        text: "Wood and stone textures with real depth for wardrobes, panels and doors.",
+        text: "Wood and stone textures with real depth for kitchens, wardrobes and doors.",
         cta: "Shop Textured",
         category: "Textured Laminates",
-        alt: "Wood-grain wardrobe panels with open shelves",
+        alt: "Kitchen with wood-grain cabinets and a white island",
     },
     {
         photoId: "1600494603989-9650cf6ddd3d",
