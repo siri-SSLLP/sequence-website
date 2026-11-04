@@ -35,12 +35,24 @@
     transform: scale(0.95);
 }
 
+/* Phones: a compact round arrow, so it covers as little of the page as possible */
 @media (max-width: 768px) {
     .back-float {
         left: 12px;
         bottom: 50px;
-        padding: 9px 15px;
-        font-size: 14px;
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .back-float span {
+        display: none;
+    }
+
+    .back-float svg {
+        font-size: 17px;
     }
 }
 
