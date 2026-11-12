@@ -29,7 +29,8 @@ const app = express(); // ✅ CREATE APP FIRST
 app.use(cors({
   origin: [
     "http://localhost:5175", "http://localhost:5173","http://localhost:5174",
-    "https://sequence-site-new-616y.vercel.app","https://sequence-website-qvc99.vercel.app"
+    "https://sequence-site-new-616y.vercel.app","https://sequence-website-qvc99.vercel.app",
+     "https://sequence-website-gray.vercel.app"
   ],
   credentials: true
 }));
@@ -64,3 +65,4 @@ app.use("/api/payment", paymentRoutes); // ✅ NEW — Razorpay
 app.listen(5002, "0.0.0.0", () => {
   console.log("🚀 Server running on port 5002");
 });
+ 
