@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../ProductPageComponent/ProductPageComponent.css";
 import "./Favourites.css";
 import { ProductContext } from "../../Context/Context";
+import { getPricing } from "../../utils/pricing";
 
 const Favourites = () => {
     const { products, loading, favourites, toggleFavourite, cart, addToCart, changeQty } = useContext(ProductContext);
@@ -40,7 +41,7 @@ const Favourites = () => {
                                 <span className="ppc-card-cat">{item.parentCategory.name}</span>
                                 <h5 className="ppc-card-title">{item.productName}</h5>
                                 <div className="ppc-card-footer">
-                                    <span className="ppc-card-price">₹{item.mrpPrice}</span>
+                                    <span className="ppc-card-price">₹{getPricing(item).salePrice.toLocaleString("en-IN")}</span>
                                     {item.finishType && <span className="ppc-card-finish">{item.finishType}</span>}
                                 </div>
                                 {!cart[item.productId] ? (

@@ -4,6 +4,7 @@ import "./LovedSection.css";
 import { Link } from "react-router-dom";
 import { ProductContext } from "../../Context/Context";
 import { scrollSlider } from "../../utils/scrollSlider";
+import { getPricing } from "../../utils/pricing";
 
 const categories = [
     "All",
@@ -71,9 +72,7 @@ const LovedSection = () => {
                 {/* Slider */}
                 <div className="slider" ref={sliderRef}>
                     {filteredProducts.map((item, index) => {
-                        const discountPrice = item.mrpPrice
-                            ? item.mrpPrice - (item.mrpPrice * (item.mrpDiscount || 0)) / 100
-                            : 0;
+                        const { mrp, salePrice, discountPct, hasDiscount } = getPricing(item);
 
                         return (
                             <Link className="loved-link" to={`/product/${item.productId}`} key={index}>
@@ -93,16 +92,16 @@ const LovedSection = () => {
 
                                         <div className="price">
                                             <span className="new">
-                                                ₹{Math.round(discountPrice)}
+                                                ₹{salePrice.toLocaleString("en-IN")}
                                             </span>
 
-                                            {item.mrpDiscount && (
+                                            {hasDiscount && (
                                                 <>
                                                     <span className="old">
-                                                        ₹{item.mrpPrice}
+                                                        ₹{mrp.toLocaleString("en-IN")}
                                                     </span>
                                                     <span className="off">
-                                                        {item.mrpDiscount}% OFF
+                                                        {discountPct}% OFF
                                                     </span>
                                                 </>
                                             )}

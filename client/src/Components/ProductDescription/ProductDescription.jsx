@@ -3,6 +3,7 @@ import "./ProductDescription.css";
 import { Link, useParams } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
 import { ProductContext } from "../../Context/Context.jsx";
+import { getPricing } from "../../utils/pricing";
 
 const ProductDescription = () => {
     const { products } = useContext(ProductContext);
@@ -84,9 +85,7 @@ const ProductDescription = () => {
         });
     };
 
-    const discountPct = singleProduct.mrpDiscount || 0;
-    const mrpPrice = singleProduct.mrpPrice;
-    const displayMRP = singleProduct.displayMRP;
+    const { mrp, salePrice, discountPct, hasDiscount } = getPricing(singleProduct);
 
     const mainInCart = (cart[singleProduct.productId] || 0) > 0;
     const isFavourite = !!favourites[singleProduct.productId];
@@ -145,7 +144,7 @@ const ProductDescription = () => {
                                 alt={singleProduct.productName}
                             />
 
-                            {discountPct > 0 && (
+                            {hasDiscount && (
                                 <div className="pdp-badge">{discountPct}% OFF</div>
                             )}
                             {isFavourite && (
@@ -204,11 +203,11 @@ const ProductDescription = () => {
 
                     {/* PRICE */}
                     <div className="pdp-price-row">
-                        <span className="pdp-price">₹{mrpPrice?.toLocaleString()}</span>
-                        {displayMRP && (
-                            <span className="pdp-old-price">₹{displayMRP?.toLocaleString()}</span>
+                        <span className="pdp-price">₹{salePrice.toLocaleString("en-IN")}</span>
+                        {hasDiscount && (
+                            <span className="pdp-old-price">₹{mrp.toLocaleString("en-IN")}</span>
                         )}
-                        {discountPct > 0 && (
+                        {hasDiscount && (
                             <span className="pdp-discount-tag">{discountPct}% OFF</span>
                         )}
                     </div>
@@ -334,7 +333,8 @@ const ProductDescription = () => {
                     <div className="pdp-related-grid">
                         {relatedProducts.map((item) => {
                             const thumb = item.imageUrl;
-                            const disc = item.mrpDiscount || 0;
+                            const p = getPricing(item);
+                            const disc = p.hasDiscount ? p.discountPct : 0;
                             const inCart = (cart[item.productId] || 0) > 0;
 
                             return (
@@ -357,11 +357,11 @@ const ProductDescription = () => {
                                         <p className="pdp-rel-name">{item.productName}</p>
                                         <div className="pdp-rel-price-row">
                                             <span className="pdp-rel-price">
-                                                ₹{item.mrpPrice?.toLocaleString()}
+                                                ₹{p.salePrice.toLocaleString("en-IN")}
                                             </span>
-                                            {item.displayMRP && (
+                                            {p.hasDiscount && (
                                                 <span className="pdp-rel-old">
-                                                    ₹{item.displayMRP?.toLocaleString()}
+                                                    ₹{p.mrp.toLocaleString("en-IN")}
                                                 </span>
                                             )}
                                         </div>

@@ -5,6 +5,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ProductContext } from '../../Context/Context'
 import { useGoBack } from '../../utils/useGoBack'
+import { getPricing } from '../../utils/pricing'
 
 const ProductPageComponent = () => {
     const location = useLocation();
@@ -107,9 +108,9 @@ const ProductPageComponent = () => {
         if (filters.color) data = data.filter(p => p.color === filters.color);
         if (filters.finish) data = data.filter(p => p.finishType === filters.finish);
         if (filters.application) data = data.filter(p => p.applications.includes(filters.application));
-        data = data.filter(p => p.mrpPrice >= filters.priceMin && p.mrpPrice <= filters.priceMax);
-        if (sort === "low") data.sort((a, b) => a.mrpPrice - b.mrpPrice);
-        if (sort === "high") data.sort((a, b) => b.mrpPrice - a.mrpPrice);
+        data = data.filter(p => getPricing(p).salePrice >= filters.priceMin && getPricing(p).salePrice <= filters.priceMax);
+        if (sort === "low") data.sort((a, b) => getPricing(a).salePrice - getPricing(b).salePrice);
+        if (sort === "high") data.sort((a, b) => getPricing(b).salePrice - getPricing(a).salePrice);
         return data;
     }, [filters, sort, product]); // ✅ product added
 
@@ -315,7 +316,7 @@ const ProductPageComponent = () => {
                                         <Link to={`/product/${item.productId}`} onClick={(e) => e.stopPropagation()}>{item.productName}</Link>
                                     </h5>
                                     <div className="ppc-card-footer">
-                                        <span className="ppc-card-price">₹{item.mrpPrice}</span>
+                                        <span className="ppc-card-price">₹{getPricing(item).salePrice.toLocaleString("en-IN")}</span>
                                         {item.finishType && <span className="ppc-card-finish">{item.finishType}</span>}
                                     </div>
                                     {!cart[item.productId] ? (

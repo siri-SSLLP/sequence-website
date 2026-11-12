@@ -95,6 +95,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { flyToFavourites } from "../utils/flyToFavourites";
+import { withPricing } from "../utils/pricing";
 
 export const ProductContext = createContext();
 
@@ -177,7 +178,7 @@ export const ProductProvider = ({ children }) => {
           },
         }
       );
-      setProducts(res.data);
+      setProducts((res.data || []).map(withPricing));
     } catch (err) {
       console.log("Error fetching products:", err);
     } finally {
